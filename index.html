@@ -197,10 +197,6 @@ td.no{color:var(--faint)}
 .contact{border:1px solid var(--border);border-radius:18px;padding:clamp(28px,5vw,52px);background:color-mix(in srgb,var(--surface) 40%,transparent);background-image:radial-gradient(circle,hsl(var(--dot)) 1px,transparent 1px);background-size:24px 24px;position:relative;overflow:hidden}
 .contact h2{font:400 clamp(1.9rem,3.6vw,2.9rem)/1.08 var(--serif);max-width:16ch;margin:12px 0 12px}
 .contact .lede{margin-bottom:24px}
-.mail{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:999px;padding:5px 5px 5px 14px;font:500 .86rem/1 var(--mono);background:var(--surface);max-width:100%}
-.mail code{overflow-wrap:anywhere}
-.mail button{padding:9px 14px;border-radius:999px;border:0;background:var(--surface-hover);color:var(--fg);font:600 .8rem/1 var(--sans);cursor:pointer}
-.mail button:hover{background:var(--border)}
 
 footer{border-top:1px solid var(--border);padding-block:32px 52px;color:var(--faint);font-size:.82rem}
 footer .wrap{display:grid;gap:8px}
@@ -467,10 +463,9 @@ footer p{max-width:90ch}
     <div class="contact">
       <p class="eyebrow"><i>//</i> early access</p>
       <h2>Want the install package?</h2>
-      <p class="lede">I am sharing NextBeacon directly with a small group while it is in early access. Send me a short note with the kind of role you are after, and I will get you the package and help you set it up.</p>
+      <p class="lede">I am sharing NextBeacon directly with a small group while it is in early access. Send me a short message on LinkedIn with the kind of role you are after, and I will get you the package and help you set it up.</p>
       <div class="cta-row">
         <a class="btn primary" id="li" href="https://www.linkedin.com/in/halerobert/" target="_blank" rel="noopener">Message me on LinkedIn</a>
-        <div class="mail"><code id="mailtxt">rwhale.colorado@gmail.com</code><button type="button" id="copy">Copy</button></div>
       </div>
     </div>
   </div>
@@ -579,14 +574,6 @@ footer p{max-width:90ch}
       if (found > 40) { found = 6; readEl.textContent = '6'; }
     }, 2600);
   }
-
-  /* ---- contact: copy the address, never claim a message was sent ---- */
-  var btn = document.getElementById('copy'), txt = document.getElementById('mailtxt');
-  if (btn && txt) btn.addEventListener('click', function () {
-    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 1600); };
-    var fallback = function () { var r = document.createRange(); r.selectNodeContents(txt); var s = getSelection(); s.removeAllRanges(); s.addRange(r); btn.textContent = 'Press Ctrl+C'; };
-    try { navigator.clipboard.writeText(txt.textContent).then(done, fallback); } catch (e) { fallback(); }
-  });
 })();
 </script>
 </body>
