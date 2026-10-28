@@ -23,11 +23,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-/* Layout concept: the NextBeacon app's own look, taken from its design tokens. Warm off-white (or
-   near-black in dark mode), burnt-orange brand, Inter for text, Instrument Serif for headings and
-   the wordmark, the dot-grid hero card from the Today page. Sections: hero with a live radar and a
-   morning-run feed in an app window, at-a-glance strip, differentiators, what is included, how it
-   works, comparison, good to know, contact. */
+/* Layout concept: the NextBeacon app's own look, taken from its design tokens. Always the warm
+   off-white light look (Rob, 2026-10-28: "It should lock in the light mode"), burnt-orange brand,
+   Inter for text, Instrument Serif for headings and the wordmark, the dot-grid hero card from the
+   Today page. Sections: hero with a live radar and a morning-run feed in an app window, at-a-glance
+   strip, differentiators, what is included, how it works, comparison, good to know, contact. */
 :root{
   --bg:#f7f6f3; --surface:#ffffff; --surface-hover:#efeeea; --border:hsl(40 9% 86%);
   --fg:hsl(30 10% 11%); --muted:hsl(35 9% 34%); --faint:hsl(35 7% 42%); --landing:#59592a;
@@ -40,16 +40,6 @@
   --mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#0a0a0a; --surface:#161616; --surface-hover:#232323; --border:#262626;
-  --fg:#fafafa; --muted:#a1a1aa; --faint:#8b8b95; --landing:#e4e2d0; --brand-text:hsl(26 73% 51%);
-  --ok:#5ed38a; --ok-soft:rgba(94,211,138,.14); --warn:hsl(33 100% 60%); --warn-soft:hsl(26 73% 51% / 0.16); --pass:#a1a1aa; --pass-soft:#232323;
-  --dot:240 5% 65% / 0.10; --shadow:0 24px 60px -32px rgba(0,0,0,.8); color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#0a0a0a; --surface:#161616; --surface-hover:#232323; --border:#262626;
-  --fg:#fafafa; --muted:#a1a1aa; --faint:#8b8b95; --landing:#e4e2d0; --brand-text:hsl(26 73% 51%);
-  --ok:#5ed38a; --ok-soft:rgba(94,211,138,.14); --warn:hsl(33 100% 60%); --warn-soft:hsl(26 73% 51% / 0.16); --pass:#a1a1aa; --pass-soft:#232323;
-  --dot:240 5% 65% / 0.10; --shadow:0 24px 60px -32px rgba(0,0,0,.8); color-scheme:dark}
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
