@@ -16,226 +16,242 @@
 <meta name="twitter:image" content="https://rwhale.github.io/roleradar-site/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <style>
-/* Layout concept: a night-trail landing page. A drifting ridge-line field behind the hero, a live "morning run"
-   console that scores example postings, then a bento of differentiators, the full feature list, an honest
-   comparison, and a single contact call to action. Dark by choice: every color below is explicit. */
+/* Layout concept: the RoleRadar app's own look, taken from its design tokens. Warm off-white (or
+   near-black in dark mode), burnt-orange brand, Inter for text, Instrument Serif for headings and
+   the wordmark, the dot-grid hero card from the Today page. Sections: hero with a live radar and a
+   morning-run feed in an app window, at-a-glance strip, differentiators, what is included, how it
+   works, comparison, good to know, contact. */
 :root{
-  --ink:#0A1210; --ink-rgb:10,18,16;
-  --surface:#111B18; --surface-2:#16231F; --line:#223630;
-  --text:#E9F0EC; --muted:#93A89F;
-  --lantern:#F2B544; --glacier:#5FD3C0; --ok:#6EE7A8; --flag:#FF7A6B;
-  --display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif;
-  --body:'Instrument Sans','Segoe UI',system-ui,sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
-  color-scheme:dark;
+  --bg:#f7f6f3; --surface:#ffffff; --surface-hover:#efeeea; --border:hsl(40 9% 86%);
+  --fg:hsl(30 10% 11%); --muted:hsl(35 9% 34%); --faint:hsl(35 7% 42%); --landing:#59592a;
+  --brand:hsl(26 73% 51%); --brand-200:hsl(33 100% 60%); --brand-fg:hsl(24 30% 12%);
+  --brand-soft:hsl(26 73% 51% / 0.12); --brand-text:hsl(26 80% 36%);
+  --ok:#1f7a3f; --ok-soft:#e4f3e8; --warn:#8a5b00; --warn-soft:#fff2d6; --pass:#6b7280; --pass-soft:#eceae5;
+  --dot:40 8% 42% / 0.09; --shadow:0 24px 60px -32px rgba(30,20,10,.28);
+  --sans:'Inter',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Instrument Serif',ui-serif,Georgia,serif;
+  --mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Consolas,monospace;
+  color-scheme:light;
 }
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0a0a0a; --surface:#161616; --surface-hover:#232323; --border:#262626;
+  --fg:#fafafa; --muted:#a1a1aa; --faint:#8b8b95; --landing:#e4e2d0; --brand-text:hsl(26 73% 51%);
+  --ok:#5ed38a; --ok-soft:rgba(94,211,138,.14); --warn:hsl(33 100% 60%); --warn-soft:hsl(26 73% 51% / 0.16); --pass:#a1a1aa; --pass-soft:#232323;
+  --dot:240 5% 65% / 0.10; --shadow:0 24px 60px -32px rgba(0,0,0,.8); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0a0a0a; --surface:#161616; --surface-hover:#232323; --border:#262626;
+  --fg:#fafafa; --muted:#a1a1aa; --faint:#8b8b95; --landing:#e4e2d0; --brand-text:hsl(26 73% 51%);
+  --ok:#5ed38a; --ok-soft:rgba(94,211,138,.14); --warn:hsl(33 100% 60%); --warn-soft:hsl(26 73% 51% / 0.16); --pass:#a1a1aa; --pass-soft:#232323;
+  --dot:240 5% 65% / 0.10; --shadow:0 24px 60px -32px rgba(0,0,0,.8); color-scheme:dark}
+
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--ink);color:var(--text);font:16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
 a{color:inherit}
-h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.02em;text-wrap:balance}
+h1,h2,h3{margin:0;font-weight:400;letter-spacing:-.01em;text-wrap:balance}
 p{margin:0}
-.wrap{max-width:1160px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.band{padding-block:clamp(56px,9vw,108px)}
-.label{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--glacier)}
-.lede{color:var(--muted);font-size:clamp(1rem,1.5vw,1.15rem);max-width:60ch}
+.wrap{max-width:1120px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.band{padding-block:clamp(48px,7vw,88px)}
+.eyebrow{font:500 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.eyebrow i{font-style:normal;color:var(--faint)}
+.serif{font-family:var(--serif)}
+.lede{color:var(--muted);font-size:clamp(1rem,1.4vw,1.1rem);max-width:58ch}
+.tnum{font-variant-numeric:tabular-nums}
 
 /* header */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(var(--ink-rgb),.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(34,54,48,.7)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
-.brand{display:flex;align-items:center;gap:10px;font:800 1.35rem/1 var(--display);letter-spacing:-.02em;text-decoration:none}
-.nav{display:flex;align-items:center;gap:24px}
-.nav a.link{color:var(--muted);text-decoration:none;font-size:.95rem}
-.nav a.link:hover{color:var(--text)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:10px;border:1px solid var(--line);background:transparent;color:var(--text);font:600 .95rem/1 var(--body);text-decoration:none;cursor:pointer;transition:transform .15s,background .2s,border-color .2s}
-.btn:hover{border-color:var(--glacier)}
-.btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--lantern);outline-offset:3px}
-.btn.primary{background:var(--lantern);border-color:var(--lantern);color:#1A1204}
-.btn.primary:hover{transform:translateY(-1px);background:#F7C463}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.mark{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:6px;background:var(--brand);color:#fff;font:400 25px/1 var(--serif);letter-spacing:.01em;padding-bottom:3px;flex:none}
+.word{font:400 1.5rem/1 var(--serif);letter-spacing:-.02em;color:var(--landing);position:relative;top:-1px}
+.nav{display:flex;align-items:center;gap:22px}
+.nav a.link{color:var(--muted);text-decoration:none;font-size:.9rem;white-space:nowrap}
+.nav .btn{white-space:nowrap}
+@media (max-width:900px){.nav a.link{display:none}}
+.nav a.link:hover{color:var(--fg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--fg);font:500 .9rem/1 var(--sans);text-decoration:none;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;min-height:40px}
+.btn:hover{background:var(--surface-hover)}
+.btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-fg)}
+.btn.primary:hover{background:var(--brand-200);border-color:var(--brand-200)}
+.btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
 
-/* radar mark */
-.mark{width:28px;height:28px;display:block}
-.mark .ring{fill:none;stroke:var(--glacier);stroke-width:1.6;opacity:.8}
-.mark .sweep{fill:var(--lantern);opacity:.85;transform-box:fill-box;transform-origin:0% 100%;animation:sweep-turn 4s linear infinite}
-.mark .blip{fill:var(--lantern);animation:blip 4s ease-out infinite}
-@keyframes sweep-turn{to{transform:rotate(360deg)}}
-@keyframes blip{0%,20%{opacity:0}30%{opacity:1}80%,100%{opacity:0}}
+/* hero card, like the Today page */
+.hero{padding-block:clamp(24px,4vw,40px) 0}
+.hero-card{position:relative;overflow:hidden;border-radius:18px;border:1px solid var(--border);background:color-mix(in srgb,var(--surface) 40%,transparent);background-image:radial-gradient(circle,hsl(var(--dot)) 1px,transparent 1px);background-size:24px 24px;padding:clamp(28px,4vw,48px) clamp(20px,4vw,48px)}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,56px);align-items:center}
+.hero h1{font:400 clamp(2.5rem,5.6vw,4.4rem)/1.02 var(--serif);letter-spacing:-.02em;color:var(--fg);margin:18px 0 20px}
+.hero h1 em{font-style:italic;color:var(--brand)}
+.hero .lede{margin-bottom:26px}
+.cta-row{display:flex;flex-wrap:wrap;gap:10px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 20px;margin:26px 0 0;padding:0;list-style:none;color:var(--muted);font-size:.88rem}
+.trust li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--brand);margin-right:8px;vertical-align:middle}
 
-/* hero */
-.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
-#topo{position:absolute;inset:0;width:100%;height:100%;display:block;-webkit-mask-image:linear-gradient(#000 55%,transparent);mask-image:linear-gradient(#000 55%,transparent)}
-.hero .wrap{position:relative;z-index:2}
-.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(28px,5vw,64px);align-items:center;padding-block:clamp(40px,7vw,88px)}
-.hero h1{font-size:clamp(2.3rem,5.4vw,4.5rem);line-height:1.02;font-weight:800;margin:18px 0 22px}
-.hero h1 em{font-style:normal;color:var(--glacier)}
-.hero .lede{margin-bottom:30px}
-.cta-row{display:flex;flex-wrap:wrap;gap:12px}
-.trust{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:28px;padding:0;list-style:none;color:var(--muted);font-size:.9rem}
-.trust li::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--ok);margin-right:8px;vertical-align:middle}
+/* radar */
+.radar-wrap{position:relative;aspect-ratio:1;max-width:460px;width:100%;margin-inline:auto}
+#radar{width:100%;height:100%;display:block}
+.radar-cap{position:absolute;left:0;right:0;bottom:-6px;text-align:center;font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
 
-/* live console */
-.console{background:rgba(17,27,24,.86);border:1px solid var(--line);border-radius:16px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);overflow:hidden;box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}
-.console-h{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);font:500 12px/1.3 var(--mono);color:var(--muted)}
-.console-h b{color:var(--lantern);font-weight:500;font-variant-numeric:tabular-nums}
-.pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:8px;box-shadow:0 0 0 0 rgba(110,231,168,.6);animation:pulse 2s infinite}
-@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(110,231,168,0)}100%{box-shadow:0 0 0 0 rgba(110,231,168,0)}}
-#feed{list-style:none;margin:0;padding:6px 0;min-height:372px}
-.row{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:13px 18px;border-bottom:1px solid rgba(34,54,48,.55);animation:rowin .5s ease both}
-.row:last-child{border-bottom:0}
-@keyframes rowin{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
-.co{font-weight:600;line-height:1.3;min-width:0}
-.co small{display:block;font-weight:400;color:var(--muted);font-size:.82rem;overflow-wrap:anywhere}
-.score{font:500 1.15rem/1 var(--mono);font-variant-numeric:tabular-nums;min-width:2.6ch;text-align:right}
-.verdict{font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding:7px 10px;border-radius:999px;min-width:84px;text-align:center}
-.verdict.apply{background:rgba(110,231,168,.14);color:var(--ok)}
-.verdict.consider{background:rgba(242,181,68,.14);color:var(--lantern)}
-.verdict.pass{background:rgba(147,168,159,.12);color:var(--muted)}
-.verdict.reading{background:transparent;color:var(--muted);border:1px dashed var(--line)}
-.fine{padding:12px 18px;border-top:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+/* app window with the morning run */
+.window{margin-top:clamp(20px,3vw,32px);border:1px solid var(--border);border-radius:16px;background:var(--surface);box-shadow:var(--shadow);overflow:hidden}
+.win-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--border);background:color-mix(in srgb,var(--surface-hover) 60%,var(--surface))}
+.win-bar i{width:10px;height:10px;border-radius:50%;background:var(--border);display:inline-block}
+.win-bar span{margin-left:auto;font:500 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+.win-body{display:grid;grid-template-columns:200px 1fr}
+.side{border-right:1px solid var(--border);padding:16px 12px;display:grid;gap:4px;align-content:start;font-size:.88rem;color:var(--muted)}
+.side .brand{padding:2px 6px 14px}
+.side .word{font-size:1.25rem}
+.side .mark{width:26px;height:26px;font-size:20px;padding-bottom:2px}
+.side a{display:block;padding:7px 10px;border-radius:6px;text-decoration:none}
+.side a.on{background:var(--brand-soft);color:var(--brand-text)}
+.main{padding:18px 20px 8px}
+.main .eyebrow{margin-bottom:8px}
+.main h3{font:400 1.6rem/1.1 var(--serif);margin-bottom:6px}
+.main h3 b{font-weight:400;color:var(--brand)}
+.main .sub{font-size:.85rem;color:var(--muted);margin-bottom:10px}
+#feed{list-style:none;margin:0;padding:0;min-height:296px}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:11px 0;border-top:1px solid var(--border);animation:rowin .45s ease both}
+@keyframes rowin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.co{font-weight:500;line-height:1.3;min-width:0;font-size:.93rem}
+.co small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;overflow-wrap:anywhere}
+.score{font:400 1.25rem/1 var(--serif);font-variant-numeric:tabular-nums;min-width:2.6ch;text-align:right}
+.chip{font:600 10px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;padding:6px 9px;border-radius:999px;min-width:76px;text-align:center}
+.chip.apply{background:var(--ok-soft);color:var(--ok)}
+.chip.consider{background:var(--warn-soft);color:var(--warn)}
+.chip.pass{background:var(--pass-soft);color:var(--pass)}
+.chip.reading{background:transparent;color:var(--faint);border:1px dashed var(--border)}
+.fine{padding:10px 20px;border-top:1px solid var(--border);font-size:.76rem;color:var(--faint)}
 
-/* facts strip */
-.facts{border-bottom:1px solid var(--line)}
+/* at a glance */
+.facts{border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-top:clamp(40px,6vw,64px)}
 .facts .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
-.fact{padding:30px 22px;border-right:1px solid var(--line)}
-.fact:first-child{padding-left:0}
-.fact:last-child{border-right:0}
-.fact b{display:block;font:700 clamp(1.7rem,3vw,2.4rem)/1 var(--display);color:var(--lantern);margin-bottom:8px}
-.fact span{color:var(--muted);font-size:.92rem}
+.fact{padding:26px 22px;border-right:1px solid var(--border)}
+.fact:first-child{padding-left:0}.fact:last-child{border-right:0}
+.fact b{display:block;font:400 clamp(1.8rem,3vw,2.4rem)/1 var(--serif);color:var(--brand);margin-bottom:6px}
+.fact span{color:var(--muted);font-size:.9rem}
 
-/* bento */
-.head{display:grid;gap:14px;margin-bottom:44px}
-.head h2{font-size:clamp(1.9rem,3.8vw,3rem);line-height:1.08;font-weight:800;max-width:20ch}
-.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
-.card{position:relative;grid-column:span 2;padding:28px;border:1px solid var(--line);border-radius:18px;background:var(--surface);overflow:hidden;--mx:50%;--my:0%}
-.card::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--mx) var(--my),rgba(95,211,192,.10),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
-.card:hover::before{opacity:1}
+/* sections */
+.head{display:grid;gap:12px;margin-bottom:36px}
+.head h2{font:400 clamp(1.9rem,3.6vw,2.9rem)/1.08 var(--serif);max-width:22ch;color:var(--fg)}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.card{grid-column:span 2;padding:26px;border:1px solid var(--border);border-radius:16px;background:color-mix(in srgb,var(--surface) 70%,transparent)}
 .card.wide{grid-column:span 3}
-.card h3{font-size:1.35rem;line-height:1.15;font-weight:700;margin:16px 0 10px}
-.card p{color:var(--muted);font-size:.97rem}
-.ico{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;background:var(--surface-2)}
-.ico svg{width:20px;height:20px;stroke:var(--glacier);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font:400 1.45rem/1.15 var(--serif);margin:14px 0 8px}
+.card p{color:var(--muted);font-size:.93rem}
+.ico{width:38px;height:38px;border-radius:9px;background:var(--brand-soft);display:grid;place-items:center}
+.ico svg{width:19px;height:19px;stroke:var(--brand-text);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 
-/* gauge */
-.gauge-box{display:flex;align-items:center;gap:22px;margin-top:20px;flex-wrap:wrap}
-.gauge{width:128px;height:128px;position:relative;flex:none}
+.gauge-box{display:flex;align-items:center;gap:22px;margin-top:18px;flex-wrap:wrap}
+.gauge{width:120px;height:120px;position:relative;flex:none}
 .gauge svg{width:100%;height:100%}
-.gauge .trk{stroke:var(--line)}
-.gauge .val{stroke:var(--lantern);stroke-dasharray:206 327;animation:fill 1.8s cubic-bezier(.2,.8,.2,1) both}
+.gauge .trk{stroke:var(--border)}
+.gauge .val{stroke:var(--brand);stroke-dasharray:206 327;animation:fill 1.6s cubic-bezier(.2,.8,.2,1) both}
 @keyframes fill{from{stroke-dasharray:0 327}to{stroke-dasharray:206 327}}
-.gauge .num{position:absolute;inset:0;display:grid;place-content:center;text-align:center;font:700 2rem/1 var(--display)}
-.gauge .num small{font:400 .75rem/1.2 var(--mono);color:var(--muted)}
-.why{display:grid;gap:8px;margin:0;padding:0;list-style:none;font-size:.9rem;color:var(--text)}
+.gauge .num{position:absolute;inset:0;display:grid;place-content:center;text-align:center;font:400 2.1rem/1 var(--serif)}
+.gauge .num small{font:500 .7rem/1.2 var(--mono);color:var(--faint);letter-spacing:.08em}
+.why{display:grid;gap:7px;margin:0;padding:0;list-style:none;font-size:.88rem}
 .why li{display:flex;gap:8px;align-items:flex-start}
-.why li::before{content:"";flex:none;width:14px;height:14px;margin-top:4px;background:var(--ok);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat}
+.why li::before{content:"";flex:none;width:14px;height:14px;margin-top:3px;background:var(--ok);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat}
 
-/* fact-check visual */
-.fc{position:relative;list-style:none;margin:20px 0 0;padding:6px 0;border:1px solid var(--line);border-radius:12px;background:var(--ink);overflow:hidden;font-size:.9rem}
-.fc li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:11px 14px;border-bottom:1px solid rgba(34,54,48,.6)}
+.fc{position:relative;list-style:none;margin:18px 0 0;padding:4px 0;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden;font-size:.88rem}
+.fc li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border)}
 .fc li:last-child{border-bottom:0}
 .fc li span:first-child{min-width:0;overflow-wrap:anywhere}
-.fc .st{flex:none;font:500 11px/1 var(--mono);letter-spacing:.04em;opacity:0;animation:st 9s infinite}
+.fc .st{flex:none;font:600 10px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;opacity:0;animation:st 9s infinite}
 .fc li:nth-child(1) .st{animation-delay:.9s}.fc li:nth-child(2) .st{animation-delay:2.2s}.fc li:nth-child(3) .st{animation-delay:3.5s}
-.fc .good{color:var(--ok)}.fc .bad{color:var(--flag)}
-.fc li.flag span:first-child{text-decoration:line-through;text-decoration-color:rgba(255,122,107,.0);animation:strike 9s infinite 3.5s}
+.fc .good{color:var(--ok)}.fc .bad{color:#b4332a}
+.fc li.flag span:first-child{text-decoration:line-through;text-decoration-color:rgba(180,51,42,0);animation:strike 9s infinite 3.5s}
 @keyframes st{0%,5%{opacity:0;transform:translateX(6px)}12%,86%{opacity:1;transform:none}95%,100%{opacity:0}}
-@keyframes strike{0%,5%{text-decoration-color:rgba(255,122,107,0)}12%,86%{text-decoration-color:rgba(255,122,107,.9)}95%,100%{text-decoration-color:rgba(255,122,107,0)}}
-.scan{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--lantern),transparent);box-shadow:0 0 18px var(--lantern);opacity:0;animation:sweep 9s infinite}
+@keyframes strike{0%,5%{text-decoration-color:rgba(180,51,42,0)}12%,86%{text-decoration-color:rgba(180,51,42,.9)}95%,100%{text-decoration-color:rgba(180,51,42,0)}}
+.scan{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--brand),transparent);opacity:0;animation:sweep 9s infinite}
 @keyframes sweep{0%{top:0;opacity:0}3%{opacity:1}50%{top:100%;opacity:1}55%,100%{top:100%;opacity:0}}
 
-/* feature list */
-.groups{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:var(--surface)}
-.group{padding:28px 24px;border-right:1px solid var(--line)}
+.groups{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:16px;overflow:hidden;background:color-mix(in srgb,var(--surface) 70%,transparent)}
+.group{padding:26px 22px;border-right:1px solid var(--border)}
 .group:last-child{border-right:0}
-.group h3{font:500 12px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--lantern);margin-bottom:20px}
-.group ul{list-style:none;margin:0;padding:0;display:grid;gap:18px}
-.group li b{display:block;font-weight:600;font-size:.98rem;margin-bottom:3px}
-.group li span{color:var(--muted);font-size:.9rem;line-height:1.5;display:block}
+.group h3{font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--brand-text);margin-bottom:18px}
+.group ul{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.group li b{display:block;font-weight:500;font-size:.95rem;margin-bottom:2px}
+.group li span{color:var(--muted);font-size:.87rem;line-height:1.5;display:block}
 
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;counter-reset:s;border-top:1px solid var(--line)}
-.step{padding:28px 22px 0 0;position:relative}
-.step::before{counter-increment:s;content:"0" counter(s);font:500 12px/1 var(--mono);color:var(--glacier);display:block;margin-bottom:14px}
-.step::after{content:"";position:absolute;top:-4px;left:0;width:7px;height:7px;border-radius:50%;background:var(--lantern)}
-.step h3{font-size:1.15rem;margin-bottom:8px}
-.step p{color:var(--muted);font-size:.93rem}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);counter-reset:s;border-top:1px solid var(--border)}
+.step{padding:26px 22px 0 0;position:relative}
+.step::before{counter-increment:s;content:"0" counter(s);font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--brand-text);display:block;margin-bottom:12px}
+.step::after{content:"";position:absolute;top:-4px;left:0;width:7px;height:7px;border-radius:50%;background:var(--brand)}
+.step h3{font:400 1.3rem/1.15 var(--serif);margin-bottom:6px}
+.step p{color:var(--muted);font-size:.9rem}
 
-/* compare */
-.tw{overflow-x:auto;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
-table{border-collapse:collapse;width:100%;min-width:640px;font-size:.95rem}
-th,td{padding:16px 18px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+.tw{overflow-x:auto;border:1px solid var(--border);border-radius:16px;background:color-mix(in srgb,var(--surface) 70%,transparent)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:.92rem}
+th,td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
 tr:last-child td{border-bottom:0}
-th{font:500 12px/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500}
-th.us,td.us{background:rgba(242,181,68,.07);color:var(--text)}
-th.us{color:var(--lantern)}
-td.yes{color:var(--ok);font-weight:600}
-td.no{color:var(--muted)}
-.note{margin-top:14px;font-size:.82rem;color:var(--muted)}
+th{font:500 11px/1.3 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+th.us,td.us{background:var(--brand-soft)}
+th.us{color:var(--brand-text)}
+td.yes{color:var(--ok);font-weight:500}
+td.no{color:var(--faint)}
+.note{margin-top:12px;font-size:.8rem;color:var(--faint)}
 
-/* need */
-.need{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.need{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .need .card{grid-column:auto}
-.need ul{margin:14px 0 0;padding-left:18px;color:var(--muted);font-size:.95rem;display:grid;gap:8px}
+.need h3{margin-top:0}
+.need ul{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:.93rem;display:grid;gap:7px}
 
-/* contact */
-.contact{border:1px solid var(--line);border-radius:22px;padding:clamp(28px,5vw,56px);background:linear-gradient(135deg,var(--surface-2),var(--surface));position:relative;overflow:hidden}
-.contact::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(242,181,68,.16),transparent 65%);pointer-events:none}
-.contact h2{font-size:clamp(1.9rem,3.8vw,3rem);line-height:1.08;font-weight:800;max-width:16ch;margin-bottom:14px}
-.contact .lede{margin-bottom:28px}
-.mail{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:6px 6px 6px 14px;font:500 .9rem/1 var(--mono);background:var(--ink);max-width:100%}
-.mail code{overflow-wrap:anywhere;color:var(--text)}
-.mail button{padding:9px 14px;border-radius:7px;border:0;background:var(--surface-2);color:var(--text);font:600 .82rem/1 var(--body);cursor:pointer}
-.mail button:hover{background:var(--line)}
+.contact{border:1px solid var(--border);border-radius:18px;padding:clamp(28px,5vw,52px);background:color-mix(in srgb,var(--surface) 40%,transparent);background-image:radial-gradient(circle,hsl(var(--dot)) 1px,transparent 1px);background-size:24px 24px;position:relative;overflow:hidden}
+.contact h2{font:400 clamp(1.9rem,3.6vw,2.9rem)/1.08 var(--serif);max-width:16ch;margin:12px 0 12px}
+.contact .lede{margin-bottom:24px}
+.mail{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:999px;padding:5px 5px 5px 14px;font:500 .86rem/1 var(--mono);background:var(--surface);max-width:100%}
+.mail code{overflow-wrap:anywhere}
+.mail button{padding:9px 14px;border-radius:999px;border:0;background:var(--surface-hover);color:var(--fg);font:600 .8rem/1 var(--sans);cursor:pointer}
+.mail button:hover{background:var(--border)}
 
-footer{border-top:1px solid var(--line);padding-block:36px 56px;color:var(--muted);font-size:.85rem}
-footer .wrap{display:grid;gap:10px}
+footer{border-top:1px solid var(--border);padding-block:32px 52px;color:var(--faint);font-size:.82rem}
+footer .wrap{display:grid;gap:8px}
 footer p{max-width:90ch}
 
 @media (max-width:960px){
   .hero-grid{grid-template-columns:1fr}
+  .radar-wrap{max-width:380px}
   .facts .wrap{grid-template-columns:1fr 1fr}
   .fact:nth-child(2){border-right:0}
-  .fact:nth-child(-n+2){border-bottom:1px solid var(--line)}
+  .fact:nth-child(-n+2){border-bottom:1px solid var(--border)}
   .bento{grid-template-columns:1fr 1fr}
   .card,.card.wide{grid-column:span 2}
   .card:nth-child(n+3):not(.wide){grid-column:span 1}
   .groups{grid-template-columns:1fr 1fr}
   .group:nth-child(2){border-right:0}
-  .group:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .steps{grid-template-columns:1fr 1fr;row-gap:28px}
+  .group:nth-child(-n+2){border-bottom:1px solid var(--border)}
+  .steps{grid-template-columns:1fr 1fr;row-gap:26px}
   .need{grid-template-columns:1fr}
 }
 @media (max-width:640px){
-  #topo{opacity:.5}
   .nav a.link{display:none}
   .facts .wrap{grid-template-columns:1fr}
-  .fact{border-right:0;border-bottom:1px solid var(--line);padding-left:0}
+  .fact{border-right:0;border-bottom:1px solid var(--border);padding-left:0}
   .fact:last-child{border-bottom:0}
   .bento,.groups,.steps{grid-template-columns:1fr}
   .card,.card.wide,.card:nth-child(n+3):not(.wide){grid-column:auto}
-  .group{border-right:0;border-bottom:1px solid var(--line)}
+  .group{border-right:0;border-bottom:1px solid var(--border)}
   .group:last-child{border-bottom:0}
+  .win-body{grid-template-columns:1fr}.side{display:none}
   .row{grid-template-columns:1fr auto}
-  .row .verdict{grid-column:1 / -1;justify-self:start}
+  .row .chip{grid-column:1 / -1;justify-self:start}
   #feed{min-height:0}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .fc .st{opacity:1}
-  .fc li.flag span:first-child{text-decoration-color:rgba(255,122,107,.9)}
+  .fc li.flag span:first-child{text-decoration-color:rgba(180,51,42,.9)}
   .scan{display:none}
 }
 </style>
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="RoleRadar home">
-      <svg class="mark" viewBox="0 0 30 30" aria-hidden="true"><circle class="ring" cx="15" cy="15" r="13"/><circle class="ring" cx="15" cy="15" r="8"/><circle class="ring" cx="15" cy="15" r="3"/><path class="sweep" d="M15 15 L15 2 A13 13 0 0 1 26.3 8.5 Z"/><circle class="blip" cx="21" cy="10" r="2"/></svg>
-      RoleRadar
-    </a>
+    <a class="brand" href="#top" aria-label="RoleRadar home"><span class="mark" aria-hidden="true">RR</span><span class="word">RoleRadar</span></a>
     <nav class="nav" aria-label="Page sections">
       <a class="link" href="#different">Why it is different</a>
       <a class="link" href="#included">What is included</a>
@@ -247,27 +263,43 @@ footer p{max-width:90ch}
 
 <main id="top">
 <section class="hero">
-  <canvas id="topo" aria-hidden="true"></canvas>
   <div class="wrap">
-    <div class="hero-grid">
-      <div>
-        <span class="label">Early access · for people who want fewer, better applications</span>
-        <h1>Find the roles worth your time. <em>Send résumés you can stand behind.</em></h1>
-        <p class="lede">Every morning RoleRadar reads the postings at the companies you care about, scores each one against your real background, and builds a tailored résumé where every number, employer and title is checked against your own CV.</p>
-        <div class="cta-row">
-          <a class="btn primary" href="#contact">Request the install package</a>
-          <a class="btn" href="#different">See what makes it different</a>
+    <div class="hero-card">
+      <div class="hero-grid">
+        <div>
+          <p class="eyebrow"><i>//</i> early access · for people who want fewer, better applications</p>
+          <h1>Find the roles worth your time. <em>Send résumés you can stand behind.</em></h1>
+          <p class="lede">Every morning RoleRadar reads the postings at the companies you care about, scores each one against your real background, and builds a tailored résumé where every number, employer and title is checked against your own CV.</p>
+          <div class="cta-row">
+            <a class="btn primary" href="#contact">Request the install package</a>
+            <a class="btn" href="#different">See what makes it different</a>
+          </div>
+          <ul class="trust">
+            <li>Runs on your own PC</li>
+            <li>You press Submit, always</li>
+            <li>No bulk auto-apply spam</li>
+          </ul>
         </div>
-        <ul class="trust">
-          <li>Runs on your own PC</li>
-          <li>You press Submit, always</li>
-          <li>No bulk auto-apply spam</li>
-        </ul>
+        <div class="radar-wrap" role="img" aria-label="Animated radar sweep picking out job postings, the strongest matches closest to the center. Illustrative.">
+          <canvas id="radar"></canvas>
+          <div class="radar-cap">the morning sweep · illustrative</div>
+        </div>
       </div>
 
-      <div class="console" role="img" aria-label="Animated example of a morning run scoring job postings. The postings shown are illustrative.">
-        <div class="console-h"><span><i class="pulse"></i>Morning run · 6:00 am</span><span>postings read <b id="read">14,860</b></span></div>
-        <ul id="feed" aria-hidden="true"></ul>
+      <div class="window" role="img" aria-label="Example of the RoleRadar Today page scoring new postings. The postings shown are made up.">
+        <div class="win-bar"><i></i><i></i><i></i><span>127.0.0.1:3000 · your PC only</span></div>
+        <div class="win-body">
+          <div class="side">
+            <span class="brand"><span class="mark" aria-hidden="true">RR</span><span class="word">RoleRadar</span></span>
+            <a class="on" href="#top">Today</a><a href="#top">Pipeline</a><a href="#top">Analytics</a><a href="#top">Follow-ups</a><a href="#top">Portals</a><a href="#top">Documents</a><a href="#top">Config</a>
+          </div>
+          <div class="main">
+            <p class="eyebrow"><i>//</i> today · <span class="tnum" id="today-date">tuesday, oct 28</span></p>
+            <h3><b id="read" class="tnum">6</b> new matches this morning</h3>
+            <p class="sub">Your action queue for today, in one place.</p>
+            <ul id="feed" aria-hidden="true"></ul>
+          </div>
+        </div>
         <div class="fine">Illustrative example. These are made-up postings that show how scoring looks.</div>
       </div>
     </div>
@@ -286,11 +318,10 @@ footer p{max-width:90ch}
 <section class="band" id="different">
   <div class="wrap">
     <div class="head">
-      <span class="label">Why it is different</span>
+      <p class="eyebrow"><i>//</i> why it is different</p>
       <h2>Built to be right about you, not to send the most applications.</h2>
       <p class="lede">Most tools either rewrite your résumé to please a keyword filter or blast out hundreds of applications on your behalf. RoleRadar does neither. It helps you choose well, then helps you apply well.</p>
     </div>
-
     <div class="bento">
       <article class="card wide">
         <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
@@ -307,19 +338,17 @@ footer p{max-width:90ch}
           <ul class="why"><li>Program leadership matches your last two roles</li><li>Remote, as you asked</li><li>Pay is above your floor</li></ul>
         </div>
       </article>
-
       <article class="card wide">
         <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
         <h3>A fact check on every résumé.</h3>
         <p>Before a résumé is saved, every number, employer, job title, degree and certification is checked word for word against your own CV. A claim that is not in your CV does not get through.</p>
         <ul class="fc" aria-label="Example fact check">
           <div class="scan"></div>
-          <li><span>Led a 40-person program team</span><span class="st good">FOUND IN YOUR CV</span></li>
-          <li><span>Cut schedule risk by 22%</span><span class="st good">FOUND IN YOUR CV</span></li>
-          <li class="flag"><span>Managed 50 participants</span><span class="st bad">NOT IN YOUR CV · REMOVED</span></li>
+          <li><span>Led a 40-person program team</span><span class="st good">Found in your CV</span></li>
+          <li><span>Cut schedule risk by 22%</span><span class="st good">Found in your CV</span></li>
+          <li class="flag"><span>Managed 50 participants</span><span class="st bad">Not in your CV · removed</span></li>
         </ul>
       </article>
-
       <article class="card">
         <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 20V8l5-3 5 3 3-2 5 3v11z"/><path d="M9 20v-5h4v5"/></svg></div>
         <h3>Straight from the source.</h3>
@@ -342,46 +371,34 @@ footer p{max-width:90ch}
 <section class="band" id="included" style="padding-top:0">
   <div class="wrap">
     <div class="head">
-      <span class="label">What is included</span>
+      <p class="eyebrow"><i>//</i> what is included</p>
       <h2>A complete job search desk, not a single trick.</h2>
     </div>
     <div class="groups">
-      <div class="group">
-        <h3>Find</h3>
-        <ul>
-          <li><b>A daily scan</b><span>Runs at the time you pick and wakes your PC to do it.</span></li>
-          <li><b>Company suggestions</b><span>Type a company you like and get similar ones. Pick industries and company sizes to focus on.</span></li>
-          <li><b>Add any company by name</b><span>RoleRadar finds its job board. Pasting the careers page address works too.</span></li>
-          <li><b>A daily email report</b><span>Score, company, role, pay and a link to the posting. On a quiet day you get a job-hunting quote so you know it is still working.</span></li>
-        </ul>
-      </div>
-      <div class="group">
-        <h3>Apply</h3>
-        <ul>
-          <li><b>Tailored résumés</b><span>Two-page PDF for each strong match, built automatically or with one click.</span></li>
-          <li><b>Fact-checked claims</b><span>Numbers, employers, titles and certifications must match your CV.</span></li>
-          <li><b>Cover letters</b><span>Written for the specific role from your real background.</span></li>
-          <li><b>Interview prep</b><span>A prep pack for the roles you move forward on.</span></li>
-        </ul>
-      </div>
-      <div class="group">
-        <h3>Stay on top</h3>
-        <ul>
-          <li><b>A pipeline you can read</b><span>Every posting with its score, the reasons, and its status.</span></li>
-          <li><b>Applied, marked clearly</b><span>See what you have already applied to at a glance.</span></li>
-          <li><b>Follow-up reminders</b><span>Know who to nudge and when.</span></li>
-          <li><b>Trends</b><span>See how many strong matches show up each day.</span></li>
-        </ul>
-      </div>
-      <div class="group">
-        <h3>Make it yours</h3>
-        <ul>
-          <li><b>Real filters</b><span>Job titles, experience level, job type, pay floor, remote or on-site, and how far from home you would commute.</span></li>
-          <li><b>All your documents</b><span>Add a résumé, certifications, past accomplishments and older versions.</span></li>
-          <li><b>Re-score on demand</b><span>Change a setting, then re-score recent postings and see what moved up or down.</span></li>
-          <li><b>Guided setup</b><span>An install window and a page-by-page walkthrough in plain language.</span></li>
-        </ul>
-      </div>
+      <div class="group"><h3>Find</h3><ul>
+        <li><b>A daily scan</b><span>Runs at the time you pick and wakes your PC to do it.</span></li>
+        <li><b>Company suggestions</b><span>Type a company you like and get similar ones. Pick industries and company sizes to focus on.</span></li>
+        <li><b>Add any company by name</b><span>RoleRadar finds its job board. Pasting the careers page address works too.</span></li>
+        <li><b>A daily email report</b><span>Score, company, role, pay and a link to the posting. On a quiet day you get a job-hunting quote so you know it is still working.</span></li>
+      </ul></div>
+      <div class="group"><h3>Apply</h3><ul>
+        <li><b>Tailored résumés</b><span>Two-page PDF for each strong match, built automatically or with one click.</span></li>
+        <li><b>Fact-checked claims</b><span>Numbers, employers, titles and certifications must match your CV.</span></li>
+        <li><b>Cover letters</b><span>Written for the specific role from your real background.</span></li>
+        <li><b>Interview prep</b><span>A prep pack for the roles you move forward on.</span></li>
+      </ul></div>
+      <div class="group"><h3>Stay on top</h3><ul>
+        <li><b>A pipeline you can read</b><span>Every posting with its score, the reasons, and its status.</span></li>
+        <li><b>Applied, marked clearly</b><span>See what you have already applied to at a glance.</span></li>
+        <li><b>Follow-up reminders</b><span>Know who to nudge and when.</span></li>
+        <li><b>Trends</b><span>See how many strong matches show up each day.</span></li>
+      </ul></div>
+      <div class="group"><h3>Make it yours</h3><ul>
+        <li><b>Real filters</b><span>Job titles, experience level, job type, pay floor, remote or on-site, and how far from home you would commute.</span></li>
+        <li><b>All your documents</b><span>Add a résumé, certifications, past accomplishments and older versions.</span></li>
+        <li><b>Re-score on demand</b><span>Change a setting, then re-score recent postings and see what moved up or down.</span></li>
+        <li><b>Guided setup</b><span>An install window and a page-by-page walkthrough in plain language.</span></li>
+      </ul></div>
     </div>
   </div>
 </section>
@@ -389,7 +406,7 @@ footer p{max-width:90ch}
 <section class="band" style="padding-top:0">
   <div class="wrap">
     <div class="head">
-      <span class="label">How it works</span>
+      <p class="eyebrow"><i>//</i> how it works</p>
       <h2>From double-click to your first scored list.</h2>
     </div>
     <div class="steps">
@@ -404,7 +421,7 @@ footer p{max-width:90ch}
 <section class="band" id="compare" style="padding-top:0">
   <div class="wrap">
     <div class="head">
-      <span class="label">How it compares</span>
+      <p class="eyebrow"><i>//</i> how it compares</p>
       <h2>Different goals, different tools.</h2>
     </div>
     <div class="tw">
@@ -426,28 +443,22 @@ footer p{max-width:90ch}
 <section class="band" style="padding-top:0">
   <div class="wrap">
     <div class="head">
-      <span class="label">Good to know</span>
+      <p class="eyebrow"><i>//</i> good to know</p>
       <h2>What you need, and what to expect.</h2>
     </div>
     <div class="need">
-      <div class="card">
-        <h3 style="margin-top:0">What you need</h3>
-        <ul>
-          <li>A Windows 10 or 11 PC. Mac is not supported yet.</li>
-          <li>A paid Claude plan, on the account you sign in with.</li>
-          <li>About fifteen minutes for the guided install, mostly waiting.</li>
-          <li>Your résumé, as a PDF, Word file or text.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3 style="margin-top:0">What to expect</h3>
-        <ul>
-          <li>RoleRadar scores and drafts. You decide and you apply.</li>
-          <li>AI can make mistakes. Read every résumé and letter before you send it.</li>
-          <li>A few large employers block automated reading of their career pages, so those cannot be scanned.</li>
-          <li>No one can promise interviews or offers, and RoleRadar does not.</li>
-        </ul>
-      </div>
+      <div class="card"><h3>What you need</h3><ul>
+        <li>A Windows 10 or 11 PC. Mac is not supported yet.</li>
+        <li>A paid Claude plan, on the account you sign in with.</li>
+        <li>About fifteen minutes for the guided install, mostly waiting.</li>
+        <li>Your résumé, as a PDF, Word file or text.</li>
+      </ul></div>
+      <div class="card"><h3>What to expect</h3><ul>
+        <li>RoleRadar scores and drafts. You decide and you apply.</li>
+        <li>AI can make mistakes. Read every résumé and letter before you send it.</li>
+        <li>A few large employers block automated reading of their career pages, so those cannot be scanned.</li>
+        <li>No one can promise interviews or offers, and RoleRadar does not.</li>
+      </ul></div>
     </div>
   </div>
 </section>
@@ -455,8 +466,8 @@ footer p{max-width:90ch}
 <section class="band" id="contact" style="padding-top:0">
   <div class="wrap">
     <div class="contact">
-      <span class="label">Early access</span>
-      <h2 style="margin-top:14px">Want the install package?</h2>
+      <p class="eyebrow"><i>//</i> early access</p>
+      <h2>Want the install package?</h2>
       <p class="lede">I am sharing RoleRadar directly with a small group while it is in early access. Send me a short note with the kind of role you are after, and I will get you the package and help you set it up.</p>
       <div class="cta-row">
         <a class="btn primary" id="li" href="https://www.linkedin.com/in/halerobert/" target="_blank" rel="noopener">Message me on LinkedIn</a>
@@ -478,42 +489,54 @@ footer p{max-width:90ch}
 <script>
 (function () {
   var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var css = function (n) { return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); };
 
-  /* ---- ridge-line field behind the hero ---- */
-  var cv = document.getElementById('topo');
+  /* ---- live radar: the sweep finds postings; stronger matches sit nearer the center ---- */
+  var cv = document.getElementById('radar');
   if (cv && cv.getContext) {
-    var ctx = cv.getContext('2d'), w = 0, h = 0, mx = 0, tx = 0, run = true, t0 = performance.now();
+    var ctx = cv.getContext('2d'), S = 0, run = true, t0 = performance.now();
+    var BLIPS = [
+      { a: 0.35, r: 0.28, s: 4.4, l: 'Northwind 4.4' }, { a: 1.15, r: 0.36, s: 4.1, l: 'Halcyon 4.1' },
+      { a: 1.9, r: 0.52, s: 3.8, l: 'Bluepeak 3.8' }, { a: 2.6, r: 0.88, s: 2.4, l: '' },
+      { a: 3.3, r: 0.6, s: 3.6, l: 'Orbital 3.6' }, { a: 4.1, r: 0.8, s: 2.9, l: '' },
+      { a: 4.8, r: 0.3, s: 4.3, l: 'Ironwood 4.3' }, { a: 5.6, r: 0.7, s: 3.3, l: '' }
+    ];
     var size = function () {
       var r = cv.getBoundingClientRect(), d = Math.min(2, window.devicePixelRatio || 1);
-      w = r.width; h = r.height; cv.width = Math.round(w * d); cv.height = Math.round(h * d);
-      ctx.setTransform(d, 0, 0, d, 0, 0);
+      S = r.width; cv.width = Math.round(S * d); cv.height = Math.round(S * d); ctx.setTransform(d, 0, 0, d, 0, 0);
     };
     var draw = function (now) {
-      var t = reduce ? 4 : (now - t0) / 1000, N = Math.max(14, Math.round(h / 24)), i, x, f, base, amp, y;
-      ctx.clearRect(0, 0, w, h);
-      for (i = 0; i < N; i++) {
-        f = i / (N - 1); base = h * 0.12 + f * h * 0.98; amp = 8 + f * 30;
-        ctx.beginPath();
-        for (x = -10; x <= w + 10; x += 10) {
-          y = base + amp * (Math.sin(x * 0.006 + t * 0.24 + i * 0.42 + mx * 1.2) + 0.55 * Math.sin(x * 0.014 - t * 0.17 + i * 0.9));
-          if (x === -10) ctx.moveTo(x, y); else ctx.lineTo(x, y);
-        }
-        ctx.lineTo(w + 10, h + 30); ctx.lineTo(-10, h + 30); ctx.closePath();
-        ctx.fillStyle = 'rgb(10,18,16)'; ctx.fill();
-        ctx.lineWidth = i % 6 === 0 ? 1.4 : 1;
-        ctx.strokeStyle = i % 6 === 0 ? 'rgba(242,181,68,' + (0.25 + 0.4 * f).toFixed(3) + ')' : 'rgba(95,211,192,' + (0.1 + 0.3 * f).toFixed(3) + ')';
-        ctx.stroke();
-      }
+      var t = reduce ? 2.4 : (now - t0) / 1000, c = S / 2, R = S * 0.46, ang = (t * 0.9) % (Math.PI * 2);
+      var brand = css('--brand') || '#dd7627', line = css('--border') || '#ddd', fg = css('--fg') || '#111', faint = css('--faint') || '#888';
+      ctx.clearRect(0, 0, S, S);
+      ctx.lineWidth = 1; ctx.strokeStyle = line;
+      [0.25, 0.5, 0.75, 1].forEach(function (k) { ctx.beginPath(); ctx.arc(c, c, R * k, 0, Math.PI * 2); ctx.stroke(); });
+      ctx.beginPath(); ctx.moveTo(c - R, c); ctx.lineTo(c + R, c); ctx.moveTo(c, c - R); ctx.lineTo(c, c + R); ctx.stroke();
+      ctx.font = '500 10px ui-monospace, Menlo, Consolas, monospace'; ctx.fillStyle = faint; ctx.textAlign = 'left';
+      ctx.fillText('5.0', c + 4, c - R * 0.25 + 4); ctx.fillText('3.5', c + 4, c - R * 0.5 + 4); ctx.fillText('2.0', c + 4, c - R * 0.75 + 4);
+      var g = ctx.createConicGradient ? ctx.createConicGradient(ang - Math.PI * 0.5, c, c) : null;
+      if (g) { g.addColorStop(0, 'rgba(221,118,39,0)'); g.addColorStop(0.9, 'rgba(221,118,39,0)'); g.addColorStop(1, 'rgba(221,118,39,0.35)'); ctx.beginPath(); ctx.moveTo(c, c); ctx.arc(c, c, R, 0, Math.PI * 2); ctx.closePath(); ctx.fillStyle = g; ctx.fill(); }
+      ctx.beginPath(); ctx.moveTo(c, c); ctx.lineTo(c + R * Math.cos(ang - Math.PI * 0.5), c + R * Math.sin(ang - Math.PI * 0.5)); ctx.strokeStyle = brand; ctx.lineWidth = 1.5; ctx.stroke();
+      BLIPS.forEach(function (b) {
+        var since = ((ang - b.a) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2), k = reduce ? 0.8 : Math.max(0, 1 - since / 4.2);
+        if (k <= 0) return;
+        var x = c + R * b.r * Math.cos(b.a - Math.PI * 0.5), y = c + R * b.r * Math.sin(b.a - Math.PI * 0.5), strong = b.s >= 3.5;
+        ctx.beginPath(); ctx.arc(x, y, strong ? 5 : 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = strong ? 'rgba(221,118,39,' + (0.25 + 0.75 * k).toFixed(3) + ')' : 'rgba(128,128,128,' + (0.15 + 0.45 * k).toFixed(3) + ')'; ctx.fill();
+        if (strong && k > 0.2) { ctx.beginPath(); ctx.arc(x, y, 5 + (1 - k) * 14, 0, Math.PI * 2); ctx.strokeStyle = 'rgba(221,118,39,' + (0.5 * k).toFixed(3) + ')'; ctx.lineWidth = 1; ctx.stroke(); }
+        if (b.l && k > 0.25 && S > 300) { ctx.font = '500 11px Inter, system-ui, sans-serif'; ctx.fillStyle = fg; ctx.globalAlpha = Math.min(1, (k - 0.25) * 2); ctx.textAlign = x > c ? 'left' : 'right'; ctx.fillText(b.l, x + (x > c ? 9 : -9), y + 4); ctx.globalAlpha = 1; }
+      });
+      ctx.beginPath(); ctx.arc(c, c, 3, 0, Math.PI * 2); ctx.fillStyle = brand; ctx.fill();
     };
-    var loop = function (now) { if (run) { mx += (tx - mx) * 0.05; draw(now); } if (!reduce) requestAnimationFrame(loop); };
+    var loop = function (now) { if (run) draw(now); if (!reduce) requestAnimationFrame(loop); };
     size(); draw(performance.now());
     window.addEventListener('resize', function () { size(); draw(performance.now()); });
-    window.addEventListener('pointermove', function (e) { tx = e.clientX / window.innerWidth - 0.5; }, { passive: true });
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { run = es[0].isIntersecting; }).observe(cv);
+    if (window.matchMedia) { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { draw(performance.now()); }); }
     if (!reduce) requestAnimationFrame(loop);
   }
 
-  /* ---- example morning run ---- */
+  /* ---- example morning run in the app window ---- */
   var DATA = [
     ['Northwind Systems', 'Senior Program Manager · Remote', 4.4],
     ['Halcyon Space', 'Technical Solutions Manager · Remote', 4.1],
@@ -524,21 +547,23 @@ footer p{max-width:90ch}
     ['Ironwood Labs', 'Program Director · Remote', 4.3],
     ['Tidewater Group', 'Business Analyst · Hybrid, 40 miles away', 3.3]
   ];
-  var feed = document.getElementById('feed'), readEl = document.getElementById('read'), n = 0, count = 14860;
+  var feed = document.getElementById('feed'), readEl = document.getElementById('read'), n = 0, found = 6;
+  var dateEl = document.getElementById('today-date');
+  if (dateEl) { try { dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }).toLowerCase(); } catch (e) {} }
   var verdict = function (v) { return v >= 4 ? ['apply', 'Apply'] : v >= 3 ? ['consider', 'Consider'] : ['pass', 'Pass']; };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var make = function (d, scored) {
     var li = document.createElement('li'), v = verdict(d[2]);
     li.className = 'row';
-    li.innerHTML = '<span class="co">' + esc(d[0]) + '<small>' + esc(d[1]) + '</small></span><span class="score">' + (scored ? d[2].toFixed(1) : '·') + '</span><span class="verdict ' + (scored ? v[0] : 'reading') + '">' + (scored ? v[1] : 'Reading') + '</span>';
+    li.innerHTML = '<span class="co">' + esc(d[0]) + '<small>' + esc(d[1]) + '</small></span><span class="score">' + (scored ? d[2].toFixed(1) : '·') + '</span><span class="chip ' + (scored ? v[0] : 'reading') + '">' + (scored ? v[1] : 'Reading') + '</span>';
     return li;
   };
   var settle = function (li, d) {
-    var s = li.querySelector('.score'), vd = li.querySelector('.verdict'), v = verdict(d[2]), start = performance.now();
+    var s = li.querySelector('.score'), vd = li.querySelector('.chip'), v = verdict(d[2]), start = performance.now();
     var step = function (now) {
       var p = Math.min(1, (now - start) / 700);
       s.textContent = (d[2] * (1 - Math.pow(1 - p, 3))).toFixed(1);
-      if (p < 1) requestAnimationFrame(step); else { vd.className = 'verdict ' + v[0]; vd.textContent = v[1]; }
+      if (p < 1) requestAnimationFrame(step); else { vd.className = 'chip ' + v[0]; vd.textContent = v[1]; if (d[2] >= 3 && readEl) { found++; readEl.textContent = String(found); } }
     };
     requestAnimationFrame(step);
   };
@@ -549,21 +574,12 @@ footer p{max-width:90ch}
       if (document.hidden) return;
       var d = DATA[n % DATA.length], li = make(d, false);
       feed.insertBefore(li, feed.firstChild);
-      while (feed.children.length > 6) feed.removeChild(feed.lastChild);
-      count += 1800 + Math.floor(Math.random() * 1400); if (count > 62000) count = 12000 + Math.floor(Math.random() * 3000);
-      readEl.textContent = count.toLocaleString('en-US');
+      while (feed.children.length > 5) feed.removeChild(feed.lastChild);
       setTimeout(function () { settle(li, d); }, 650);
       n++;
-    }, 2400);
+      if (found > 40) { found = 6; readEl.textContent = '6'; }
+    }, 2600);
   }
-
-  /* ---- soft light that follows the pointer on cards ---- */
-  document.querySelectorAll('.card').forEach(function (c) {
-    c.addEventListener('pointermove', function (e) {
-      var r = c.getBoundingClientRect();
-      c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
-    });
-  });
 
   /* ---- contact: copy the address, never claim a message was sent ---- */
   var btn = document.getElementById('copy'), txt = document.getElementById('mailtxt');
