@@ -192,6 +192,7 @@ td.no{color:var(--faint)}
 .need{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .need .card{grid-column:auto}
 .need h3{margin-top:0}
+.price{font-size:2.2rem;color:var(--brand)}
 .need ul{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:.93rem;display:grid;gap:7px}
 
 .contact{border:1px solid var(--border);border-radius:18px;padding:clamp(28px,5vw,52px);background:color-mix(in srgb,var(--surface) 40%,transparent);background-image:radial-gradient(circle,hsl(var(--dot)) 1px,transparent 1px);background-size:24px 24px;position:relative;overflow:hidden}
@@ -251,7 +252,8 @@ footer p{max-width:90ch}
       <a class="link" href="#different">Why it is different</a>
       <a class="link" href="#included">What is included</a>
       <a class="link" href="#compare">Compare</a>
-      <a class="btn primary" href="#contact">Request the package</a>
+      <a class="link" href="#pricing">Pricing</a>
+      <a class="btn primary" href="#contact">Buy NextBeacon</a>
     </nav>
   </div>
 </header>
@@ -262,17 +264,18 @@ footer p{max-width:90ch}
     <div class="hero-card">
       <div class="hero-grid">
         <div>
-          <p class="eyebrow"><i>//</i> early access · for people who want fewer, better applications</p>
+          <p class="eyebrow"><i>//</i> one-time purchase · for people who want fewer, better applications</p>
           <h1>Find the roles worth your time. <em>Send résumés you can stand behind.</em></h1>
           <p class="lede">Every morning NextBeacon reads the postings at the companies you care about, scores each one against your real background, and builds a tailored résumé where every number, employer and title is checked against your own CV.</p>
           <div class="cta-row">
-            <a class="btn primary" href="#contact">Request the install package</a>
+            <a class="btn primary" href="#contact">Buy NextBeacon · $300</a>
             <a class="btn" href="#different">See what makes it different</a>
           </div>
           <ul class="trust">
             <li>Runs on your own PC</li>
             <li>You press Submit, always</li>
             <li>No bulk auto-apply spam</li>
+            <li>One-time $300, no subscription</li>
           </ul>
         </div>
         <div class="radar-wrap" role="img" aria-label="Animated radar sweep picking out job postings, the strongest matches closest to the center. Illustrative.">
@@ -406,7 +409,7 @@ footer p{max-width:90ch}
     </div>
     <div class="steps">
       <div class="step"><h3>Install</h3><p>Unzip the package and double-click one file. A short window installs everything it needs.</p></div>
-      <div class="step"><h3>Tell it about you</h3><p>Upload your résumé, then answer a few plain questions: roles, pay, remote or on-site, companies.</p></div>
+      <div class="step"><h3>Tell it about you</h3><p>Upload your résumé, then answer a few plain questions: roles, pay, remote or on-site, industries and the companies you want watched.</p></div>
       <div class="step"><h3>Let it scan</h3><p>Each morning it reads new postings, scores them, and emails you the ones worth a look.</p></div>
       <div class="step"><h3>Apply with confidence</h3><p>Open the tailored résumé and the employer's page, review, and press Submit yourself.</p></div>
     </div>
@@ -458,14 +461,36 @@ footer p{max-width:90ch}
   </div>
 </section>
 
+<section class="band" id="pricing" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><i>//</i> pricing</p>
+      <h2>One price. Yours to keep.</h2>
+    </div>
+    <div class="need">
+      <div class="card"><h3><span class="price">$300</span> once</h3><ul>
+        <li>A one-time payment. No subscription and no monthly fee to NextBeacon.</li>
+        <li>Licensed for one Windows PC, for your own job search.</li>
+        <li>Self-serve: a guided install window and a page-by-page setup. No call needed.</li>
+        <li>No free trial, so read this page before you buy.</li>
+      </ul></div>
+      <div class="card"><h3>What it costs to run</h3><ul>
+        <li>Your own paid Claude plan, paid to Anthropic, not to NextBeacon. Claude Pro is about $20 a month.</li>
+        <li>If your Claude plan lapses, the AI features stop until you renew it.</li>
+        <li>No other costs. NextBeacon has no server and stores nothing about you.</li>
+      </ul></div>
+    </div>
+  </div>
+</section>
+
 <section class="band" id="contact" style="padding-top:0">
   <div class="wrap">
     <div class="contact">
-      <p class="eyebrow"><i>//</i> early access</p>
-      <h2>Want the install package?</h2>
-      <p class="lede">I am sharing NextBeacon directly with a small group while it is in early access. Send me a short message on LinkedIn with the kind of role you are after, and I will get you the package and help you set it up.</p>
+      <p class="eyebrow"><i>//</i> get nextbeacon</p>
+      <h2>Ready to buy NextBeacon?</h2>
+      <p class="lede">$300, one time. Online checkout is opening soon. Until then, send me a message on LinkedIn and I will send you a payment link and your copy.</p>
       <div class="cta-row">
-        <a class="btn primary" id="li" href="https://www.linkedin.com/in/halerobert/" target="_blank" rel="noopener">Message me on LinkedIn</a>
+        <a class="btn primary" id="li" href="https://www.linkedin.com/in/halerobert/" target="_blank" rel="noopener">Message me on LinkedIn to buy</a>
       </div>
     </div>
   </div>
