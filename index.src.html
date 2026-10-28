@@ -14,6 +14,7 @@
 <meta name="twitter:title" content="RoleRadar: find the roles worth your time">
 <meta name="twitter:description" content="A private AI job-search assistant that runs on your own PC. It scores every posting against your real background and fact-checks every résumé claim.">
 <meta name="twitter:image" content="https://rwhale.github.io/roleradar-site/og.png">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
@@ -65,7 +66,7 @@ p{margin:0}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.mark{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:6px;background:var(--brand);color:#fff;font:400 25px/1 var(--serif);letter-spacing:.01em;padding-bottom:3px;flex:none}
+.mark{width:32px;height:32px;flex:none;display:block}
 .word{font:400 1.5rem/1 var(--serif);letter-spacing:-.02em;color:var(--landing);position:relative;top:-1px}
 .nav{display:flex;align-items:center;gap:22px}
 .nav a.link{color:var(--muted);text-decoration:none;font-size:.9rem;white-space:nowrap}
@@ -103,7 +104,7 @@ p{margin:0}
 .side{border-right:1px solid var(--border);padding:16px 12px;display:grid;gap:4px;align-content:start;font-size:.88rem;color:var(--muted)}
 .side .brand{padding:2px 6px 14px}
 .side .word{font-size:1.25rem}
-.side .mark{width:26px;height:26px;font-size:20px;padding-bottom:2px}
+.side .mark{width:26px;height:26px}
 .side a{display:block;padding:7px 10px;border-radius:6px;text-decoration:none}
 .side a.on{background:var(--brand-soft);color:var(--brand-text)}
 .main{padding:18px 20px 8px}
@@ -251,7 +252,7 @@ footer p{max-width:90ch}
 
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="RoleRadar home"><span class="mark" aria-hidden="true">RR</span><span class="word">RoleRadar</span></a>
+    <a class="brand" href="#top" aria-label="RoleRadar home"><svg class="mark" viewBox="0 0 96 96" aria-hidden="true"><g fill="none" stroke="var(--brand)" stroke-width="6" stroke-linecap="round"><path d="M34 48A14 14 0 0 1 48 34M23 48A25 25 0 0 1 48 23M12 48A36 36 0 0 1 48 12"/><path d="M62 48A14 14 0 0 1 48 62M73 48A25 25 0 0 1 48 73M84 48A36 36 0 0 1 48 84"/></g><path d="M50.5 12.1A36 36 0 0 1 83.9 45.5L48 48Z" fill="var(--brand)" opacity=".55"/><path d="M45.5 83.9A36 36 0 0 1 12.1 50.5L48 48Z" fill="var(--brand)" opacity=".55"/><circle cx="48" cy="48" r="4.5" fill="var(--brand)"/></svg><span class="word">RoleRadar</span></a>
     <nav class="nav" aria-label="Page sections">
       <a class="link" href="#different">Why it is different</a>
       <a class="link" href="#included">What is included</a>
@@ -290,7 +291,7 @@ footer p{max-width:90ch}
         <div class="win-bar"><i></i><i></i><i></i><span>127.0.0.1:3000 · your PC only</span></div>
         <div class="win-body">
           <div class="side">
-            <span class="brand"><span class="mark" aria-hidden="true">RR</span><span class="word">RoleRadar</span></span>
+            <span class="brand"><svg class="mark" viewBox="0 0 96 96" aria-hidden="true"><g fill="none" stroke="var(--brand)" stroke-width="6" stroke-linecap="round"><path d="M34 48A14 14 0 0 1 48 34M23 48A25 25 0 0 1 48 23M12 48A36 36 0 0 1 48 12"/><path d="M62 48A14 14 0 0 1 48 62M73 48A25 25 0 0 1 48 73M84 48A36 36 0 0 1 48 84"/></g><path d="M50.5 12.1A36 36 0 0 1 83.9 45.5L48 48Z" fill="var(--brand)" opacity=".55"/><path d="M45.5 83.9A36 36 0 0 1 12.1 50.5L48 48Z" fill="var(--brand)" opacity=".55"/><circle cx="48" cy="48" r="4.5" fill="var(--brand)"/></svg><span class="word">RoleRadar</span></span>
             <a class="on" href="#top">Today</a><a href="#top">Pipeline</a><a href="#top">Analytics</a><a href="#top">Follow-ups</a><a href="#top">Portals</a><a href="#top">Documents</a><a href="#top">Config</a>
           </div>
           <div class="main">
