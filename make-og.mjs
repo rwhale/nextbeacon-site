@@ -1,11 +1,11 @@
 // Copyright 2026 Rob Hale. All rights reserved.
 // Renders og-card.html to og.png (1200x630), the picture LinkedIn shows when the site link is posted.
-// Run: node make-og.mjs   (uses the Playwright browser installed for the RoleRadar app)
+// Run: node make-og.mjs   (uses the Playwright browser installed for the NextBeacon app)
 import { createRequire } from 'node:module';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 const dir = path.dirname(fileURLToPath(import.meta.url));
-const require = createRequire('C:/RoleRadar/roleradar/package.json');
+const require = createRequire('C:/NextBeacon/nextbeacon/package.json');
 const { chromium } = require('playwright');
 const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });

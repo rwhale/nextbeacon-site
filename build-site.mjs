@@ -1,5 +1,5 @@
 // Copyright 2026 Rob Hale. All rights reserved.
-// Builds C:\RoleRadar\site\index.html (the page GitHub hosts) from index.src.html.
+// Builds C:\NextBeacon\site\index.html (the page GitHub hosts) from index.src.html.
 // Edit index.src.html, then run: node build-site.mjs
 import fs from 'node:fs';
 import path from 'node:path';

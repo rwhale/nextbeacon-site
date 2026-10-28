@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2026 Rob Hale. All rights reserved. NextBeacon addition, not part of the MIT-licensed career-ops toolkit; see NextBeacon/NOTICE.md. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96">
-  <title>RoleRadar</title>
+  <title>NextBeacon</title>
   <rect width="96" height="96" rx="20" fill="#121212"/>
-  <g transform="translate(48 48) scale(0.8) translate(-48 -48)">
-    <g fill="none" stroke="#dd7627" stroke-width="6.5" stroke-linecap="round">
-      <path d="M34 48A14 14 0 0 1 48 34M23 48A25 25 0 0 1 48 23M12 48A36 36 0 0 1 48 12"/>
-      <path d="M62 48A14 14 0 0 1 48 62M73 48A25 25 0 0 1 48 73M84 48A36 36 0 0 1 48 84"/>
+  <g transform="translate(48 50) scale(0.82) translate(-48 -50)">
+    <g fill="#ffb347" opacity="0.85">
+      <path d="M44 27L6 14l3 7 33 11z"/>
+      <path d="M44 31L4 31l2 5 38 0z"/>
+      <path d="M52 27l38-13-3 7-33 11z"/>
+      <path d="M52 31l40 0-2 5-38 0z"/>
     </g>
-    <path d="M50.5 12.1A36 36 0 0 1 83.9 45.5L48 48Z" fill="#dd7627" opacity="0.55"/>
-    <path d="M45.5 83.9A36 36 0 0 1 12.1 50.5L48 48Z" fill="#dd7627" opacity="0.55"/>
-    <circle cx="48" cy="48" r="4.5" fill="#dd7627"/>
+    <path d="M39 22L48 8l9 14z" fill="#dd7627"/>
+    <rect x="42" y="22" width="12" height="12" rx="1.5" fill="#ffb347"/>
+    <rect x="38" y="33" width="20" height="5" rx="1.5" fill="#dd7627"/>
+    <path d="M42 38h12l5 50H37z" fill="#dd7627"/>
+    <path d="M40.3 55h15.4l0.8 8H39.5z" fill="#8c4a16"/>
+    <path d="M38.8 70h18.4l0.8 8H38z" fill="#8c4a16"/>
+    <rect x="45" y="78" width="6" height="10" rx="3" fill="#8c4a16"/>
+    <path d="M26 92c6-5 38-5 44 0z" fill="#dd7627" opacity="0.6"/>
   </g>
 </svg>
