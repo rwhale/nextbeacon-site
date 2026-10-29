@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NextBeacon</title>
-<meta name="description" content="NextBeacon is a private AI job-search assistant. It scores postings against your real background and builds résumés where every claim is checked against your own CV.">
+<meta name="description" content="NextBeacon is a private AI job-search assistant for experienced professionals. It scores postings at the companies you choose against your real background and builds résumés where every claim is checked against your own CV. One price, runs on your PC, you press Submit.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NextBeacon">
-<meta property="og:title" content="NextBeacon: find the roles worth your time">
-<meta property="og:description" content="A private AI job-search assistant that runs on your own PC. It scores every posting against your real background and fact-checks every résumé claim. You press Submit.">
+<meta property="og:title" content="NextBeacon: your next role is in the five that fit">
+<meta property="og:description" content="A private AI job-search assistant for experienced professionals. It watches the companies you choose, scores every posting against your real background and fact-checks every résumé claim. $299 once. You press Submit.">
 <meta property="og:url" content="https://rwhale.github.io/nextbeacon-site/">
 <meta property="og:image" content="https://rwhale.github.io/nextbeacon-site/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="NextBeacon: find the roles worth your time. Send résumés you can stand behind.">
+<meta property="og:image:alt" content="NextBeacon: your next role is not in the pile of 300. It is in the five that fit.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="NextBeacon: find the roles worth your time">
-<meta name="twitter:description" content="A private AI job-search assistant that runs on your own PC. It scores every posting against your real background and fact-checks every résumé claim.">
+<meta name="twitter:title" content="NextBeacon: your next role is in the five that fit">
+<meta name="twitter:description" content="A private AI job-search assistant for experienced professionals. Scores every posting against your real background and fact-checks every résumé claim. $299 once.">
 <meta name="twitter:image" content="https://rwhale.github.io/nextbeacon-site/og.png">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,8 +26,10 @@
 /* Layout concept: the NextBeacon app's own look, taken from its design tokens. Always the warm
    off-white light look (Rob, 2026-10-28: "It should lock in the light mode"), burnt-orange brand,
    Inter for text, Instrument Serif for headings and the wordmark, the dot-grid hero card from the
-   Today page. Sections: hero with a live radar and a morning-run feed in an app window, at-a-glance
-   strip, differentiators, what is included, how it works, comparison, good to know, contact. */
+   Today page. Nine sections, written for the experienced professional months into a search
+   (buyer profile, 2026-10-28): hero with a live radar and a morning-run feed, at-a-glance strip,
+   sound familiar, why it is different (with a short comparison), what is included, how it works,
+   who it is for, the founder note, price and buy, questions. Three Buy buttons, never far apart. */
 :root{
   --bg:#f7f6f3; --surface:#ffffff; --surface-hover:#efeeea; --border:hsl(40 9% 86%);
   --fg:hsl(30 10% 11%); --muted:hsl(35 9% 34%); --faint:hsl(35 7% 42%); --landing:#59592a;
@@ -50,6 +52,7 @@ h1,h2,h3{margin:0;font-weight:400;letter-spacing:-.01em;text-wrap:balance}
 p{margin:0}
 .wrap{max-width:1120px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .band{padding-block:clamp(48px,7vw,88px)}
+section[id]{scroll-margin-top:72px}
 .eyebrow{font:500 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .eyebrow i{font-style:normal;color:var(--faint)}
 .serif{font-family:var(--serif)}
@@ -71,13 +74,14 @@ p{margin:0}
 .btn:hover{background:var(--surface-hover)}
 .btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-fg)}
 .btn.primary:hover{background:var(--brand-200);border-color:var(--brand-200)}
-.btn:focus-visible,a:focus-visible,button:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.btn:focus-visible,a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.cta-mid{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:center;margin-top:36px;color:var(--muted);font-size:.9rem}
 
 /* hero card, like the Today page */
 .hero{padding-block:clamp(24px,4vw,40px) 0}
 .hero-card{position:relative;overflow:hidden;border-radius:18px;border:1px solid var(--border);background:color-mix(in srgb,var(--surface) 40%,transparent);background-image:radial-gradient(circle,hsl(var(--dot)) 1px,transparent 1px);background-size:24px 24px;padding:clamp(28px,4vw,48px) clamp(20px,4vw,48px)}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,56px);align-items:center}
-.hero h1{font:400 clamp(2.5rem,5.6vw,4.4rem)/1.02 var(--serif);letter-spacing:-.02em;color:var(--fg);margin:18px 0 20px}
+.hero h1{font:400 clamp(2.4rem,5.4vw,4.2rem)/1.02 var(--serif);letter-spacing:-.02em;color:var(--fg);margin:18px 0 20px}
 .hero h1 em{font-style:italic;color:var(--brand)}
 .hero .lede{margin-bottom:26px}
 .cta-row{display:flex;flex-wrap:wrap;gap:10px}
@@ -129,7 +133,7 @@ p{margin:0}
 
 /* sections */
 .head{display:grid;gap:12px;margin-bottom:36px}
-.head h2{font:400 clamp(1.9rem,3.6vw,2.9rem)/1.08 var(--serif);max-width:22ch;color:var(--fg)}
+.head h2{font:400 clamp(1.9rem,3.6vw,2.9rem)/1.08 var(--serif);max-width:24ch;color:var(--fg)}
 .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
 .card{grid-column:span 2;padding:26px;border:1px solid var(--border);border-radius:16px;background:color-mix(in srgb,var(--surface) 70%,transparent)}
 .card.wide{grid-column:span 3}
@@ -137,7 +141,6 @@ p{margin:0}
 .card p{color:var(--muted);font-size:.93rem}
 .ico{width:38px;height:38px;border-radius:9px;background:var(--brand-soft);display:grid;place-items:center}
 .ico svg{width:19px;height:19px;stroke:var(--brand-text);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-
 .gauge-box{display:flex;align-items:center;gap:22px;margin-top:18px;flex-wrap:wrap}
 .gauge{width:120px;height:120px;position:relative;flex:none}
 .gauge svg{width:100%;height:100%}
@@ -149,7 +152,9 @@ p{margin:0}
 .why{display:grid;gap:7px;margin:0;padding:0;list-style:none;font-size:.88rem}
 .why li{display:flex;gap:8px;align-items:flex-start}
 .why li::before{content:"";flex:none;width:14px;height:14px;margin-top:3px;background:var(--ok);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat}
-
+.never{display:grid;gap:8px;margin:18px 0 0;padding:0;list-style:none;font-size:.9rem}
+.never li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.never li b{flex:none;font:600 10px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--ok);background:var(--ok-soft);padding:6px 8px;border-radius:999px;margin-top:1px}
 .fc{position:relative;list-style:none;margin:18px 0 0;padding:4px 0;border:1px solid var(--border);border-radius:10px;background:var(--surface);overflow:hidden;font-size:.88rem}
 .fc li{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 14px;border-bottom:1px solid var(--border)}
 .fc li:last-child{border-bottom:0}
@@ -163,14 +168,24 @@ p{margin:0}
 .scan{position:absolute;left:0;right:0;top:0;height:2px;background:linear-gradient(90deg,transparent,var(--brand),transparent);opacity:0;animation:sweep 9s infinite}
 @keyframes sweep{0%{top:0;opacity:0}3%{opacity:1}50%{top:100%;opacity:1}55%,100%{top:100%;opacity:0}}
 
+/* sound familiar */
+.pain{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.pain .card{grid-column:auto;padding:24px 22px}
+.pain b{display:block;font:400 clamp(2rem,3.4vw,2.8rem)/1 var(--serif);color:var(--brand);margin-bottom:10px;font-variant-numeric:tabular-nums}
+.pain p{color:var(--muted);font-size:.9rem}
+.pain-close{margin-top:28px;font:400 clamp(1.25rem,2.2vw,1.6rem)/1.3 var(--serif);max-width:34ch}
+.pain-close em{font-style:italic;color:var(--brand)}
+
+/* what is included */
 .groups{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:16px;overflow:hidden;background:color-mix(in srgb,var(--surface) 70%,transparent)}
 .group{padding:26px 22px;border-right:1px solid var(--border)}
 .group:last-child{border-right:0}
 .group h3{font:500 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--brand-text);margin-bottom:18px}
-.group ul{list-style:none;margin:0;padding:0;display:grid;gap:16px}
+.group ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
 .group li b{display:block;font-weight:500;font-size:.95rem;margin-bottom:2px}
 .group li span{color:var(--muted);font-size:.87rem;line-height:1.5;display:block}
 
+/* how it works */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);counter-reset:s;border-top:1px solid var(--border)}
 .step{padding:26px 22px 0 0;position:relative}
 .step::before{counter-increment:s;content:"0" counter(s);font:500 11px/1 var(--mono);letter-spacing:.16em;color:var(--brand-text);display:block;margin-bottom:12px}
@@ -178,7 +193,8 @@ p{margin:0}
 .step h3{font:400 1.3rem/1.15 var(--serif);margin-bottom:6px}
 .step p{color:var(--muted);font-size:.9rem}
 
-.tw{overflow-x:auto;border:1px solid var(--border);border-radius:16px;background:color-mix(in srgb,var(--surface) 70%,transparent)}
+/* short comparison */
+.tw{overflow-x:auto;border:1px solid var(--border);border-radius:16px;background:color-mix(in srgb,var(--surface) 70%,transparent);margin-top:14px}
 table{border-collapse:collapse;width:100%;min-width:640px;font-size:.92rem}
 th,td{padding:15px 18px;text-align:left;border-bottom:1px solid var(--border);vertical-align:top}
 tr:last-child td{border-bottom:0}
@@ -189,19 +205,52 @@ td.yes{color:var(--ok);font-weight:500}
 td.no{color:var(--faint)}
 .note{margin-top:12px;font-size:.8rem;color:var(--faint)}
 
+/* two-column cards: who it is for, price */
 .need{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .need .card{grid-column:auto}
 .need h3{margin-top:0}
 .price{font-size:2.2rem;color:var(--brand)}
 .need ul{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:.93rem;display:grid;gap:7px}
+.need ul.plain{list-style:none;padding-left:0}
+.need ul.plain li{display:flex;gap:10px;align-items:flex-start}
+.need ul.plain li::before{content:"";flex:none;width:14px;height:14px;margin-top:4px;background:var(--ok);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat}
+.need ul.plain.not li::before{background:var(--faint);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/contain no-repeat}
+.math{margin-top:22px;padding:18px 20px;border-radius:12px;background:var(--brand-soft);color:var(--brand-fg);font-size:.95rem}
+.math b{font-weight:500}
+.buy-box{margin-top:14px;border:1px solid var(--border);border-radius:18px;padding:clamp(24px,4vw,40px);background:color-mix(in srgb,var(--surface) 40%,transparent);background-image:radial-gradient(circle,hsl(var(--dot)) 1px,transparent 1px);background-size:24px 24px;display:grid;grid-template-columns:1.2fr .8fr;gap:24px;align-items:center}
+.buy-box h3{font:400 clamp(1.6rem,3vw,2.2rem)/1.1 var(--serif);margin-bottom:10px}
+.buy-box p{color:var(--muted)}
+.buy-box .cta-row{justify-content:flex-end}
 
-.contact{border:1px solid var(--border);border-radius:18px;padding:clamp(28px,5vw,52px);background:color-mix(in srgb,var(--surface) 40%,transparent);background-image:radial-gradient(circle,hsl(var(--dot)) 1px,transparent 1px);background-size:24px 24px;position:relative;overflow:hidden}
-.contact h2{font:400 clamp(1.9rem,3.6vw,2.9rem)/1.08 var(--serif);max-width:16ch;margin:12px 0 12px}
-.contact .lede{margin-bottom:24px}
+/* founder note */
+.founder{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(24px,5vw,56px);align-items:center}
+.tag{position:relative;max-width:420px;margin-inline:auto}
+.tag img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.tag figcaption{margin-top:12px;text-align:center;font:500 11px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
+.letter{font-size:1.02rem;color:var(--fg);display:grid;gap:16px;max-width:60ch}
+.letter h2{font:400 clamp(1.9rem,3.6vw,2.9rem)/1.08 var(--serif);margin-bottom:4px}
+.letter p{color:var(--muted)}
+.letter p.q{font:400 1.25rem/1.4 var(--serif);color:var(--fg)}
+.sig{display:flex;align-items:center;gap:14px;margin-top:6px}
+.sig b{display:block;font-weight:500;color:var(--fg)}
+.sig span{display:block;font-size:.85rem;color:var(--muted)}
+.sig a{color:var(--brand-text)}
+
+/* questions */
+.qa{display:grid;gap:10px;max-width:820px}
+.qa details{border:1px solid var(--border);border-radius:12px;background:color-mix(in srgb,var(--surface) 70%,transparent);padding:0 18px}
+.qa summary{cursor:pointer;list-style:none;padding:16px 0;font-weight:500;font-size:1rem;display:flex;justify-content:space-between;gap:16px;align-items:center}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";flex:none;font:400 1.4rem/1 var(--serif);color:var(--brand);transition:transform .2s}
+.qa details[open] summary::after{transform:rotate(45deg)}
+.qa details p{padding:0 0 18px;color:var(--muted);font-size:.95rem;max-width:66ch}
 
 footer{border-top:1px solid var(--border);padding-block:32px 52px;color:var(--faint);font-size:.82rem}
 footer .wrap{display:grid;gap:8px}
 footer p{max-width:90ch}
+footer .links{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:6px}
+footer .links a{color:var(--muted);text-decoration:none}
+footer .links a:hover{color:var(--fg)}
 
 @media (max-width:960px){
   .hero-grid{grid-template-columns:1fr}
@@ -212,18 +261,23 @@ footer p{max-width:90ch}
   .bento{grid-template-columns:1fr 1fr}
   .card,.card.wide{grid-column:span 2}
   .card:nth-child(n+3):not(.wide){grid-column:span 1}
+  .pain{grid-template-columns:1fr 1fr}
   .groups{grid-template-columns:1fr 1fr}
   .group:nth-child(2){border-right:0}
   .group:nth-child(-n+2){border-bottom:1px solid var(--border)}
   .steps{grid-template-columns:1fr 1fr;row-gap:26px}
   .need{grid-template-columns:1fr}
+  .founder{grid-template-columns:1fr}
+  .tag{max-width:320px}
+  .buy-box{grid-template-columns:1fr}
+  .buy-box .cta-row{justify-content:flex-start}
 }
 @media (max-width:640px){
   .nav a.link{display:none}
   .facts .wrap{grid-template-columns:1fr}
   .fact{border-right:0;border-bottom:1px solid var(--border);padding-left:0}
   .fact:last-child{border-bottom:0}
-  .bento,.groups,.steps{grid-template-columns:1fr}
+  .bento,.groups,.steps,.pain{grid-template-columns:1fr}
   .card,.card.wide,.card:nth-child(n+3):not(.wide){grid-column:auto}
   .group{border-right:0;border-bottom:1px solid var(--border)}
   .group:last-child{border-bottom:0}
@@ -250,10 +304,11 @@ footer p{max-width:90ch}
     <a class="brand" href="#top" aria-label="NextBeacon home"><svg class="mark" viewBox="0 0 96 96" aria-hidden="true"><g fill="#ffb347" opacity=".85"><path d="M44 27L6 14l3 7 33 11z"/><path d="M44 31L4 31l2 5 38 0z"/><path d="M52 27l38-13-3 7-33 11z"/><path d="M52 31l40 0-2 5-38 0z"/></g><path d="M39 22L48 8l9 14z" fill="var(--brand)"/><rect x="42" y="22" width="12" height="12" rx="1.5" fill="#ffb347"/><rect x="38" y="33" width="20" height="5" rx="1.5" fill="var(--brand)"/><path d="M42 38h12l5 50H37z" fill="var(--brand)"/><path d="M40.3 55h15.4l0.8 8H39.5z" fill="#8c4a16"/><path d="M38.8 70h18.4l0.8 8H38z" fill="#8c4a16"/><rect x="45" y="78" width="6" height="10" rx="3" fill="#8c4a16"/><path d="M26 92c6-5 38-5 44 0z" fill="var(--brand)" opacity=".6"/></svg><span class="word">NextBeacon</span></a>
     <nav class="nav" aria-label="Page sections">
       <a class="link" href="#different">Why it is different</a>
-      <a class="link" href="#included">What is included</a>
-      <a class="link" href="#compare">Compare</a>
-      <a class="link" href="#pricing">Pricing</a>
-      <a class="btn primary" href="#contact">Buy NextBeacon</a>
+      <a class="link" href="#how">How it works</a>
+      <a class="link" href="#for">Who it is for</a>
+      <a class="link" href="#questions">Questions</a>
+      <a class="link" href="help.html">Help</a>
+      <a class="btn primary" href="#buy">Buy · $299</a>
     </nav>
   </div>
 </header>
@@ -264,18 +319,18 @@ footer p{max-width:90ch}
     <div class="hero-card">
       <div class="hero-grid">
         <div>
-          <p class="eyebrow"><i>//</i> one-time purchase · for people who want fewer, better applications</p>
-          <h1>Find the roles worth your time. <em>Send résumés you can stand behind.</em></h1>
-          <p class="lede">Every morning NextBeacon reads the postings at the companies you care about, scores each one against your real background, and builds a tailored résumé where every number, employer and title is checked against your own CV.</p>
+          <p class="eyebrow"><i>//</i> for experienced professionals · one-time purchase</p>
+          <h1>Your next role is not in the pile of 300. <em>It is in the five that fit.</em></h1>
+          <p class="lede">Every morning NextBeacon reads the new postings at the companies you choose, scores each one against your real background, and builds a tailored résumé where every number, employer and title is checked against your own CV. Built for people with fifteen or more years of real work behind them.</p>
           <div class="cta-row">
-            <a class="btn primary" href="#contact">Buy NextBeacon · $300</a>
-            <a class="btn" href="#different">See what makes it different</a>
+            <a class="btn primary" href="#buy">Buy NextBeacon · $299</a>
+            <a class="btn" href="#how">See how it works</a>
           </div>
           <ul class="trust">
             <li>Runs on your own PC</li>
             <li>You press Submit, always</li>
-            <li>No bulk auto-apply spam</li>
-            <li>One-time $300, no subscription</li>
+            <li>No bulk auto-apply</li>
+            <li>$299 once, no subscription</li>
           </ul>
         </div>
         <div class="radar-wrap" role="img" aria-label="Animated radar sweep picking out job postings, the strongest matches closest to the center. Illustrative.">
@@ -313,15 +368,54 @@ footer p{max-width:90ch}
   </div>
 </section>
 
-<section class="band" id="different">
+<section class="band" id="familiar">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow"><i>//</i> sound familiar?</p>
+      <h2>The job boards are not broken for you. They are broken for everyone.</h2>
+      <p class="lede">If you have fifteen years of real work behind you and months of silence in front of you, the numbers say it is not you.</p>
+    </div>
+    <div class="pain">
+      <div class="card"><b>63</b><p>applications in an average search, at 44 minutes each. That is a full work week of forms.</p></div>
+      <div class="card"><b>48%</b><p>of applicants heard nothing back from employers last year. Not a no. Nothing.</p></div>
+      <div class="card"><b>47%</b><p>of professionals have applied to a job they later learned never existed.</p></div>
+      <div class="card"><b>5,000 → 5</b><p>applications sent by one auto-apply tool, and the interviews it produced. Volume is not the answer.</p></div>
+    </div>
+    <p class="pain-close">You do not need more applications. <em>You need the right ones, and a résumé you can stand behind.</em></p>
+    <p class="note">2026 figures from the United Way NCA job seeker survey, Criteria Corp hiring data reported by Fortune, an Enhancv survey of 1,000 professionals, and a widely reported auto-apply case study.</p>
+  </div>
+</section>
+
+<section class="band" id="different" style="padding-top:0">
   <div class="wrap">
     <div class="head">
       <p class="eyebrow"><i>//</i> why it is different</p>
       <h2>Built to be right about you, not to send the most applications.</h2>
-      <p class="lede">Most tools either rewrite your résumé to please a keyword filter or blast out hundreds of applications on your behalf. NextBeacon does neither. It helps you choose well, then helps you apply well.</p>
+      <p class="lede">Most tools either rewrite your résumé to please a keyword filter or blast out hundreds of applications in your name. NextBeacon does neither. It helps you choose well, then helps you apply well.</p>
     </div>
     <div class="bento">
       <article class="card wide">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <h3>You press Submit. Always.</h3>
+        <p>The Apply button opens the employer's own page with your résumé ready. You read it, you decide, and you send it. Nothing goes out in your name without you, so nothing can embarrass you.</p>
+        <ul class="never">
+          <li><b>Never</b><span>Applies to a job for you, in bulk or one at a time</span></li>
+          <li><b>Never</b><span>Sends a résumé or a letter you have not read</span></li>
+          <li><b>Never</b><span>Contacts an employer or a recruiter on your behalf</span></li>
+        </ul>
+      </article>
+      <article class="card wide">
+        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
+        <h3>A fact check on every résumé.</h3>
+        <p>Before a résumé is saved, every number, employer, job title, degree and certification is checked word for word against your own CV. A claim that is not in your CV does not get through. Your reputation took twenty years to build; this protects it.</p>
+        <ul class="fc" aria-label="Example fact check">
+          <div class="scan"></div>
+          <li><span>Led a 40-person program team</span><span class="st good">Found in your CV</span></li>
+          <li><span>Cut schedule risk by 22%</span><span class="st good">Found in your CV</span></li>
+          <li class="flag"><span>Managed 50 participants</span><span class="st bad">Not in your CV · removed</span></li>
+        </ul>
+      </article>
+      <article class="card">
         <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
         <h3>It scores you, not keywords.</h3>
         <p>Each posting gets a 0 to 5 fit score against your actual experience, pay floor, level, location and the work you want, with the reasons written out. 4.0 and up means apply. 3.5 to 3.9 means worth a look.</p>
@@ -336,33 +430,30 @@ footer p{max-width:90ch}
           <ul class="why"><li>Program leadership matches your last two roles</li><li>Remote, as you asked</li><li>Pay is above your floor</li></ul>
         </div>
       </article>
-      <article class="card wide">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></div>
-        <h3>A fact check on every résumé.</h3>
-        <p>Before a résumé is saved, every number, employer, job title, degree and certification is checked word for word against your own CV. A claim that is not in your CV does not get through.</p>
-        <ul class="fc" aria-label="Example fact check">
-          <div class="scan"></div>
-          <li><span>Led a 40-person program team</span><span class="st good">Found in your CV</span></li>
-          <li><span>Cut schedule risk by 22%</span><span class="st good">Found in your CV</span></li>
-          <li class="flag"><span>Managed 50 participants</span><span class="st bad">Not in your CV · removed</span></li>
-        </ul>
-      </article>
       <article class="card">
         <div class="ico"><svg viewBox="0 0 24 24"><path d="M3 20V8l5-3 5 3 3-2 5 3v11z"/><path d="M9 20v-5h4v5"/></svg></div>
-        <h3>Straight from the source.</h3>
-        <p>It reads the career pages employers themselves publish, for the companies you pick, and drops postings that have since closed. No recycled listings.</p>
+        <h3>The companies you choose.</h3>
+        <p>You name the companies you would actually be proud to join. NextBeacon finds their job boards, reads the postings they publish, and drops the ones that have since closed. No recycled listings, no ghost jobs from an aggregator.</p>
       </article>
       <article class="card">
         <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div>
         <h3>Private by design.</h3>
-        <p>NextBeacon runs on your own PC with your own Claude account. There is no NextBeacon server, and nothing of yours is stored by us.</p>
-      </article>
-      <article class="card">
-        <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <h3>You stay in control.</h3>
-        <p>The Apply button opens the employer's own page with your résumé ready. You review it and you press Submit. Nothing is sent in your name without you.</p>
+        <p>NextBeacon runs on your own PC with your own Claude account. There is no NextBeacon server, and nothing of yours is stored by us. If you are searching while employed, nobody can tell.</p>
       </article>
     </div>
+    <div class="tw">
+      <table>
+        <thead><tr><th></th><th class="us">NextBeacon</th><th>Bulk auto-apply services</th><th>Résumé and tracker subscriptions</th></tr></thead>
+        <tbody>
+          <tr><td>What it costs over a year</td><td class="us yes">$299, once</td><td class="no">$300 to $480 a year, and rising</td><td class="no">$170 to $350 a year</td></tr>
+          <tr><td>Who presses Submit</td><td class="us yes">You, every time</td><td class="no">The service, in bulk</td><td class="no">You</td></tr>
+          <tr><td>Checks every résumé claim against your own CV</td><td class="us yes">Yes</td><td class="no">—</td><td class="no">—</td></tr>
+          <tr><td>Where your information lives</td><td class="us yes">On your PC</td><td class="no">On their servers</td><td class="no">On their servers</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">Prices are the public 2026 prices of the common services in each group. A dash means the feature is not advertised on their public pages. Categories are summarized, not named.</p>
+    <div class="cta-mid"><a class="btn primary" href="#buy">Buy NextBeacon · $299</a><span>One payment. Yours to keep.</span></div>
   </div>
 </section>
 
@@ -374,125 +465,148 @@ footer p{max-width:90ch}
     </div>
     <div class="groups">
       <div class="group"><h3>Find</h3><ul>
-        <li><b>A daily scan</b><span>Runs at the time you pick and wakes your PC to do it.</span></li>
-        <li><b>Company suggestions</b><span>Type a company you like and get similar ones. Pick industries and company sizes to focus on.</span></li>
-        <li><b>Add any company by name</b><span>NextBeacon finds its job board. Pasting the careers page address works too.</span></li>
-        <li><b>A daily email report</b><span>Score, company, role, pay and a link to the posting. On a quiet day you get a job-hunting quote so you know it is still working.</span></li>
+        <li><b>A daily scan</b><span>At the times you pick. It wakes your PC to run.</span></li>
+        <li><b>Add any company by name</b><span>NextBeacon finds its job board. Pasting a careers page works too.</span></li>
+        <li><b>Company suggestions</b><span>Name one you like and get similar ones.</span></li>
+        <li><b>A daily email report</b><span>Score, company, role, pay and a link to the posting.</span></li>
+        <li><b>Honest pay on every posting</b><span>One clean salary line, so you stop reading below your floor.</span></li>
       </ul></div>
       <div class="group"><h3>Apply</h3><ul>
-        <li><b>Tailored résumés</b><span>Two-page PDF for each strong match, built automatically or with one click.</span></li>
+        <li><b>Tailored résumés</b><span>A two-page PDF for each strong match, built automatically or with one click.</span></li>
         <li><b>Fact-checked claims</b><span>Numbers, employers, titles and certifications must match your CV.</span></li>
         <li><b>Cover letters</b><span>Written for the specific role from your real background.</span></li>
         <li><b>Interview prep</b><span>A prep pack for the roles you move forward on.</span></li>
       </ul></div>
       <div class="group"><h3>Stay on top</h3><ul>
-        <li><b>A pipeline you can read</b><span>Every posting with its score, the reasons, and its status.</span></li>
-        <li><b>Applied, marked clearly</b><span>See what you have already applied to at a glance.</span></li>
-        <li><b>Follow-up reminders</b><span>Know who to nudge and when.</span></li>
-        <li><b>Trends</b><span>See how many strong matches show up each day.</span></li>
+        <li><b>A pipeline you can read</b><span>Every posting with its score, the reasons, and where it stands.</span></li>
+        <li><b>Applied, marked clearly</b><span>What you have already sent, at a glance.</span></li>
+        <li><b>Follow-up reminders</b><span>Who to nudge and when.</span></li>
+        <li><b>Trends</b><span>How many strong matches show up each day.</span></li>
       </ul></div>
       <div class="group"><h3>Make it yours</h3><ul>
-        <li><b>Real filters</b><span>Job titles, experience level, job type, pay floor, remote or on-site, and how far from home you would commute.</span></li>
-        <li><b>All your documents</b><span>Add a résumé, certifications, past accomplishments and older versions.</span></li>
-        <li><b>Re-score on demand</b><span>Change a setting, then re-score recent postings and see what moved up or down.</span></li>
-        <li><b>Guided setup</b><span>An install window and a page-by-page walkthrough in plain language.</span></li>
+        <li><b>Real filters</b><span>Titles, level, job type, pay floor, remote or on-site, how far you would commute.</span></li>
+        <li><b>All your documents</b><span>Your résumé, certifications, past accomplishments and older versions.</span></li>
+        <li><b>Re-score on demand</b><span>Change a setting and see what moved up or down.</span></li>
+        <li><b>Guided setup</b><span>One installer and a page-by-page walkthrough in plain language.</span></li>
       </ul></div>
     </div>
   </div>
 </section>
 
-<section class="band" style="padding-top:0">
+<section class="band" id="how" style="padding-top:0">
   <div class="wrap">
     <div class="head">
       <p class="eyebrow"><i>//</i> how it works</p>
-      <h2>From double-click to your first scored list.</h2>
+      <h2>From one download to your first scored list.</h2>
     </div>
     <div class="steps">
-      <div class="step"><h3>Install</h3><p>Unzip the package and double-click one file. A short window installs everything it needs.</p></div>
+      <div class="step"><h3>Install</h3><p>Run the installer. It checks that your PC is ready first, then installs everything it needs. No typing, no code.</p></div>
       <div class="step"><h3>Tell it about you</h3><p>Upload your résumé, then answer a few plain questions: roles, pay, remote or on-site, industries and the companies you want watched.</p></div>
-      <div class="step"><h3>Let it scan</h3><p>Each morning it reads new postings, scores them, and emails you the ones worth a look.</p></div>
-      <div class="step"><h3>Apply with confidence</h3><p>Open the tailored résumé and the employer's page, review, and press Submit yourself.</p></div>
+      <div class="step"><h3>Let it scan</h3><p>Each morning it reads the new postings, scores them, and emails you the ones worth a look.</p></div>
+      <div class="step"><h3>Apply with confidence</h3><p>Open the tailored résumé and the employer's page, read, and press Submit yourself.</p></div>
     </div>
   </div>
 </section>
 
-<section class="band" id="compare" style="padding-top:0">
+<section class="band" id="for" style="padding-top:0">
   <div class="wrap">
     <div class="head">
-      <p class="eyebrow"><i>//</i> how it compares</p>
-      <h2>Different goals, different tools.</h2>
-    </div>
-    <div class="tw">
-      <table>
-        <thead><tr><th></th><th class="us">NextBeacon</th><th>Bulk auto-apply services</th><th>Résumé rewrite tools</th></tr></thead>
-        <tbody>
-          <tr><td>Searches for roles for you every day</td><td class="us yes">Yes</td><td class="no">Yes</td><td class="no">—</td></tr>
-          <tr><td>Scores each posting against your whole background</td><td class="us yes">Yes, with reasons</td><td class="no">—</td><td class="no">Match for one posting you paste in</td></tr>
-          <tr><td>Checks every résumé claim against your own CV</td><td class="us yes">Yes</td><td class="no">—</td><td class="no">—</td></tr>
-          <tr><td>You review and submit every application</td><td class="us yes">Always</td><td class="no">Sent for you in bulk</td><td class="no">You apply</td></tr>
-          <tr><td>Runs on your own PC, nothing stored by us</td><td class="us yes">Yes</td><td class="no">—</td><td class="no">—</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="note">A dash means the feature is not advertised on the public pages of the services reviewed in 2026. Categories are summarized, not named.</p>
-  </div>
-</section>
-
-<section class="band" style="padding-top:0">
-  <div class="wrap">
-    <div class="head">
-      <p class="eyebrow"><i>//</i> good to know</p>
-      <h2>What you need, and what to expect.</h2>
+      <p class="eyebrow"><i>//</i> who it is for</p>
+      <h2>Made for a serious search. Not for everyone, on purpose.</h2>
     </div>
     <div class="need">
-      <div class="card"><h3>What you need</h3><ul>
-        <li>A Windows 10 or 11 PC with 8 GB of memory and 4 GB of free disk space. Mac is not supported yet.</li>
-        <li>A paid Claude plan, on the account you sign in with.</li>
-        <li>An internet connection that can reach Claude and the job boards. Home networks usually can; some work networks block them.</li>
-        <li>About fifteen minutes for the guided install, mostly waiting.</li>
-        <li>Your résumé, as a PDF, Word file or text.</li>
+      <div class="card"><h3>NextBeacon is for you if</h3><ul class="plain">
+        <li>You have fifteen or more years of real work behind you and a résumé with real numbers in it.</li>
+        <li>You have a list of companies in mind and nobody is watching it for you.</li>
+        <li>You are done with mass applying and the silence that follows.</li>
+        <li>You want to read every résumé and press Submit yourself.</li>
+        <li>You are searching while employed and need it to stay private.</li>
       </ul></div>
-      <div class="card"><h3>What to expect</h3><ul>
-        <li>NextBeacon scores and drafts. You decide and you apply.</li>
-        <li>AI can make mistakes. Read every résumé and letter before you send it.</li>
-        <li>A few large employers block automated reading of their career pages, so those cannot be scanned.</li>
-        <li>No one can promise interviews or offers, and NextBeacon does not.</li>
+      <div class="card"><h3>It is not for you if</h3><ul class="plain not">
+        <li>You want hundreds of applications sent for you. That is the opposite of this.</li>
+        <li>You are early in your career. The free boards serve you better right now.</li>
+        <li>You use a Mac. NextBeacon runs on Windows 10 and 11 only.</li>
+        <li>You want a free tool, or a free trial. There is neither.</li>
       </ul></div>
     </div>
   </div>
 </section>
 
-<section class="band" id="pricing" style="padding-top:0">
+<section class="band" id="founder" style="padding-top:0">
+  <div class="wrap">
+    <div class="founder">
+      <figure class="tag">
+        <img src="tea-tag.webp" width="800" height="801" alt="A tea-bag tag on a wooden desk that reads: Settling is Not an Option." loading="lazy">
+        <figcaption>The tag that has been taped to Rob's monitor for years</figcaption>
+      </figure>
+      <div class="letter">
+        <p class="eyebrow"><i>//</i> a note from the person who built it</p>
+        <h2>Why I built NextBeacon</h2>
+        <p class="q">I built this for my friends.</p>
+        <p>Too many people I know and respect, people with twenty years of real work behind them, have spent this year in the application black hole. Sixty applications and silence. A posting that turns out not to exist. A tool that "applied" for them to a role two states away. Watching that happen to good people made me angry enough to build something.</p>
+        <p>I remember my own hard road into a new industry a few years back: a résumé rewritten a hundred times, hundreds of cover letters, a long list of rejections and a longer list of silences. A tea-bag tag on my monitor said "Settling is Not an Option," and some days it was the only thing keeping me on target. What finally worked was fewer applications, aimed at the companies I actually cared about, with a résumé I never had to apologize for.</p>
+        <p>NextBeacon is that approach, built into a tool. It is not magic and it cannot promise you an interview. It will tell you honestly which postings fit, build a résumé that is true to your CV, and leave the Submit button to you. If you are in transition, I know the road. You can do this.</p>
+        <div class="sig"><div><b>Rob Hale</b><span>Builder of NextBeacon · <a href="https://www.linkedin.com/in/halerobert/" target="_blank" rel="noopener">LinkedIn</a></span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="buy" style="padding-top:0">
   <div class="wrap">
     <div class="head">
-      <p class="eyebrow"><i>//</i> pricing</p>
+      <p class="eyebrow"><i>//</i> price</p>
       <h2>One price. Yours to keep.</h2>
     </div>
     <div class="need">
-      <div class="card"><h3><span class="price">$300</span> once</h3><ul>
-        <li>A one-time payment. No subscription and no monthly fee to NextBeacon.</li>
+      <div class="card"><h3><span class="price">$299</span> once</h3><ul>
+        <li>One payment. No subscription and no monthly fee to NextBeacon, ever.</li>
         <li>Licensed for one Windows PC, for your own job search.</li>
-        <li>Self-serve: a guided install window and a page-by-page setup. No call needed.</li>
+        <li>Self-serve: one installer and a page-by-page setup in plain language. No call needed.</li>
+        <li>Your own Claude plan is the only running cost: about $20 a month, paid to Anthropic, not to us.</li>
         <li>No free trial. If it is not for you, ask within 7 days for a full refund.</li>
+      </ul>
+      <div class="math">At a $120,000 salary, every week of searching costs about <b>$2,300</b>. If NextBeacon saves you one week, it has paid for itself seven times over.</div>
+      </div>
+      <div class="card"><h3>Before you buy, check that you have</h3><ul class="plain">
+        <li>A Windows 10 or 11 PC with 8 GB of memory and 4 GB of free disk space. The installer checks this before it installs anything.</li>
+        <li>A paid Claude plan from Anthropic, on an account in your name. Claude Pro at about $20 a month is enough.</li>
+        <li>An internet connection that can reach Claude and the job boards. Home networks usually can; some work networks block them.</li>
+        <li>About fifteen minutes for the guided setup, mostly waiting.</li>
+        <li>Your résumé as a PDF, Word file or text.</li>
       </ul></div>
-      <div class="card"><h3>What it costs to run</h3><ul>
-        <li>Your own paid Claude plan, paid to Anthropic, not to NextBeacon. Claude Pro is about $20 a month.</li>
-        <li>If your Claude plan lapses, the AI features stop until you renew it.</li>
-        <li>No other costs. NextBeacon has no server and stores nothing about you.</li>
-      </ul></div>
+    </div>
+    <div class="buy-box">
+      <div>
+        <p class="eyebrow"><i>//</i> get nextbeacon</p>
+        <h3>Ready to buy NextBeacon?</h3>
+        <p>$299, one time. Online checkout is opening soon. Until then, send me a message on LinkedIn and I will send you a payment link and your copy, usually the same day.</p>
+      </div>
+      <div class="cta-row">
+        <a class="btn primary" id="li" href="https://www.linkedin.com/in/halerobert/" target="_blank" rel="noopener">Message me on LinkedIn to buy</a>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="band" id="contact" style="padding-top:0">
+<section class="band" id="questions" style="padding-top:0">
   <div class="wrap">
-    <div class="contact">
-      <p class="eyebrow"><i>//</i> get nextbeacon</p>
-      <h2>Ready to buy NextBeacon?</h2>
-      <p class="lede">$300, one time. Online checkout is opening soon. Until then, send me a message on LinkedIn and I will send you a payment link and your copy.</p>
-      <div class="cta-row">
-        <a class="btn primary" id="li" href="https://www.linkedin.com/in/halerobert/" target="_blank" rel="noopener">Message me on LinkedIn to buy</a>
-      </div>
+    <div class="head">
+      <p class="eyebrow"><i>//</i> questions</p>
+      <h2>The things people ask before they buy.</h2>
+    </div>
+    <div class="qa">
+      <details><summary>Is this another auto-apply tool?</summary><p>No. NextBeacon never applies to a job for you, in bulk or one at a time. It finds and scores postings and prepares your résumé. You read it, you open the employer's page, and you press Submit. Nothing is ever sent in your name without you.</p></details>
+      <details><summary>Will the AI make things up on my résumé?</summary><p>It is built not to. Before a résumé is saved, every number, employer, job title, degree and certification is checked word for word against your own CV, and anything that is not there is removed. AI can still make mistakes, so read every résumé and letter before you send it. You always have the final say.</p></details>
+      <details><summary>I am not technical. Can I set this up?</summary><p>Yes. You run one installer. It checks that your PC is ready, installs everything it needs, and opens a page-by-page setup that asks plain questions: your résumé, the roles you want, your pay floor, remote or on-site, and the companies to watch. There is no command window and no code. Most people are done in about fifteen minutes.</p></details>
+      <details><summary>Where does my information go?</summary><p>It stays on your PC. Your résumé, your profile and your job history live in files on your own computer. There is no NextBeacon server, and nothing of yours is stored by us. The AI work happens through your own Claude account, under your own name, so posting text and parts of your profile go to Anthropic and nowhere else. The full details are on the <a href="privacy.html">privacy page</a>.</p></details>
+      <details><summary>What is Claude, and why do I need an account?</summary><p>Claude is the AI from Anthropic that reads postings, scores them and drafts your résumés. NextBeacon uses it through an account that belongs to you, so your information is never pooled with anyone else's. You pay Anthropic for that plan directly, about $20 a month for Claude Pro. If your plan lapses, the AI features pause until you renew it.</p></details>
+      <details><summary>Is there a subscription?</summary><p>Not to NextBeacon. You pay $299 once and it is yours to keep on one Windows PC. The only running cost is your own Claude plan.</p></details>
+      <details><summary>Does it work on a Mac?</summary><p>Not yet. NextBeacon runs on Windows 10 and 11. If you only have a Mac, please do not buy it yet.</p></details>
+      <details><summary>Can it read every company's job board?</summary><p>Most of them. NextBeacon reads the job boards that companies publish on, and it finds a company's board when you type the company's name. A few large employers block automated reading of their career pages, and those cannot be scanned. You can still add them and check them by hand.</p></details>
+      <details><summary>Does it promise interviews or offers?</summary><p>No, and nobody honestly can. NextBeacon helps you choose well and apply well. A score is an opinion about fit, not a prediction. Whether you get the job depends on you, the employer and the market.</p></details>
+      <details><summary>What if it is not for me?</summary><p>Ask within 7 days of your purchase and you get a full refund. The refund ends the licence, so the copy stops working. The <a href="terms.html">terms</a> have the details.</p></details>
+      <details><summary>Who is behind this?</summary><p>Rob Hale, one person in Colorado, who built NextBeacon for friends in a hard market and runs it himself. There is no company behind it yet, and the <a href="terms.html">terms</a> say so plainly. You can reach Rob on <a href="https://www.linkedin.com/in/halerobert/" target="_blank" rel="noopener">LinkedIn</a>, and the <a href="help.html">help page</a> covers what to expect after you buy.</p></details>
     </div>
   </div>
 </section>
@@ -500,9 +614,10 @@ footer p{max-width:90ch}
 
 <footer>
   <div class="wrap">
+    <div class="links"><a href="help.html">Help</a><a href="terms.html">Terms and refunds</a><a href="privacy.html">Privacy</a><a href="https://www.linkedin.com/in/halerobert/" target="_blank" rel="noopener">LinkedIn</a></div>
     <p>© 2026 Rob Hale. All rights reserved. NextBeacon is an independent project. It is not affiliated with or endorsed by LinkedIn or Anthropic. It works with your own Claude account.</p>
     <p>Built on the open-source career-ops toolkit, used under its MIT license.</p>
-    <p>Example postings and example résumé lines on this page are illustrative.</p>
+    <p>Example postings and example résumé lines on this page are illustrative. Survey figures are from public 2026 reports and are quoted as published.</p>
   </div>
 </footer>
 
@@ -552,7 +667,6 @@ footer p{max-width:90ch}
     size(); draw(performance.now());
     window.addEventListener('resize', function () { size(); draw(performance.now()); });
     if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { run = es[0].isIntersecting; }).observe(cv);
-    if (window.matchMedia) { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function () { draw(performance.now()); }); }
     if (!reduce) requestAnimationFrame(loop);
   }
 
