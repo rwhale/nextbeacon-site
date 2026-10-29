@@ -29,12 +29,19 @@
     <div class="head">
       <p class="eyebrow"><i>//</i> purchase complete</p>
       <h1>Thank you. Your copy of NextBeacon is on its way.</h1>
-      <p class="lede">Stripe has sent a receipt to the email address you used at checkout. Here is what happens next.</p>
+      <p class="lede">Stripe has sent a receipt to the email address you used at checkout. Your download link and purchase key are on their way to the same address, and they appear below as soon as they are ready.</p>
+      <div id="delivery" class="card" hidden>
+        <p class="eyebrow"><i>//</i> your purchase key</p>
+        <p id="pkey" style="font:600 1.6rem/1.2 var(--mono);letter-spacing:.04em;margin:4px 0 10px"></p>
+        <p id="pnote" class="quiet"></p>
+        <p><a id="pdl" class="btn primary" href="#">Download the installer</a></p>
+      </div>
+      <p id="delivery-wait" class="quiet" hidden>Looking up your purchase…</p>
     </div>
 
     <div class="prose">
       <ol class="steps">
-        <li><b>Within one business day</b>Rob sends an email to the address you used at checkout. It carries the download link for the installer and your purchase key. Check your spam folder if it has not arrived by then.</li>
+        <li><b>Check your email</b>A message from info@mynextbeacon.com carries the download link for the installer, your purchase key and the setup steps. It usually arrives within a minute or two; check your spam folder if it has not.</li>
         <li><b>Download and run the installer</b>The installer shows the terms, checks that your PC meets the requirements, then asks for your purchase key. If a check fails, it tells you what to change and you can run it again.</li>
         <li><b>Walk through the first setup</b>About fifteen minutes: sign in to your Claude account, add your résumé, say what you are looking for, pick your companies, set the morning email and the daily time.</li>
         <li><b>Start your first scan</b>From then on NextBeacon runs every morning on its own. You press Submit.</li>
@@ -48,6 +55,28 @@
     </div>
   </div>
 </main>
+<script>
+(function(){
+  var DELIVERY_URL = "https://nextbeacon-delivery.rwhale-colorado.workers.dev"; // the delivery service address; filled in once it is deployed
+  var sid = new URLSearchParams(location.search).get("session_id");
+  if (!DELIVERY_URL || !sid) return;
+  var box = document.getElementById("delivery"), wait = document.getElementById("delivery-wait");
+  wait.hidden = false;
+  var tries = 0;
+  function ask(){
+    tries++;
+    fetch(DELIVERY_URL + "/purchase?session_id=" + encodeURIComponent(sid)).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+      if (d && d.key) {
+        document.getElementById("pkey").textContent = d.key;
+        document.getElementById("pnote").textContent = "Also sent to " + d.email + ". The key unlocks NextBeacon on one Windows PC.";
+        document.getElementById("pdl").href = d.download_url;
+        wait.hidden = true; box.hidden = false;
+      } else if (tries < 6) { setTimeout(ask, 3000); } else { wait.textContent = "Your purchase is confirmed. The email with your key and download link is on its way."; }
+    }).catch(function(){ if (tries < 6) setTimeout(ask, 3000); else wait.hidden = true; });
+  }
+  ask();
+})();
+</script>
 
 <footer>
   <div class="wrap">
