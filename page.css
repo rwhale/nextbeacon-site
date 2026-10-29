@@ -24,7 +24,7 @@ p{margin:0}
 .top{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none}
-.mark{width:32px;height:32px;flex:none;display:block}
+.mark{height:32px;width:auto;flex:none;display:block}
 .word{font:400 1.5rem/1 var(--serif);letter-spacing:-.02em;color:var(--landing);position:relative;top:-1px}
 .nav{display:flex;align-items:center;gap:22px}
 .nav a.link{color:var(--muted);text-decoration:none;font-size:.9rem;white-space:nowrap}
