@@ -1,4 +1,4 @@
-// Copyright 2026 Rob Hale. All rights reserved.
+// Copyright 2026 NextBeacon LLC. All rights reserved.
 // Renders og-card.html to og.png (1200x630), the picture LinkedIn shows when the site link is posted.
 // Run: node make-og.mjs   (uses the Playwright browser installed for the NextBeacon app)
 import { createRequire } from 'node:module';

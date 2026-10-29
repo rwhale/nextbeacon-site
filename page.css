@@ -1,4 +1,4 @@
-/* Copyright 2026 Rob Hale. All rights reserved.
+/* Copyright 2026 NextBeacon LLC. All rights reserved.
    Shared look for the support pages (help, terms, privacy): the same tokens as the main page. */
 :root{
   --bg:#f7f6f3; --surface:#ffffff; --surface-hover:#efeeea; --border:hsl(40 9% 86%);
