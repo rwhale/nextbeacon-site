@@ -51,6 +51,8 @@ p{margin:0}
 .prose .card{border:1px solid var(--border);border-radius:14px;padding:20px 22px;background:color-mix(in srgb,var(--surface) 70%,transparent);display:grid;gap:10px}
 .prose .card h3{margin-top:0}
 .prose .quiet{font-size:.85rem;color:var(--faint)}
+.page .head .card{border:1px solid var(--border);border-radius:14px;padding:18px 22px;background:var(--surface);display:grid;gap:6px;margin-top:6px}
+.page .head .card .btn{justify-self:start;margin-top:4px}
 .toc{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 10px}
 .toc a{font-size:.85rem;color:var(--muted);text-decoration:none;border:1px solid var(--border);border-radius:999px;padding:6px 12px;background:var(--surface)}
 .toc a:hover{color:var(--fg);background:var(--surface-hover)}
