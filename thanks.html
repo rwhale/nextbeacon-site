@@ -68,7 +68,7 @@
     fetch(DELIVERY_URL + "/purchase?session_id=" + encodeURIComponent(sid)).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
       if (d && d.key) {
         document.getElementById("pkey").textContent = d.key;
-        document.getElementById("pnote").textContent = "Also sent to " + d.email + ". The key unlocks NextBeacon on one Windows PC.";
+        document.getElementById("pnote").textContent = "The key unlocks NextBeacon on one Windows PC. Keep it with the email that is on its way to you.";
         document.getElementById("pdl").href = d.download_url;
         wait.hidden = true; box.hidden = false;
       } else if (tries < 6) { setTimeout(ask, 3000); } else { wait.textContent = "Your purchase is confirmed. The email with your key and download link is on its way."; }
