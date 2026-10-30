@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NextBeacon</title>
-<meta name="description" content="NextBeacon is a private AI job-search assistant for experienced professionals. It scores postings at the companies you choose against your real background and builds résumés where every claim is checked against your own CV. One price, runs on your PC, you press Submit.">
+<meta name="description" content="NextBeacon is a private AI job-search assistant for experienced professionals. It scores postings at the companies you choose against your real background and builds résumés where every claim is checked against your own CV. One price, runs on your PC, and every application is sent by you.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="NextBeacon">
 <meta property="og:title" content="NextBeacon: your next role is in the five that fit">
-<meta property="og:description" content="A private AI job-search assistant for experienced professionals. It watches the companies you choose, scores every posting against your real background and fact-checks every résumé claim. $299 once. You press Submit.">
+<meta property="og:description" content="A private AI job-search assistant for experienced professionals. It watches the companies you choose, scores every posting against your real background and fact-checks every résumé claim. $299 once. Every application is sent by you.">
 <meta property="og:url" content="https://mynextbeacon.com/">
 <meta property="og:image" content="https://mynextbeacon.com/og.png">
 <meta property="og:image:width" content="1200">
@@ -57,7 +57,7 @@ section[id]{scroll-margin-top:72px}
 .eyebrow{font:500 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .eyebrow i{font-style:normal;color:var(--faint)}
 .serif{font-family:var(--serif)}
-.lede{color:var(--muted);font-size:clamp(1rem,1.4vw,1.1rem);max-width:88ch}
+.lede{color:var(--muted);font-size:clamp(1rem,1.4vw,1.1rem)}
 .tnum{font-variant-numeric:tabular-nums}
 
 /* header */
@@ -133,8 +133,8 @@ section[id]{scroll-margin-top:72px}
 .fact span{color:var(--muted);font-size:.9rem}
 
 /* sections */
-.head{display:grid;gap:12px;margin-bottom:36px}
-.head h2{font:400 clamp(1.9rem,3.6vw,2.9rem)/1.08 var(--serif);max-width:40ch;color:var(--fg)}
+.head{display:grid;gap:12px;margin-bottom:36px;max-width:960px}
+.head h2{font:400 clamp(1.9rem,3.6vw,2.9rem)/1.08 var(--serif);color:var(--fg)}
 .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
 .card{grid-column:span 2;padding:26px;border:1px solid var(--border);border-radius:16px;background:color-mix(in srgb,var(--surface) 70%,transparent)}
 .card.wide{grid-column:span 3}
@@ -174,7 +174,7 @@ section[id]{scroll-margin-top:72px}
 .pain .card{grid-column:auto;padding:24px 22px}
 .pain b{display:block;font:400 clamp(2rem,3.4vw,2.8rem)/1 var(--serif);color:var(--brand);margin-bottom:10px;font-variant-numeric:tabular-nums}
 .pain p{color:var(--muted);font-size:.9rem}
-.pain-close{margin-top:28px;font:400 clamp(1.25rem,2.2vw,1.6rem)/1.3 var(--serif);max-width:60ch}
+.pain-close{margin-top:28px;font:400 clamp(1.25rem,2.2vw,1.6rem)/1.3 var(--serif)}
 .pain-close em{font-style:italic;color:var(--brand)}
 
 /* what is included */
@@ -229,7 +229,7 @@ td.no{color:var(--faint)}
 .tag{position:relative;max-width:420px;margin-inline:auto}
 .tag img{display:block;width:100%;height:auto;border-radius:16px;border:1px solid var(--border);box-shadow:var(--shadow)}
 .tag figcaption{margin-top:12px;text-align:center;font:500 11px/1.5 var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--faint)}
-.letter{font-size:1.02rem;color:var(--fg);display:grid;gap:16px;max-width:76ch}
+.letter{font-size:1.02rem;color:var(--fg);display:grid;gap:16px}
 .letter h2{font:400 clamp(1.9rem,3.6vw,2.9rem)/1.08 var(--serif);margin-bottom:4px}
 .letter p{color:var(--muted)}
 .letter p.q{font:400 1.25rem/1.4 var(--serif);color:var(--fg)}
@@ -245,14 +245,13 @@ td.no{color:var(--faint)}
 .qa summary::-webkit-details-marker{display:none}
 .qa summary::after{content:"+";flex:none;font:400 1.4rem/1 var(--serif);color:var(--brand);transition:transform .2s}
 .qa details[open] summary::after{transform:rotate(45deg)}
-.qa details p{padding:0 0 18px;color:var(--muted);font-size:.95rem;max-width:90ch}
+.qa details p{padding:0 0 18px;color:var(--muted);font-size:.95rem}
 
-footer{border-top:1px solid var(--border);padding-block:32px 52px;color:var(--faint);font-size:.82rem}
-footer .wrap{display:grid;gap:8px}
-footer p{max-width:90ch}
-footer .links{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:6px}
-footer .links a{color:var(--muted);text-decoration:none}
-footer .links a:hover{color:var(--fg)}
+footer{border-top:1px solid var(--border);padding-block:28px 44px;color:var(--faint);font-size:.82rem}
+footer .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:8px 22px}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--fg)}
+footer span{color:var(--faint)}
 
 @media (max-width:960px){
   .hero-grid{grid-template-columns:1fr}
@@ -310,7 +309,7 @@ footer .links a:hover{color:var(--fg)}
       <a class="link" href="#for">Who it is for</a>
       <a class="link" href="#questions">Questions</a>
       <a class="link" href="help.html">Help</a>
-      <a class="btn primary" href="#buy">Buy · $299</a>
+      <a class="btn primary" href="https://buy.stripe.com/test_14A00jbUr7TD7cv5wS9EI00">Buy · $299</a>
     </nav>
   </div>
 </header>
@@ -323,14 +322,14 @@ footer .links a:hover{color:var(--fg)}
         <div>
           <p class="eyebrow"><i>//</i> for experienced professionals · one-time purchase</p>
           <h1>Your next role is not in the pile of 300. <em>It is in the five that fit.</em></h1>
-          <p class="lede">Every morning NextBeacon reads the new postings at the companies you choose, scores each one against your real background, and builds a tailored résumé where every number, employer and title is checked against your own CV. Built for people with fifteen or more years of real work behind them.</p>
+          <p class="lede">Every morning NextBeacon reads the new postings at the companies you choose, scores each one against your real background, and builds a tailored résumé where every number, employer and title is checked against your own CV. It all lands in your own NextBeacon app on your PC, with a morning email telling you what is worth a look. Built for people with fifteen or more years of real work behind them.</p>
           <div class="cta-row">
-            <a class="btn primary" href="#buy">Buy NextBeacon · $299</a>
+            <a class="btn primary" href="https://buy.stripe.com/test_14A00jbUr7TD7cv5wS9EI00">Buy NextBeacon · $299</a>
             <a class="btn" href="#how">See how it works</a>
           </div>
           <ul class="trust">
             <li>Runs on your own PC</li>
-            <li>You press Submit, always</li>
+            <li>Every application is sent by you</li>
             <li>No bulk auto-apply</li>
             <li>$299 once, no subscription</li>
           </ul>
@@ -342,7 +341,7 @@ footer .links a:hover{color:var(--fg)}
       </div>
 
       <div class="window" role="img" aria-label="Example of the NextBeacon Today page scoring new postings. The postings shown are made up.">
-        <div class="win-bar"><i></i><i></i><i></i><span>127.0.0.1:3000 · your PC only</span></div>
+        <div class="win-bar"><i></i><i></i><i></i><span>the NextBeacon app · on your PC only</span></div>
         <div class="win-body">
           <div class="side">
             <span class="brand"><img class="mark" src="logo.png" alt="" width="19" height="32"><span class="word">NextBeacon</span></span>
@@ -398,7 +397,7 @@ footer .links a:hover{color:var(--fg)}
     <div class="bento">
       <article class="card wide">
         <div class="ico"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <h3>You press Submit. Always.</h3>
+        <h3>Every application is sent by you.</h3>
         <p>The Apply button opens the employer's own page with your résumé ready. You read it, you decide, and you send it. Nothing goes out in your name without you, so nothing can embarrass you.</p>
         <ul class="never">
           <li><b>Never</b><span>Applies to a job for you, in bulk or one at a time</span></li>
@@ -440,7 +439,7 @@ footer .links a:hover{color:var(--fg)}
       <article class="card">
         <div class="ico"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg></div>
         <h3>Private by design.</h3>
-        <p>NextBeacon runs on your own PC with your own Claude account. Your résumé, your profile and your job history never leave it; we keep your purchase record and plain usage counts, nothing else. If you are searching while employed, nobody can tell.</p>
+        <p>NextBeacon runs on your own PC with your own Claude account. Your résumé, your profile and your job history never leave it; If you are searching while employed, nobody can tell.</p>
       </article>
     </div>
     <div class="tw">
@@ -448,14 +447,14 @@ footer .links a:hover{color:var(--fg)}
         <thead><tr><th></th><th class="us">NextBeacon</th><th>Bulk auto-apply services</th><th>Résumé and tracker subscriptions</th></tr></thead>
         <tbody>
           <tr><td>What it costs over a year</td><td class="us yes">$299, once</td><td class="no">$300 to $480 a year, and rising</td><td class="no">$170 to $350 a year</td></tr>
-          <tr><td>Who presses Submit</td><td class="us yes">You, every time</td><td class="no">The service, in bulk</td><td class="no">You</td></tr>
+          <tr><td>Who sends the application</td><td class="us yes">You, every time</td><td class="no">The service, in bulk</td><td class="no">You</td></tr>
           <tr><td>Checks every résumé claim against your own CV</td><td class="us yes">Yes</td><td class="no">—</td><td class="no">—</td></tr>
           <tr><td>Where your information lives</td><td class="us yes">On your PC</td><td class="no">On their servers</td><td class="no">On their servers</td></tr>
         </tbody>
       </table>
     </div>
     <p class="note">Prices are the public 2026 prices of the common services in each group. A dash means the feature is not advertised on their public pages. Categories are summarized, not named.</p>
-    <div class="cta-mid"><a class="btn primary" href="#buy">Buy NextBeacon · $299</a><span>One payment. Yours to keep.</span></div>
+    <div class="cta-mid"><a class="btn primary" href="https://buy.stripe.com/test_14A00jbUr7TD7cv5wS9EI00">Buy NextBeacon · $299</a><span>One payment. Yours to keep.</span></div>
   </div>
 </section>
 
@@ -480,6 +479,7 @@ footer .links a:hover{color:var(--fg)}
         <li><b>Interview prep</b><span>A prep pack for the roles you move forward on.</span></li>
       </ul></div>
       <div class="group"><h3>Stay on top</h3><ul>
+        <li><b>Your own NextBeacon app</b><span>Opens from a desktop shortcut and runs on your PC only: Today, Pipeline, Analytics, Follow-ups, Documents and Config.</span></li>
         <li><b>A pipeline you can read</b><span>Every posting with its score, the reasons, and where it stands.</span></li>
         <li><b>Applied, marked clearly</b><span>What you have already sent, at a glance.</span></li>
         <li><b>Follow-up reminders</b><span>Who to nudge and when.</span></li>
@@ -504,8 +504,8 @@ footer .links a:hover{color:var(--fg)}
     <div class="steps">
       <div class="step"><h3>Install</h3><p>Run the installer. It checks that your PC is ready first, then installs everything it needs. No typing, no code.</p></div>
       <div class="step"><h3>Tell it about you</h3><p>Upload your résumé, then answer a few plain questions: roles, pay, remote or on-site, industries and the companies you want watched.</p></div>
-      <div class="step"><h3>Let it scan</h3><p>Each morning it reads the new postings, scores them, and emails you the ones worth a look.</p></div>
-      <div class="step"><h3>Apply with confidence</h3><p>Open the tailored résumé and the employer's page, read, and press Submit yourself.</p></div>
+      <div class="step"><h3>Let it scan</h3><p>Each morning it reads the new postings, scores them, lines them up on your Today page, and emails you the ones worth a look.</p></div>
+      <div class="step"><h3>Apply with confidence</h3><p>Open the tailored résumé and the employer's page, read them through, and submit the application yourself.</p></div>
     </div>
   </div>
 </section>
@@ -521,7 +521,7 @@ footer .links a:hover{color:var(--fg)}
         <li>You have fifteen or more years of real work behind you and a résumé with real numbers in it.</li>
         <li>You have a list of companies in mind and nobody is watching it for you.</li>
         <li>You are done with mass applying and the silence that follows.</li>
-        <li>You want to read every résumé and press Submit yourself.</li>
+        <li>You want to read every résumé and send every application yourself.</li>
         <li>You are searching while employed and need it to stay private.</li>
       </ul></div>
       <div class="card"><h3>It is not for you if</h3><ul class="plain not">
@@ -546,8 +546,8 @@ footer .links a:hover{color:var(--fg)}
         <h2>Why I built NextBeacon</h2>
         <p class="q">I built this for my friends.</p>
         <p>Too many people I know and respect, people with twenty years of real work behind them, have spent this year in the application black hole. Sixty applications and silence. A posting that turns out not to exist. A tool that "applied" for them to a role two states away. Watching that happen to good people made me angry enough to build something.</p>
-        <p>I remember my own hard road into a new industry a few years back: a résumé rewritten a hundred times, hundreds of cover letters, a long list of rejections and a longer list of silences. A tea-bag tag on my monitor said "Settling is Not an Option," and some days it was the only thing keeping me on target. What finally worked was fewer applications, aimed at the companies I actually cared about, with a résumé I never had to apologize for.</p>
-        <p>NextBeacon is that approach, built into a tool. It is not magic and it cannot promise you an interview. It will tell you honestly which postings fit, build a résumé that is true to your CV, and leave the Submit button to you. If you are in transition, I know the road. You can do this.</p>
+        <p>I remember my own hard road into a new industry a few years back: a résumé rewritten a hundred times, hundreds of cover letters, a long list of rejections and a longer list of silences. A tea-bag tag on my monitor said "Settling is Not an Option," and some days it was the only thing keeping me on target. What finally worked was simple: fewer applications, targeted at companies I actually cared about, with a résumé that actually matched what hiring managers were looking for.</p>
+        <p>NextBeacon is that approach, built into a tool. It is not magic and it cannot promise you an interview. It will tell you honestly which postings fit, build a résumé that is true to your CV, and leave the sending to you. If you are in transition, I know the road. You can do this.</p>
         <div class="sig"><div><b>Rob Hale</b><span>Builder of NextBeacon · <a href="https://www.linkedin.com/posts/halerobert_to-those-with-green-banners-my-goal-at-share-7128758521898139648-l_j4/" target="_blank" rel="noopener">The 2023 LinkedIn post</a></span></div></div>
       </div>
     </div>
@@ -565,14 +565,12 @@ footer .links a:hover{color:var(--fg)}
         <li>One payment. No subscription and no monthly fee to NextBeacon, ever.</li>
         <li>Licensed for one Windows PC, for your own job search.</li>
         <li>Self-serve: one installer and a page-by-page setup in plain language. No call needed.</li>
-        <li>Your own Claude plan is the only running cost: about $20 a month, paid to Anthropic, not to us.</li>
-        <li>No free trial.</li>
       </ul>
       <div class="math"><b>The arithmetic.</b> $120,000 a year is $2,308 a week ($120,000 ÷ 52). Every week the search runs on is a week of that pay you never collect. If NextBeacon saves you one week, it has paid for itself seven times over. <span class="math-note">$120,000 is about the U.S. median pay for management jobs (Bureau of Labor Statistics, May 2024: $122,090). Use your own number: last salary ÷ 52.</span></div>
       </div>
       <div class="card"><h3>Before you buy, check that you have</h3><ul class="plain">
         <li>A Windows 10 or 11 PC with 8 GB of memory and 4 GB of free disk space. The installer checks this before it installs anything.</li>
-        <li>A paid Claude plan from Anthropic, on an account in your name. Claude Pro at about $20 a month is enough.</li>
+        <li>A paid Claude plan from Anthropic, on an account in your name. Claude Pro at about $20 a month is enough. If you do not have Claude yet, <a href="https://claude.ai/download" target="_blank" rel="noopener">download it from Anthropic</a>.</li>
         <li>An internet connection that can reach Claude and the job boards. Home networks usually can; some work networks block them.</li>
         <li>About fifteen minutes for the guided setup, mostly waiting.</li>
         <li>Your résumé as a PDF, Word file or text.</li>
@@ -582,10 +580,10 @@ footer .links a:hover{color:var(--fg)}
       <div>
         <p class="eyebrow"><i>//</i> get nextbeacon</p>
         <h3>Ready to buy NextBeacon?</h3>
-        <p>$299, one time. Online checkout is opening soon. Until then, email <a href="mailto:info@mynextbeacon.com">info@mynextbeacon.com</a> and you will receive a payment link and your copy, usually the same day.</p>
+        <p>$299, one time, through secure checkout by Stripe. The thank-you page and your receipt carry the download link and your purchase key, so you can be installing within minutes.</p>
       </div>
       <div class="cta-row">
-        <a class="btn primary" id="li" href="mailto:info@mynextbeacon.com?subject=NextBeacon">Email to buy</a>
+        <a class="btn primary" href="https://buy.stripe.com/test_14A00jbUr7TD7cv5wS9EI00">Buy NextBeacon · $299</a>
       </div>
     </div>
   </div>
@@ -598,16 +596,16 @@ footer .links a:hover{color:var(--fg)}
       <h2>The things people ask before they buy.</h2>
     </div>
     <div class="qa">
-      <details><summary>Is this another auto-apply tool?</summary><p>No. NextBeacon never applies to a job for you, in bulk or one at a time. It finds and scores postings and prepares your résumé. You read it, you open the employer's page, and you press Submit. Nothing is ever sent in your name without you.</p></details>
+      <details><summary>Is this another auto-apply tool?</summary><p>No. NextBeacon never applies to a job for you, in bulk or one at a time. It finds and scores postings and prepares your résumé. You read it, you open the employer's page, and after your review you submit the application. Nothing is ever sent in your name without you.</p></details>
       <details><summary>Will the AI make things up on my résumé?</summary><p>It is built not to. Before a résumé is saved, every number, employer, job title, degree and certification is checked word for word against your own CV, and anything that is not there is removed. AI can still make mistakes, so read every résumé and letter before you send it. You always have the final say.</p></details>
       <details><summary>I am not technical. Can I set this up?</summary><p>Yes. You run one installer. It checks that your PC is ready, installs everything it needs, and opens a page-by-page setup that asks plain questions: your résumé, the roles you want, your pay floor, remote or on-site, and the companies to watch. There is no command window and no code. Most people are done in about fifteen minutes.</p></details>
-      <details><summary>Where does my information go?</summary><p>It stays on your PC. Your résumé, your profile and your job history live in files on your own computer. They never leave it. NextBeacon LLC keeps your purchase record and plain usage counts (postings scanned and scored, and your applied, interviewing and offer counts unless you switch that off on the Config page), nothing else. The AI work happens through your own Claude account, under your own name, so posting text and parts of your profile go to Anthropic and nowhere else. The full details are on the <a href="privacy.html">privacy page</a>.</p></details>
-      <details><summary>What is Claude, and why do I need an account?</summary><p>Claude is the AI from Anthropic that reads postings, scores them and drafts your résumés. NextBeacon uses it through an account that belongs to you, so your information is never pooled with anyone else's. You pay Anthropic for that plan directly, about $20 a month for Claude Pro. If your plan lapses, the AI features pause until you renew it.</p></details>
+      <details><summary>Where does my information go?</summary><p>It stays on your PC. Your résumé, your profile and your job history live in files on your own computer. They never leave it. The AI work happens through your own Claude account, under your own name, so posting text and parts of your profile go to Anthropic and nowhere else. The full details are on the <a href="privacy.html">privacy page</a>.</p></details>
+      <details><summary>What is Claude, and why do I need an account?</summary><p>Claude is the AI from Anthropic that reads postings, scores them and drafts your résumés. NextBeacon uses it through an account that belongs to you, so your information is never pooled with anyone else's. You pay Anthropic for that plan directly, about $20 a month for Claude Pro. If you do not have Claude on your PC yet, <a href="https://claude.ai/download" target="_blank" rel="noopener">download it from Anthropic</a>. If your plan lapses, the AI features pause until you renew it.</p></details>
       <details><summary>Is there a subscription?</summary><p>Not to NextBeacon. You pay $299 once and it is yours to keep on one Windows PC. The only running cost is your own Claude plan.</p></details>
       <details><summary>Does it work on a Mac?</summary><p>Not yet. NextBeacon runs on Windows 10 and 11. If you only have a Mac, please do not buy it yet.</p></details>
       <details><summary>Can it read every company's job board?</summary><p>Most of them. NextBeacon reads the job boards that companies publish on, and it finds a company's board when you type the company's name. A few large employers block automated reading of their career pages, and those cannot be scanned. You can still add them and check them by hand.</p></details>
       <details><summary>Does it promise interviews or offers?</summary><p>No, and nobody honestly can. NextBeacon helps you choose well and apply well. A score is an opinion about fit, not a prediction. Whether you get the job depends on you, the employer and the market.</p></details>
-      <details><summary>Who is behind this?</summary><p>Rob Hale, one person in Colorado, who built NextBeacon for friends in a hard market and runs it himself through NextBeacon LLC, a one-person Colorado company. The <a href="terms.html">terms</a> say so plainly. You can reach him at <a href="mailto:info@mynextbeacon.com">info@mynextbeacon.com</a>, and the <a href="help.html">help page</a> covers what to expect after you buy.</p></details>
+      <details><summary>Who is behind this?</summary><p>NextBeacon is built and run by Rob Hale—a single founder in Colorado who created the tool to help friends navigate a tough job market. Everything is operated directly through NextBeacon LLC, a one-person Colorado company, and the <a href="terms.html">terms</a> reflect that. If you need to reach Rob, email <a href="mailto:info@mynextbeacon.com">info@mynextbeacon.com</a>, or check out the <a href="help.html">Help page</a> for details on what happens after you purchase.</p></details>
     </div>
   </div>
 </section>
@@ -615,8 +613,7 @@ footer .links a:hover{color:var(--fg)}
 
 <footer>
   <div class="wrap">
-    <div class="links"><a href="help.html">Help</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="mailto:info@mynextbeacon.com">info@mynextbeacon.com</a></div>
-    <p>© 2026 NextBeacon LLC. All rights reserved.</p>
+    <a href="help.html">Help</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="mailto:info@mynextbeacon.com">info@mynextbeacon.com</a><span>© 2026 NextBeacon LLC. All rights reserved.</span>
   </div>
 </footer>
 
@@ -725,7 +722,6 @@ footer .links a:hover{color:var(--fg)}
   if (!ref) { try { var v = JSON.parse(localStorage.getItem('nb_ref') || 'null'); if (v && ok.test(v.r) && now - v.t < 30 * 864e5) ref = v.r; } catch (e) {} }
   if (!ref) return;
   document.querySelectorAll('a[href^="https://buy.stripe.com/"]').forEach(function (a) { var u = new URL(a.href); u.searchParams.set('client_reference_id', ref); a.href = u.toString(); });
-  document.querySelectorAll('a[href^="mailto:info@mynextbeacon.com?subject=NextBeacon"]').forEach(function (a) { a.href = 'mailto:info@mynextbeacon.com?subject=' + encodeURIComponent('NextBeacon (' + ref + ')'); });
 })();
 </script>
 </body>
