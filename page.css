@@ -39,6 +39,7 @@ p{margin:0}
 [id]{scroll-margin-top:80px}
 .page .head{display:grid;gap:12px;margin-bottom:32px}
 .page h1{font:400 clamp(2.1rem,4.4vw,3.4rem)/1.05 var(--serif);letter-spacing:-.02em}
+.page .head .updated{font:500 12px/1 var(--mono);letter-spacing:.04em;color:var(--faint);margin-top:-2px}
 .lede{color:var(--muted);font-size:clamp(1rem,1.4vw,1.1rem)}
 .prose{max-width:960px;display:grid;gap:14px}
 .prose h2{font:400 clamp(1.5rem,2.6vw,2rem)/1.15 var(--serif);margin-top:26px}
