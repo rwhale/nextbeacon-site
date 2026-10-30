@@ -708,3 +708,16 @@ footer .links a:hover{color:var(--fg)}
   }
 })();
 </script>
+<script>
+/* Post attribution (Decision 63): a visitor from a NextBeacon post arrives with ?ref=<tag>. The tag
+   rides along to checkout (Stripe's client_reference_id) so the sale is credited to that post.
+   Only the short tag is kept, in this browser, for 30 days; nothing personal. */
+(function () {
+  var ok = /^[a-z0-9]{3,20}$/i, ref = '', now = Date.now();
+  try { var q = new URLSearchParams(location.search).get('ref'); if (q && ok.test(q)) { ref = q; localStorage.setItem('nb_ref', JSON.stringify({ r: q, t: now })); } } catch (e) {}
+  if (!ref) { try { var v = JSON.parse(localStorage.getItem('nb_ref') || 'null'); if (v && ok.test(v.r) && now - v.t < 30 * 864e5) ref = v.r; } catch (e) {} }
+  if (!ref) return;
+  document.querySelectorAll('a[href^="https://buy.stripe.com/"]').forEach(function (a) { var u = new URL(a.href); u.searchParams.set('client_reference_id', ref); a.href = u.toString(); });
+  document.querySelectorAll('a[href^="mailto:info@mynextbeacon.com?subject=NextBeacon"]').forEach(function (a) { a.href = 'mailto:info@mynextbeacon.com?subject=' + encodeURIComponent('NextBeacon (' + ref + ')'); });
+})();
+</script>
