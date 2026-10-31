@@ -101,8 +101,36 @@ section[id]{scroll-margin-top:72px}
 .side .brand{padding:2px 6px 14px}
 .side .word{font-size:1.25rem}
 .side .mark{height:26px}
-.side a{display:block;padding:7px 10px;border-radius:6px;text-decoration:none}
-.side a.on{background:var(--brand-soft);color:var(--brand-text)}
+.side button{display:block;width:100%;text-align:left;padding:7px 10px;border-radius:6px;border:0;background:none;font:inherit;color:inherit;cursor:pointer}
+.side button:hover{background:var(--surface-hover)}
+.side button.on{background:var(--brand-soft);color:var(--brand-text)}
+.side button:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
+.view[hidden]{display:none}
+.view{min-height:296px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px;font:600 10px/1 var(--sans);letter-spacing:.08em;text-transform:uppercase}
+.tabs span{padding:6px 9px;border-radius:999px;border:1px solid var(--border);color:var(--muted)}
+.tabs span.on{background:var(--brand-soft);color:var(--brand-text);border-color:transparent}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
+.tiles div{border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.tiles b{display:block;font:400 1.4rem/1 var(--serif);color:var(--brand);margin-bottom:4px}
+.tiles span{font-size:.72rem;color:var(--muted)}
+.bars{display:grid;gap:7px;font-size:.8rem;color:var(--muted)}
+.bars div{display:grid;grid-template-columns:70px 1fr 34px;gap:10px;align-items:center}
+.bars i{display:block;height:8px;border-radius:4px;background:var(--brand-soft);overflow:hidden}
+.bars i::after{content:"";display:block;height:100%;width:var(--w);background:var(--brand);border-radius:4px}
+.bars em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums}
+.plain{list-style:none;margin:0;padding:0}
+.plain li{display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--border);font-size:.9rem}
+.plain li small{display:block;color:var(--muted);font-size:.78rem}
+.plain .chip{min-width:0}
+.chip.on{background:var(--ok-soft);color:var(--ok)}
+.chip.off{background:transparent;color:var(--faint);border:1px solid var(--border)}
+.chip.due{background:var(--warn-soft);color:var(--warn)}
+.chip.ok{background:var(--ok-soft);color:var(--ok)}
+.toggle{width:34px;height:18px;border-radius:999px;background:var(--border);position:relative;display:inline-block}
+.toggle::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:#fff}
+.toggle.on{background:var(--ok)}.toggle.on::after{left:18px}
+@media (max-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}}
 .main{padding:18px 20px 8px}
 .main .eyebrow{margin-bottom:8px}
 .main h3{font:400 1.6rem/1.1 var(--serif);margin-bottom:6px}
@@ -338,13 +366,78 @@ footer span{color:var(--faint)}
         <div class="win-body">
           <div class="side">
             <span class="brand"><img class="mark" src="logo.png" alt="" width="19" height="32"><span class="word">NextBeacon</span></span>
-            <a class="on" href="#top">Today</a><a href="#top">Pipeline</a><a href="#top">Analytics</a><a href="#top">Follow-ups</a><a href="#top">Portals</a><a href="#top">Documents</a><a href="#top">Config</a>
+            <button type="button" data-view="today" class="on">Today</button><button type="button" data-view="pipeline">Pipeline</button><button type="button" data-view="analytics">Analytics</button><button type="button" data-view="followups">Follow-ups</button><button type="button" data-view="portals">Portals</button><button type="button" data-view="documents">Documents</button><button type="button" data-view="config">Config</button>
           </div>
           <div class="main">
+            <div class="view" data-view="today">
             <p class="eyebrow"><i>//</i> today · <span class="tnum" id="today-date">tuesday, oct 28</span></p>
             <h3><b id="read" class="tnum">6</b> new matches this morning</h3>
             <p class="sub">Your action queue for today, in one place.</p>
             <ul id="feed" aria-hidden="true"></ul>
+            </div>
+            <div class="view" data-view="pipeline" hidden>
+            <p class="eyebrow"><i>//</i> pipeline</p>
+            <h3><b class="tnum">14</b> in play</h3>
+            <p class="sub">Every posting you kept, by stage. Nothing moves without you.</p>
+            <div class="tabs"><span class="on">Inbox 6</span><span>Applied 5</span><span>Responded 2</span><span>Interview 1</span><span>Offer 0</span></div>
+            <ul class="plain">
+              <li><span>Ironwood Labs<small>Program Director · applied 6 days ago</small></span><span class="chip consider">Responded</span></li>
+              <li><span>Northwind Systems<small>Senior Program Manager · applied 9 days ago</small></span><span class="chip apply">Interview Thu</span></li>
+              <li><span>Halcyon Space<small>Technical Solutions Manager · résumé ready</small></span><span class="chip reading">Inbox</span></li>
+              <li><span>Orbital Dynamics<small>AI Program Lead · applied 2 days ago</small></span><span class="chip reading">Waiting</span></li>
+            </ul>
+            </div>
+            <div class="view" data-view="analytics" hidden>
+            <p class="eyebrow"><i>//</i> analytics</p>
+            <h3>Search progress</h3>
+            <p class="sub">A read on the roles you are pursuing and the funnel they move through.</p>
+            <div class="tiles"><div><b class="tnum">412</b><span>postings read</span></div><div><b class="tnum">38</b><span>scored 3.0 or better</span></div><div><b class="tnum">5</b><span>applied, by you</span></div><div><b class="tnum">2</b><span>responses</span></div></div>
+            <div class="bars"><div><span>4.0 to 5.0</span><i style="--w:18%"></i><em>7</em></div><div><span>3.5 to 3.9</span><i style="--w:30%"></i><em>12</em></div><div><span>3.0 to 3.4</span><i style="--w:46%"></i><em>19</em></div><div><span>Below 3.0</span><i style="--w:100%"></i><em>374</em></div></div>
+            </div>
+            <div class="view" data-view="followups" hidden>
+            <p class="eyebrow"><i>//</i> follow-ups</p>
+            <h3><b class="tnum">3</b> worth a nudge</h3>
+            <p class="sub">Reminders by stage, so a quiet inbox never becomes a lost thread.</p>
+            <ul class="plain">
+              <li><span>Ironwood Labs<small>Applied 6 days ago, no reply · a short check-in note is drafted</small></span><span class="chip due">Today</span></li>
+              <li><span>Northwind Systems<small>Interview Thursday · prep pack ready, 14 likely questions</small></span><span class="chip ok">Prepared</span></li>
+              <li><span>Bluepeak Health<small>Recruiter replied Monday · reply by Wednesday</small></span><span class="chip due">Tomorrow</span></li>
+              <li><span>Tidewater Group<small>Applied 14 days ago · second nudge, then let it go</small></span><span class="chip reading">Fri</span></li>
+            </ul>
+            </div>
+            <div class="view" data-view="portals" hidden>
+            <p class="eyebrow"><i>//</i> portals</p>
+            <h3><b class="tnum">22</b> companies watched</h3>
+            <p class="sub">Each company's own job board, read every morning. Add any company by name.</p>
+            <ul class="plain">
+              <li><span>Northwind Systems<small>Greenhouse · 9 open roles · read today 06:04</small></span><span class="toggle on"></span></li>
+              <li><span>Halcyon Space<small>Workday · 31 open roles · read today 06:05</small></span><span class="toggle on"></span></li>
+              <li><span>Ironwood Labs<small>Lever · 4 open roles · read today 06:05</small></span><span class="toggle on"></span></li>
+              <li><span>Meridian Logistics<small>Ashby · paused by you</small></span><span class="toggle"></span></li>
+            </ul>
+            </div>
+            <div class="view" data-view="documents" hidden>
+            <p class="eyebrow"><i>//</i> documents</p>
+            <h3>Résumés and letters</h3>
+            <p class="sub">One tailored résumé per strong match, every claim checked against your CV before it is saved.</p>
+            <ul class="plain">
+              <li><span>Northwind Systems · Senior Program Manager<small>Résumé, 2 pages · 11 claims checked, 11 found in your CV</small></span><span class="chip ok">Checked</span></li>
+              <li><span>Northwind Systems · cover letter<small>Draft · reads your three strongest matches to the posting</small></span><span class="chip reading">Draft</span></li>
+              <li><span>Ironwood Labs · Program Director<small>Résumé, 2 pages · 1 claim removed: not in your CV</small></span><span class="chip ok">Checked</span></li>
+              <li><span>Your CV<small>The source of truth · updated by you, 12 Oct</small></span><span class="chip reading">Master</span></li>
+            </ul>
+            </div>
+            <div class="view" data-view="config" hidden>
+            <p class="eyebrow"><i>//</i> config</p>
+            <h3>Your search, your rules</h3>
+            <p class="sub">Set once, in plain questions. Change any of it whenever the search changes.</p>
+            <ul class="plain">
+              <li><span>Titles you want<small>Program manager, delivery lead, PMO, platform owner</small></span><span class="chip reading">Edit</span></li>
+              <li><span>Pay floor<small>Postings below it are shown but never scored</small></span><span class="chip ok">$140,000</span></li>
+              <li><span>Where<small>Remote, or hybrid within 40 miles of home</small></span><span class="chip ok">Set</span></li>
+              <li><span>Morning email<small>Sent to you at the hour you choose</small></span><span class="chip ok">06:00</span></li>
+            </ul>
+            </div>
           </div>
         </div>
         <div class="fine">Illustrative example. These are made-up postings that show how scoring looks.</div>
@@ -690,6 +783,11 @@ footer span{color:var(--faint)}
     };
     requestAnimationFrame(step);
   };
+  var sideBtns = document.querySelectorAll('.side button[data-view]'), views = document.querySelectorAll('.main .view');
+  sideBtns.forEach(function (b) { b.addEventListener('click', function () {
+    sideBtns.forEach(function (x) { x.classList.toggle('on', x === b); });
+    views.forEach(function (v) { v.hidden = v.getAttribute('data-view') !== b.getAttribute('data-view'); });
+  }); });
   if (feed) {
     var seed = 4; for (var k = 0; k < seed; k++) feed.appendChild(make(DATA[k], true)); n = seed;
     if (reduce) { feed.appendChild(make(DATA[4], true)); feed.appendChild(make(DATA[5], true)); }
