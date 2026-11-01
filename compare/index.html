@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<!-- Copyright 2026 NextBeacon LLC. All rights reserved. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Twelve AI job-search tools, compared for experienced professionals</title>
+<meta name="description" content="Twelve AI job-search tools scored on the six things that matter after fifteen years of experience: the companies you choose, written reasons, a résumé that stays true, your own hand on every application, privacy, and paying once. Every price and rating links to its source. Published by NextBeacon LLC.">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="NextBeacon">
+<meta property="og:title" content="Twelve AI job-search tools, compared for experienced professionals">
+<meta property="og:description" content="Scored on the six things that matter after fifteen years of experience. Every price and rating links to its source. Untick a criterion and the table re-sorts.">
+<meta property="og:url" content="https://mynextbeacon.com/compare/">
+<meta property="og:image" content="https://mynextbeacon.com/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://mynextbeacon.com/compare/">
+<link rel="icon" type="image/png" href="../favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../page.css">
+<style>
+/* The comparison page (Rob, 2026-10-31: "a stood up site with real comparisons with NextBeacon on top").
+   Built the honest way: real tools, real prices with their sources, a plain line saying who publishes it,
+   and the criteria stated so the reader can untick any one and re-sort. Looks like the support pages. */
+.page .head{max-width:900px}
+.page h1{max-width:18ch}
+.who{border:1px solid var(--border);border-radius:14px;padding:16px 20px;background:var(--surface);display:grid;gap:6px;margin-top:8px;font-size:.95rem;color:var(--muted)}
+.who b{color:var(--fg);font-weight:500}
+.crit{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin:8px 0 22px}
+.crit label{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--surface);cursor:pointer}
+.crit label:has(input:not(:checked)){opacity:.55}
+.crit input{width:18px;height:18px;margin-top:3px;accent-color:var(--brand)}
+.crit b{display:block;font-weight:500;color:var(--fg)}
+.crit span{font-size:.85rem;color:var(--muted)}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:14px;background:var(--surface);margin-bottom:10px}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:.92rem}
+th,td{padding:11px 12px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle}
+th{font:500 11px/1.3 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);background:color-mix(in srgb,var(--surface-hover) 60%,transparent)}
+th.c,td.c{text-align:center}
+tr:last-child td{border-bottom:0}
+tr.top td{background:var(--brand-soft)}
+td.rank{font:400 1.35rem/1 var(--serif);color:var(--faint);width:44px}
+td.tool b{font-weight:500}
+td.tool small{display:block;color:var(--faint);font-size:.8rem}
+td.price{white-space:nowrap}
+.mark{display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid var(--brand-text);vertical-align:-2px}
+.mark.y{background:var(--brand-text)}
+.mark.p{background:linear-gradient(90deg,var(--brand-text) 50%,transparent 50%)}
+.mark.n{border-color:var(--border)}
+td.total{font:400 1.25rem/1 var(--serif);white-space:nowrap}
+td.total small{font:400 .75rem var(--sans);color:var(--faint)}
+.key{display:flex;flex-wrap:wrap;gap:16px;font-size:.85rem;color:var(--muted);margin-bottom:28px}
+.key span{display:inline-flex;align-items:center;gap:6px}
+.cards{display:grid;gap:12px}
+.cardt{border:1px solid var(--border);border-radius:14px;background:var(--surface);padding:18px 20px;display:grid;gap:8px}
+.cardt.top{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-soft)}
+.cardt .hd{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 14px}
+.cardt .hd h3{font:400 1.35rem/1.1 var(--serif);margin:0}
+.cardt .hd .n{font:400 1rem var(--serif);color:var(--faint)}
+.cardt .hd .pr{margin-left:auto;font-size:.9rem;color:var(--muted)}
+.cardt p{color:var(--muted);font-size:.95rem}
+.cardt .why{display:grid;gap:4px;font-size:.9rem;color:var(--muted);padding-left:0;margin:0;list-style:none}
+.cardt .why li{display:grid;grid-template-columns:18px 1fr;gap:8px;align-items:start}
+.cardt .why li .mark{margin-top:4px}
+.cardt .links{display:flex;flex-wrap:wrap;gap:12px;font-size:.85rem}
+.cardt .links a{color:var(--brand-text)}
+.cta{margin-top:40px;border:1px solid var(--border);border-radius:18px;background:var(--surface);padding:clamp(22px,4vw,36px);display:grid;gap:12px;max-width:760px}
+.cta h2{font:400 clamp(1.5rem,3vw,2.2rem)/1.1 var(--serif)}
+.cta p{color:var(--muted)}
+.cta .btn{justify-self:start}
+.method{max-width:760px;display:grid;gap:10px;margin-top:40px;font-size:.92rem;color:var(--muted)}
+.method h2{font:400 1.5rem/1.15 var(--serif);color:var(--fg)}
+footer{border-top:1px solid var(--border);padding:24px 0;font-size:.85rem;color:var(--faint)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
+footer a{color:var(--muted);text-decoration:none}
+@media (max-width:640px){.cardt .hd .pr{margin-left:0;width:100%}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="https://mynextbeacon.com/?ref=compare"><img class="mark" src="../logo.png" alt="" width="32" height="32"><span class="word">NextBeacon</span></a>
+  <nav class="nav"><a class="link" href="#criteria">The six criteria</a><a class="link" href="#table">The table</a><a class="link" href="#method">How we scored</a><a class="btn primary" href="https://mynextbeacon.com/?ref=compare">See NextBeacon</a></nav>
+</div></header>
+
+<main class="page"><div class="wrap">
+  <div class="head">
+    <p class="eyebrow"><i>//</i> a guide for people with fifteen or more years of experience</p>
+    <h1>Twelve AI job-search tools, compared for experienced professionals.</h1>
+    <p class="updated">Prices and ratings checked 30 and 31 October 2026. Tell us when one changes: info@mynextbeacon.com</p>
+    <p class="lede">Most of these tools were built for people early in their careers, who need volume. After fifteen years of running teams and budgets you need something else: the right postings, a résumé that is true, and your own hand on every application. We scored twelve tools on the six things that matter at that level. Every price and rating links to its source.</p>
+    <div class="who">
+      <b>Who wrote this, and why you should read it with that in mind.</b>
+      <span>NextBeacon LLC, the maker of NextBeacon, which is one of the twelve. We chose the six criteria and we say below why each one matters. Untick any criterion and the table re-sorts, so you can see where each tool lands on the things you care about. No reviewer is invented, there are no testimonials, and every number has a link. The other eleven tools have their own strengths; several are excellent for a first job or a career change.</span>
+    </div>
+  </div>
+
+  <section id="criteria">
+    <h2 class="serif" style="font-size:1.6rem;margin-bottom:6px">The six criteria. Untick any you do not care about.</h2>
+    <div class="crit" id="crit"></div>
+  </section>
+
+  <section id="table">
+    <div class="tablewrap"><table>
+      <thead><tr><th>#</th><th>Tool</th><th>Price</th><th class="c" title="Reads the companies you choose, every day">Companies</th><th class="c" title="Tells you why a posting fits">Reasons</th><th class="c" title="Keeps the résumé true to your CV">True</th><th class="c" title="You submit every application">You submit</th><th class="c" title="Your data stays on your PC">Private</th><th class="c" title="Pay once, no renewal">Pay once</th><th>Score</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    <div class="key"><span><i class="mark y"></i> yes</span><span><i class="mark p"></i> partly</span><span><i class="mark n"></i> no</span><span>Score: yes 2, partly 1, no 0, over the criteria you left ticked.</span></div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <div class="cta">
+    <p class="eyebrow"><i>//</i> the one that is ours</p>
+    <h2>NextBeacon scores twelve of twelve on these criteria because it was built for them.</h2>
+    <p>It reads the postings at the companies you choose every morning, scores each one against your real background with the reasons written out, builds a two-page résumé and checks every claim against your own CV, and leaves the sending to you. It runs on your PC. $299 once. It needs a Windows PC and a Claude account, which is not included. There is no Mac version yet, and it is made by one person. All of that is on the site.</p>
+    <a class="btn primary" href="https://mynextbeacon.com/?ref=compare">See NextBeacon</a>
+  </div>
+
+  <section class="method" id="method">
+    <h2>How we scored</h2>
+    <p>Each tool was read from its own site and its own page on Trustpilot on 30 October 2026, with a second check on 31 October. A mark of <b>yes</b> means the tool does the thing as its main way of working; <b>partly</b> means it offers it as an option, a tier or a side feature, or does it in a weaker form; <b>no</b> means it does not, or the recurring complaints on its review page say the opposite. Prices are the published price of the plan that includes the features scored, as shown on that date; most are monthly and renew. Ratings are Trustpilot's score and review count on that date. "Watch out" lines are the most repeated theme in that tool's own one-star reviews, not our opinion.</p>
+    <p>We did not test the tools against each other on live searches, and we say so. If you run one of these tools and a line here is wrong or out of date, write to info@mynextbeacon.com and we will correct it, with a note of what changed.</p>
+  </section>
+</div></main>
+
+<footer><div class="wrap"><span>&copy; 2026 NextBeacon LLC, Colorado.</span><a href="https://mynextbeacon.com/privacy.html">Privacy</a><a href="https://mynextbeacon.com/terms.html">Terms</a><a href="https://mynextbeacon.com/?ref=compare">NextBeacon</a></div></footer>
+
+<script>
+(() => {
+  const CRITERIA = [
+    { k: 'companies', name: 'Reads the companies you choose, every day', why: 'Senior roles are posted on company boards first and often never reach the aggregators. A tool that watches the boards you pick, daily, finds them before the pile forms.' },
+    { k: 'reasons', name: 'Tells you why a posting fits', why: 'A match score is a number. The reasons, written out, are what let you decide in thirty seconds instead of reading the posting for ten minutes.' },
+    { k: 'true', name: 'Keeps the résumé true to your CV', why: 'A tool that rewrites your résumé to please a keyword filter will, sooner or later, put a claim on it that is not yours. At this level one invented line in an interview can cost twenty years of reputation.' },
+    { k: 'submit', name: 'You submit every application', why: 'Bulk auto-apply sends your name to roles two levels down and two states away. Nothing should leave your desk unread.' },
+    { k: 'private', name: 'Your data stays on your PC', why: 'A search while employed has to stay private. A tool that runs on your own machine keeps your résumé and your target list off a server.' },
+    { k: 'once', name: 'Pay once, no renewal', why: 'The most repeated complaint across this whole category is the renewal: trials that convert, annual plans that re-bill, cancel buttons that do not. Paying once ends that.' },
+  ];
+  // Marks: 2 yes, 1 partly, 0 no. Every "why" line is a fact from the tool's own site or its Trustpilot
+  // page on 30 October 2026, with the link on the card.
+  const T = 'https://www.trustpilot.com/review/';
+  const TOOLS = [
+    { name: 'NextBeacon', site: 'https://mynextbeacon.com/?ref=compare', price: '$299 once', priceNote: 'one-time licence for one PC; needs a Claude account, not included', marks: { companies: 2, reasons: 2, true: 2, submit: 2, private: 2, once: 2 }, best: 'Experienced professionals who want the right postings and a résumé they can stand behind.', why: ['Reads the careers pages of the companies you choose every morning (Workday, Greenhouse, Ashby, Lever, iCIMS and the big companies’ own boards).', 'Scores each posting 0 to 5 against your background with the reasons written out.', 'Checks every number, employer, title, degree and certification on the résumé against your own CV and removes what is not there.', 'Never applies for you; you read and submit each application.', 'Runs on your PC; résumé, profile and scores stay there.', '$299 once. No renewal.'], watch: 'Windows only, no Mac yet. Needs a Claude account on top. Made by one person. No reviews on Trustpilot yet: the product shipped in October 2026.', rating: '', links: [['The site', 'https://mynextbeacon.com/?ref=compare'], ['Privacy page', 'https://mynextbeacon.com/privacy.html']] },
+    { name: 'Teal', site: 'https://www.tealhq.com/', price: '$29 / month', priceNote: 'Teal+; also $13 a week or $79 a quarter; a free tier', marks: { companies: 0, reasons: 1, true: 1, submit: 2, private: 0, once: 0 }, best: 'A free tracker and résumé builder with a large library of free advice.', why: ['Searches job boards and tracks applications; it does not watch the company boards you name each day.', 'Gives a keyword match score per posting; the reasons are the keywords.', 'An AI writer for résumés and cover letters; no fact check against your CV is described.', 'No auto-apply; you apply yourself.', 'Cloud service.', 'Weekly, monthly or quarterly plans that renew.'], watch: 'Reviews mention daily marketing emails whose unsubscribe fails and stale "ghost" listings.', rating: '4.2 of 5 (118 reviews)', links: [['Site', 'https://www.tealhq.com/'], ['Trustpilot', T + 'tealhq.com']] },
+    { name: 'Jobscan', site: 'https://www.jobscan.co/', price: '$49.95 / month', priceNote: 'Premium; $89.95 a quarter; free tier of five scans a month', marks: { companies: 0, reasons: 1, true: 1, submit: 2, private: 0, once: 0 }, best: 'Checking a finished résumé against one posting’s applicant-tracking filter.', why: ['Scans a posting you paste; it does not find postings.', 'Reports a match rate against the posting’s keywords and the applicant-tracking system it detects.', 'Suggests keywords to add; no check that a claim is true to your CV.', 'You apply yourself.', 'Cloud service.', 'Monthly or quarterly, renewing.'], watch: 'Reviews report multi-month charges after choosing a one-month plan and no way to cancel inside the account.', rating: '4.3 of 5 (346 reviews)', links: [['Site', 'https://www.jobscan.co/'], ['Trustpilot', T + 'www.jobscan.co']] },
+    { name: 'Simplify', site: 'https://simplify.jobs/', price: '$39.99 / month', priceNote: 'Simplify+; also $19.99 a week or $89.99 a quarter; a free autofill tier', marks: { companies: 1, reasons: 1, true: 1, submit: 1, private: 0, once: 0 }, best: 'Students and early-career searchers who want one-click autofill on many applications.', why: ['Daily matches from its own job index, not the boards you name.', 'A match score per posting.', 'AI tailoring of the résumé; no fact check described.', 'Autofill where you submit, and an Autopilot tier that submits without a preview.', 'Cloud service.', 'Weekly, monthly or quarterly, renewing.'], watch: 'Reviews report refunds refused after same-day cancellation and autofill that misses fields silently.', rating: '2.8 of 5 (21 reviews)', links: [['Site', 'https://simplify.jobs/'], ['Trustpilot', T + 'simplify.jobs']] },
+    { name: 'Careerflow', site: 'https://www.careerflow.ai/', price: '$23.99 / month', priceNote: 'Premium; Premium Plus $44.99 a month; a free tier', marks: { companies: 0, reasons: 0, true: 1, submit: 2, private: 0, once: 0 }, best: 'Candidates aiming at the big technology companies, with LinkedIn profile help.', why: ['A tracker and LinkedIn tools; it does not watch company boards.', 'No per-posting reasons.', 'AI résumé and cover-letter help; no fact check described.', 'You apply yourself.', 'Cloud service.', 'Weekly to yearly plans, renewing.'], watch: 'A small review count; reviews mention no way to delete an account.', rating: '3.8 of 5 (20 reviews)', links: [['Site', 'https://www.careerflow.ai/'], ['Trustpilot', T + 'careerflow.ai']] },
+    { name: 'Rezi', site: 'https://www.rezi.ai/', price: '$29 / month, or $149 once', priceNote: 'Pro monthly, or a Lifetime plan paid once', marks: { companies: 0, reasons: 0, true: 0, submit: 2, private: 0, once: 2 }, best: 'A résumé builder with a one-time price.', why: ['A résumé builder; it does not find postings.', 'No per-posting reasons.', 'Reviews in October 2026 report the AI rewording generically, changing dates and striking job titles.', 'You apply yourself.', 'Cloud service.', 'A $149 Lifetime plan, paid once.'], watch: 'October 2026 reviews report the AI changing dates and job titles, and email-only support.', rating: '4.6 of 5 (1,008 reviews)', links: [['Pricing', 'https://www.rezi.ai/pricing'], ['Trustpilot', T + 'rezi.ai']] },
+    { name: 'Ladders', site: 'https://www.theladders.com/', price: '$49.97 / month', priceNote: 'Premium; $24.97 a month on an annual plan ($299.64)', marks: { companies: 0, reasons: 0, true: 1, submit: 1, private: 0, once: 0 }, best: 'A job board filtered to roles paying $100,000 and up.', why: ['A job board; it does not watch the companies you name.', 'No per-posting reasons.', 'A résumé-writing service; reviews call the output AI-looking.', 'Apply4Me: their staff submit up to 50 applications a month for you.', 'Cloud service.', 'Monthly or annual, renewing.'], watch: 'The lowest rating in this set: pop-up upsells, heavy email and charges after cancelling.', rating: '1.9 of 5 (409 reviews)', links: [['Site', 'https://www.theladders.com/'], ['Trustpilot', T + 'theladders.com']] },
+    { name: 'Jobright', site: 'https://jobright.ai/', price: '$39.99 / month', priceNote: 'Turbo; also $17.99 a week; a free tier with daily caps', marks: { companies: 1, reasons: 1, true: 0, submit: 1, private: 0, once: 0 }, best: 'A large free tier and daily matches for a broad search.', why: ['Daily matches from its own index; reviews mention stale listings.', 'Match scores with short reasons.', 'Reviews report the résumé AI inserting skills that were not on the résumé.', 'Apply yourself, or an auto-apply option.', 'Cloud service.', 'Annual plans that auto-renew lead the one-star reviews.'], watch: 'Annual auto-renew and a hard cancel dominate the one-star reviews; daily caps on customisation.', rating: '4.8 of 5 (3,703 reviews)', links: [['Site', 'https://jobright.ai/'], ['Trustpilot', T + 'jobright.ai']] },
+    { name: 'JobCopilot', site: 'https://jobcopilot.com/', price: 'from $0.93 / day', priceNote: 'Premium, billed weekly, monthly or quarterly; no trial', marks: { companies: 1, reasons: 1, true: 0, submit: 1, private: 0, once: 0 }, best: 'Auto-apply with a review-before-send option.', why: ['Says it checks career pages every two hours.', 'Match filters and strictness settings.', 'Reviews report the AI inventing job titles and experience.', 'You choose: review each application, or let it send.', 'Cloud service.', 'Recurring billing; reviews report a cancel button that reloads the page.'], watch: 'Sixty-one percent of its reviews are one star: invented résumé content, cancellation and refund trouble.', rating: '1.8 of 5 (95 reviews)', links: [['Site', 'https://jobcopilot.com/'], ['Trustpilot', T + 'jobcopilot.com']] },
+    { name: 'Sonara', site: 'https://www.sonara.ai/', price: '$23.95 / 4 weeks', priceNote: '$2.95 for a 14-day trial, then $23.95 every four weeks; $71.40 a year', marks: { companies: 0, reasons: 1, true: 1, submit: 0, private: 0, once: 0 }, best: 'A cheap trial of automated applying.', why: ['Matches from job boards; it does not watch the companies you name.', 'Smart matching with a score.', 'Reviews mention repeated or poorly matched listings.', 'Applies for you.', 'Cloud service.', 'The trial converts to a four-weekly charge.'], watch: 'The $2.95 trial converting silently to $23.95 a month is the most repeated complaint.', rating: '3.8 of 5 (102 reviews)', links: [['Site', 'https://www.sonara.ai/'], ['Trustpilot', T + 'sonara.ai']] },
+    { name: 'AIApply', site: 'https://aiapply.co/', price: '$29 / month + credits', priceNote: 'Premium subscription plus Auto-Apply credit packs, about $49 for 100', marks: { companies: 0, reasons: 0, true: 1, submit: 0, private: 0, once: 0 }, best: 'Volume applying for early-career searchers.', why: ['Applies across job boards; it does not watch the companies you name.', 'No per-posting reasons.', 'Reviews report applications sent to the wrong kind of role.', 'Applies for you; the base plan does not include auto-apply.', 'Cloud service.', 'Subscription plus credit packs, non-refundable.'], watch: 'Reviews report auto-apply sending a product manager to engineering roles, and no refunds.', rating: '4.3 of 5 (2,116 reviews)', links: [['Site', 'https://aiapply.co/'], ['Trustpilot', T + 'aiapply.co']] },
+    { name: 'LazyApply', site: 'https://lazyapply.com/', price: '$99 to $999 / year', priceNote: 'Basic $99 (15 a day), Premium $149 (150 a day), Ultimate $999 (1,500 a day); annual only', marks: { companies: 0, reasons: 0, true: 0, submit: 0, private: 0, once: 0 }, best: 'The most applications per day, on LinkedIn, Indeed and ZipRecruiter.', why: ['Mass-applies on job boards; it does not watch the companies you name.', 'No reasons; the headline number is applications per day.', 'Reviews report name fields left blank and visa questions answered wrongly.', 'Applies for you, by the hundred.', 'Cloud service.', 'Annual plans.'], watch: 'Reviews report unresponsive support, forms filled wrongly, and refunds ignored.', rating: '2.1 of 5 (110 reviews)', links: [['Site', 'https://lazyapply.com/'], ['Trustpilot', T + 'lazyapply.com']] },
+  ];
+  const critBox = document.getElementById('crit');
+  critBox.innerHTML = CRITERIA.map((c) => `<label><input type="checkbox" data-k="${c.k}" checked><span><b>${c.name}</b>${c.why}</span></label>`).join('');
+  const markHtml = (v) => `<i class="mark ${v === 2 ? 'y' : v === 1 ? 'p' : 'n'}" aria-label="${v === 2 ? 'yes' : v === 1 ? 'partly' : 'no'}"></i>`;
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+  function render() {
+    const on = [...critBox.querySelectorAll('input')].filter((i) => i.checked).map((i) => i.dataset.k);
+    const max = on.length * 2;
+    const scored = TOOLS.map((t, i) => ({ t, i, score: on.reduce((s, k) => s + t.marks[k], 0) })).sort((a, b) => b.score - a.score || a.i - b.i);
+    document.getElementById('rows').innerHTML = scored.map((r, n) => `<tr class="${n === 0 && max ? 'top' : ''}"><td class="rank">${n + 1}</td><td class="tool"><b>${esc(r.t.name)}</b><small>${esc(r.t.best)}</small></td><td class="price">${esc(r.t.price)}</td>${CRITERIA.map((c) => `<td class="c" style="${on.includes(c.k) ? '' : 'opacity:.3'}">${markHtml(r.t.marks[c.k])}</td>`).join('')}<td class="total">${r.score}<small> of ${max}</small></td></tr>`).join('');
+    document.getElementById('cards').innerHTML = scored.map((r, n) => `<article class="cardt ${n === 0 && max ? 'top' : ''}" id="t-${r.t.name.toLowerCase()}"><div class="hd"><span class="n">${n + 1}</span><h3>${esc(r.t.name)}</h3><span class="pr">${esc(r.t.price)}${r.t.priceNote ? ' &middot; ' + esc(r.t.priceNote) : ''}</span></div><p><b style="color:var(--fg);font-weight:500">Best for:</b> ${esc(r.t.best)}</p><ul class="why">${CRITERIA.map((c, j) => `<li>${markHtml(r.t.marks[c.k])}<span><b style="color:var(--fg);font-weight:500">${esc(c.name)}.</b> ${esc(r.t.why[j])}</span></li>`).join('')}</ul><p><b style="color:var(--fg);font-weight:500">Watch out:</b> ${esc(r.t.watch)}${r.t.rating ? ` <span style="color:var(--faint)">Trustpilot ${esc(r.t.rating)}, 30 October 2026.</span>` : ''}</p><div class="links">${r.t.links.map(([l, u]) => `<a href="${u}" rel="nofollow noopener" target="_blank">${esc(l)}</a>`).join('')}</div></article>`).join('');
+  }
+  critBox.addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>
