@@ -66,9 +66,18 @@
   function ask(){
     tries++;
     fetch(DELIVERY_URL + "/purchase?session_id=" + encodeURIComponent(sid)).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
-      if (d && d.key) {
+      if (d && d.key && d.upgraded) {
+        // An upgrade from Lite to the full product: same key, nothing to download; the app sees it within a minute.
+        document.querySelector(".head h1").textContent = "Thank you. Your NextBeacon is now the full version.";
+        document.querySelector(".head .lede").textContent = "Your purchase key is unchanged. Open NextBeacon on your computer: it sees the upgrade on its own within a minute, or press Check for updates on the Config page. Then sign in to your Claude account on the Your AI page if you have not yet. The full features need your own paid Claude plan.";
         document.getElementById("pkey").textContent = d.key;
-        document.getElementById("pnote").textContent = "The key unlocks NextBeacon on one Windows PC. Keep it with the email that is on its way to you.";
+        document.getElementById("pnote").textContent = "The same key, now the full NextBeacon. A confirmation email is on its way.";
+        document.getElementById("pdl").hidden = true;
+        var steps = document.querySelector(".steps"); if (steps) steps.hidden = true;
+        wait.hidden = true; box.hidden = false;
+      } else if (d && d.key) {
+        document.getElementById("pkey").textContent = d.key;
+        document.getElementById("pnote").textContent = d.plan === "lite" ? "The key unlocks NextBeacon Lite on one computer. Keep it with the email that is on its way to you. No Claude account is needed for Lite." : "The key unlocks NextBeacon on one computer. Keep it with the email that is on its way to you.";
         document.getElementById("pdl").href = d.download_url;
         wait.hidden = true; box.hidden = false;
       } else if (tries < 6) { setTimeout(ask, 3000); } else { wait.textContent = "Your purchase is confirmed. The email with your key and download link is on its way."; }
