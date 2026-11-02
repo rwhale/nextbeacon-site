@@ -72,8 +72,8 @@
         document.querySelector(".head .lede").textContent = "Your purchase key is unchanged. Open NextBeacon on your computer: it sees the upgrade on its own within a minute, or press Check for updates on the Config page. Then sign in to your Claude account on the Your AI page if you have not yet. The full features need your own paid Claude plan.";
         document.getElementById("pkey").textContent = d.key;
         document.getElementById("pnote").textContent = "The same key, now the full NextBeacon. A confirmation email is on its way.";
-        document.getElementById("pdl").hidden = true;
-        var steps = document.querySelector(".steps"); if (steps) steps.hidden = true;
+        document.getElementById("pdl").style.display = "none";
+        var steps = document.querySelector(".steps"); if (steps) steps.style.display = "none"; var wn = document.getElementById("wait-note"); if (wn) wn.innerHTML = "Questions about the upgrade? Email <a href=\"mailto:info@mynextbeacon.com\">info@mynextbeacon.com</a>.";
         wait.hidden = true; box.hidden = false;
       } else if (d && d.key) {
         document.getElementById("pkey").textContent = d.key;
