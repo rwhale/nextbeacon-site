@@ -234,15 +234,33 @@ td.yes{color:var(--ok);font-weight:500}
 td.no{color:var(--faint)}
 .note{margin-top:12px;font-size:.8rem;color:var(--faint)}
 
-/* two-column cards: who it is for, price */
+/* the two versions: NextBeacon first and larger, Lite second */
+.plans{display:grid;grid-template-columns:1.18fr .82fr;gap:14px;margin-bottom:14px}
+.plans .card{grid-column:auto;position:relative;display:grid;gap:12px;align-content:start}
+.plans .card.lead{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand),var(--shadow);padding-top:30px}
+.plans .pick{position:absolute;top:-13px;left:22px;padding:6px 12px;border-radius:999px;background:var(--brand);color:var(--brand-fg);font:500 11px/1 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+.plans h3{margin:0;font:400 1.45rem/1.15 var(--serif)}
+.plans h3 .price{display:block;margin-top:6px;font-size:2.2rem;line-height:1;color:var(--brand)}
+.plans h3 .price small{font:400 .95rem/1 var(--sans);color:var(--muted);margin-left:6px}
+.plans .lede-p{color:var(--fg);font-size:1rem}
+.plans ul.plain{margin:0;padding:0;list-style:none;display:grid;gap:8px;color:var(--muted);font-size:.93rem}
+.plans ul.plain li{display:block;position:relative;padding-left:24px}
+.plans ul.plain li::before{content:"";position:absolute;left:0;top:14px;width:14px;height:14px;background:var(--ok);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat}
+.plans ul.plain.not li::before{background:var(--faint);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/contain no-repeat}
+.plans .plan-cta{margin-top:4px}
+.plans .plan-fine{font-size:.82rem;color:var(--faint)}
+
+/* two-column cards: the arithmetic, the checklist */
 .need{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.need.one{grid-template-columns:1fr}
+.need.one ul.plain{grid-template-columns:1fr 1fr;column-gap:28px}
 .need .card{grid-column:auto}
 .need h3{margin-top:0}
 .price{font-size:2.2rem;color:var(--brand)}
 .need ul{margin:12px 0 0;padding-left:18px;color:var(--muted);font-size:.93rem;display:grid;gap:7px}
 .need ul.plain{list-style:none;padding-left:0}
-.need ul.plain li{display:flex;gap:10px;align-items:flex-start}
-.need ul.plain li::before{content:"";flex:none;width:14px;height:14px;margin-top:4px;background:var(--ok);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat}
+.need ul.plain li{display:block;position:relative;padding-left:24px}
+.need ul.plain li::before{content:"";position:absolute;left:0;top:14px;width:14px;height:14px;background:var(--ok);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5 9-10'/%3E%3C/svg%3E") center/contain no-repeat}
 .need ul.plain.not li::before{background:var(--faint);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M6 6l12 12M18 6L6 18'/%3E%3C/svg%3E") center/contain no-repeat}
 .math{margin-top:22px;padding:18px 20px;border-radius:12px;background:var(--brand-soft);color:var(--brand-fg);font-size:.95rem}
 .math b{font-weight:500}
@@ -295,7 +313,8 @@ footer span{color:var(--faint)}
   .group:nth-child(2){border-right:0}
   .group:nth-child(-n+2){border-bottom:1px solid var(--border)}
   .steps{grid-template-columns:1fr 1fr;row-gap:26px}
-  .need{grid-template-columns:1fr}
+  .need,.need.one ul.plain{grid-template-columns:1fr}
+  .plans{grid-template-columns:1fr}
   .founder{grid-template-columns:1fr}
   .tag{max-width:320px}
   .buy-box{grid-template-columns:1fr}
@@ -651,19 +670,46 @@ footer span{color:var(--faint)}
   <div class="wrap">
     <div class="head">
       <p class="eyebrow"><i>//</i> price</p>
-      <h2>One price. Yours to keep.</h2>
+      <h2>Two versions. Either one is yours to keep.</h2>
+      <p>One payment, no subscription and no monthly fee to NextBeacon, ever. Licensed for one computer, for your own job search. One installer and a page-by-page setup in plain language. No call needed.</p>
     </div>
-    <div class="need">
-      <div class="card"><h3><span class="price">$299</span> once</h3><ul>
-        <li>One payment. No subscription and no monthly fee to NextBeacon, ever.</li>
-        <li>Licensed for one Windows PC, for your own job search.</li>
-        <li>Self-serve: one installer and a page-by-page setup in plain language. No call needed.</li>
-      </ul>
-      <div class="math"><b>The arithmetic.</b> $120,000 a year is $2,308 a week ($120,000 ÷ 52). Every week the search runs on is a week of that pay you never collect. If NextBeacon saves you one week, it has paid for itself seven times over. <span class="math-note">$120,000 is about the U.S. median pay for management jobs (Bureau of Labor Statistics, May 2024: $122,090). Use your own number: last salary ÷ 52.</span></div>
+    <div class="plans">
+      <div class="card lead">
+        <span class="pick">Most people choose this</span>
+        <h3>NextBeacon<span class="price">$299<small>once</small></span></h3>
+        <p class="lede-p">The full product: AI that reads every posting against your real background and writes résumés you can stand behind.</p>
+        <ul class="plain">
+          <li>Watches the companies you choose and emails you every morning.</li>
+          <li>Scores every matching posting 1 to 5 against your own CV, with the reasoning.</li>
+          <li>Writes a tailored résumé and cover letter for the roles you pick, every claim checked word for word against your CV.</li>
+          <li>Drafts your answers to application questions.</li>
+          <li>Keeps your pipeline: Today, Applied, Interviewing, Follow-ups.</li>
+        </ul>
+        <div class="plan-cta"><a class="btn primary" href="https://buy.stripe.com/14A00jbUr7TD7cv5wS9EI00">Buy NextBeacon · $299</a></div>
+        <p class="plan-fine">Needs a paid Claude plan from Anthropic on an account in your name, about $20 a month, paid to Anthropic. The checklist below has the details.</p>
+        <div class="math"><b>The arithmetic.</b> $120,000 a year is $2,308 a week ($120,000 ÷ 52). Every week the search runs on is a week of that pay you never collect. If NextBeacon saves you one week, it has paid for itself seven times over. <span class="math-note">$120,000 is about the U.S. median pay for management jobs (Bureau of Labor Statistics, May 2024: $122,090). Use your own number: last salary ÷ 52.</span></div>
       </div>
+      <div class="card">
+        <h3>NextBeacon Lite<span class="price">$129<small>once</small></span></h3>
+        <p class="lede-p">No separate AI account needed. Watches your companies, ranks the matches by fit, emails you every morning.</p>
+        <ul class="plain">
+          <li>Watches the companies you choose and emails you every morning.</li>
+          <li>Keeps the postings whose titles match the roles you want.</li>
+          <li>Ranks each one Strong, Possible or Weak fit, with the reasons: your title words, terms shared with your résumé, pay against your floor, remote or on-site.</li>
+          <li>Keeps your pipeline: Today, Applied, Interviewing, Follow-ups.</li>
+        </ul>
+        <ul class="plain not" aria-label="Not included in Lite">
+          <li>No AI score and no reasoning.</li>
+          <li>No written résumés, cover letters or application answers.</li>
+        </ul>
+        <div class="plan-cta"><a class="btn" href="https://buy.stripe.com/7sY6oH8Ifc9T40jaRc9EI01">Buy NextBeacon Lite · $129</a></div>
+        <p class="plan-fine">Upgrade to the full NextBeacon any time, from inside the app, for the $170 difference. No reinstall.</p>
+      </div>
+    </div>
+    <div class="need one">
       <div class="card"><h3>Before you buy, check that you have</h3><ul class="plain">
         <li>A Windows 10 or 11 PC with 8 GB of memory and 4 GB of free disk space. The installer checks this before it installs anything.</li>
-        <li>A paid Claude plan from Anthropic, on an account in your name. Claude Pro at about $20 a month is enough. If you do not have Claude yet, <a href="https://claude.ai/download" target="_blank" rel="noopener">download it from Anthropic</a>.</li>
+        <li>For the full NextBeacon: a paid Claude plan from Anthropic, on an account in your name. Claude Pro at about $20 a month is enough. If you do not have Claude yet, <a href="https://claude.ai/download" target="_blank" rel="noopener">download it from Anthropic</a>. NextBeacon Lite needs no separate AI account.</li>
         <li>An internet connection that can reach Claude and the job boards. Home networks usually can; some work networks block them.</li>
         <li>About fifteen minutes for the guided setup, mostly waiting.</li>
         <li>Your résumé as a PDF, Word file or text.</li>
@@ -673,10 +719,11 @@ footer span{color:var(--faint)}
       <div>
         <p class="eyebrow"><i>//</i> get nextbeacon</p>
         <h3>Ready to buy NextBeacon?</h3>
-        <p>$299, one time, through secure checkout by Stripe. The thank-you page and your receipt carry the download link and your purchase key, so you can be installing within minutes.</p>
+        <p>$299 one time, or $129 for NextBeacon Lite, through secure checkout by Stripe. The thank-you page and your receipt carry the download link and your purchase key, so you can be installing within minutes.</p>
       </div>
       <div class="cta-row">
         <a class="btn primary" href="https://buy.stripe.com/14A00jbUr7TD7cv5wS9EI00">Buy NextBeacon · $299</a>
+        <a class="btn" href="https://buy.stripe.com/7sY6oH8Ifc9T40jaRc9EI01">Buy Lite · $129</a>
       </div>
     </div>
   </div>
@@ -693,8 +740,9 @@ footer span{color:var(--faint)}
       <details><summary>Will the AI make things up on my résumé?</summary><p>It is built not to. Before a résumé is saved, every number, employer, job title, degree and certification is checked word for word against your own CV, and anything that is not there is removed. AI can still make mistakes, so read every résumé and letter before you send it. You always have the final say.</p></details>
       <details><summary>I am not technical. Can I set this up?</summary><p>Yes. You run one installer. It checks that your PC is ready, installs everything it needs, and opens a page-by-page setup that asks plain questions: your résumé, the roles you want, your pay floor, remote or on-site, and the companies to watch. There is no command window and no code. Most people are done in about fifteen minutes.</p></details>
       <details><summary>Where does my information go?</summary><p>It stays on your PC. Your résumé, your profile and your job history live in files on your own computer. They never leave it. The AI work happens through your own Claude account, under your own name, so posting text and parts of your profile go to Anthropic and nowhere else. The full details are on the <a href="privacy.html">privacy page</a>.</p></details>
-      <details><summary>What is Claude, and why do I need an account?</summary><p>Claude is the AI from Anthropic that reads postings, scores them and drafts your résumés. NextBeacon uses it through an account that belongs to you, so your information is never pooled with anyone else's. You pay Anthropic for that plan directly, about $20 a month for Claude Pro. If you do not have Claude on your PC yet, <a href="https://claude.ai/download" target="_blank" rel="noopener">download it from Anthropic</a>. If your plan lapses, the AI features pause until you renew it.</p></details>
-      <details><summary>Is there a subscription?</summary><p>Not to NextBeacon. You pay $299 once and it is yours to keep on one Windows PC. The only running cost is your own Claude plan.</p></details>
+      <details><summary>What is Claude, and why do I need an account?</summary><p>Claude is the AI from Anthropic that reads postings, scores them and drafts your résumés. NextBeacon uses it through an account that belongs to you, so your information is never pooled with anyone else's. You pay Anthropic for that plan directly, about $20 a month for Claude Pro. If you do not have Claude on your PC yet, <a href="https://claude.ai/download" target="_blank" rel="noopener">download it from Anthropic</a>. If your plan lapses, the AI features pause until you renew it. NextBeacon Lite does not use Claude, so it needs no account.</p></details>
+      <details><summary>What is NextBeacon Lite?</summary><p>The same tool without the AI. Lite watches the companies you choose, keeps the postings whose titles match the roles you want, ranks each one Strong, Possible or Weak fit by comparing the posting with your titles, your résumé, your pay floor and your remote setting, and emails you the list every morning. It does not score postings 1 to 5, explain its reasoning, or write résumés, cover letters or application answers. It needs no separate AI account. If you later want the full product, press Unlock in the app, pay the $170 difference, and the full features switch on in place, no reinstall.</p></details>
+      <details><summary>Is there a subscription?</summary><p>Not to NextBeacon. You pay once, $299 for NextBeacon or $129 for NextBeacon Lite, and it is yours to keep on one Windows PC. The only running cost is your own Claude plan, and Lite has none.</p></details>
       <details><summary>Does it work on a Mac?</summary><p>Not yet. NextBeacon runs on Windows 10 and 11. If you only have a Mac, please do not buy it yet.</p></details>
       <details><summary>Can it read every company's job board?</summary><p>Most of them. NextBeacon reads the job boards that companies publish on, and it finds a company's board when you type the company's name. A few large employers block automated reading of their career pages, and those cannot be scanned. You can still add them and check them by hand.</p></details>
       <details><summary>Does it promise interviews or offers?</summary><p>No, and nobody honestly can. NextBeacon helps you choose well and apply well. A score is an opinion about fit, not a prediction. Whether you get the job depends on you, the employer and the market.</p></details>
