@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NextBeacon</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Most postings are noise. NextBeacon finds the few that fit.">
+<!-- Copyright 2026 NextBeacon LLC. All rights reserved.
+     One self-contained animation: the pile of postings, the beam, the five that fit, the fact check,
+     the lighthouse in dots. Canvas, no libraries, no fonts, no network. About 14 seconds, then it loops.
+     Honours prefers-reduced-motion (a still of the final frame) and pauses while the tab is hidden. -->
+<style>
+  :root{color-scheme:dark}
+  html,body{margin:0;height:100%;background:#0f0c09;overflow:hidden}
+  canvas{display:block;width:100vw;height:100vh;width:100dvw;height:100dvh}
+  .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+<canvas id="c" aria-hidden="true"></canvas>
+<p class="sr">Most job postings are noise. NextBeacon reads them every morning, finds the few that fit your experience, and checks every résumé claim against your own CV. A private job search assistant for experienced professionals.</p>
+<script>
+(() => {
+'use strict';
+// ---------- palette (the NextBeacon brand orange, a warm off-white, everything else muted) ----------
+const ORANGE = [224, 122, 47], OFF = [244, 238, 227], INK = '#0f0c09';
+const rgba = (c, a) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+const LOOP = 14;                 // seconds
+const TAGLINE = 'A private job search assistant for experienced professionals.';
+
+// ---------- deterministic randomness, so every run and every screenshot is the same ----------
+const mulberry = (s) => () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+
+// ---------- easing ----------
+const clamp01 = (v) => v < 0 ? 0 : v > 1 ? 1 : v;
+const ramp = (t, a, b) => clamp01((t - a) / (b - a));          // 0 before a, 1 after b
+const io = (x) => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;   // ease in-out
+const out = (x) => 1 - Math.pow(1 - x, 3);                      // ease out
+const inn = (x) => x * x * x;                                   // ease in
+const seg = (t, a, b, f = io) => f(ramp(t, a, b));
+
+// ---------- the five that fit (every role and score is made up) ----------
+// Wide screens: a fan above the lamp, the fifth point low on the left so no line runs past its label.
+// Narrow screens: the five sit on the left, their labels in a clear column on the right, so a line from the
+// lamp (bottom centre) can never cross a label.
+const ROLES = [
+  { role: 'Senior Technical Program Manager', score: '4.2' },
+  { role: 'AI Enablement Lead', score: '4.0' },
+  { role: 'Director, Delivery Operations', score: '4.1' },
+  { role: 'Business Systems Analyst', score: '3.9' },
+  { role: 'Portfolio Planning Manager', score: '3.8' },
+];
+const WIDE_POS = [[.24, .34], [.41, .16], [.59, .25], [.77, .40], [.30, .56]];
+const NARROW_POS = [[.14, .13], [.30, .25], [.20, .37], [.34, .49], [.24, .61]];
+const FIVE = ROLES.map((r, i) => ({ ...r, fx: WIDE_POS[i][0], fy: WIDE_POS[i][1] }));
+const LOGS = ['33,723 postings read', '193 new since yesterday', 'titles matched: 41', 'pay floor applied', 'scoring against your experience', 'checking claims against your CV', '5 worth a look'];
+
+// ---------- the lighthouse mark as dots (56 x 96 design units) ----------
+const inTri = (px, py, ax, ay, bx, by, cx, cy) => { const s1 = (bx - ax) * (py - ay) - (by - ay) * (px - ax), s2 = (cx - bx) * (py - by) - (cy - by) * (px - bx), s3 = (ax - cx) * (py - cy) - (ay - cy) * (px - cx); return (s1 >= 0 && s2 >= 0 && s3 >= 0) || (s1 <= 0 && s2 <= 0 && s3 <= 0); };
+const inMark = (x, y) => {
+  if (y >= 88 && y <= 96 && x >= 9 && x <= 47) return 1;                       // plinth
+  if (y >= 27 && y <= 32 && x >= 13 && x <= 43) return 1;                       // gallery
+  if (y >= 14 && y <= 27 && x >= 21.5 && x <= 34.5) return 2;                   // lamp room (brighter)
+  if (y >= 5 && y <= 14 && inTri(x, y, 18.5, 14, 28, 5, 37.5, 14)) return 1;    // roof
+  if (y >= 32 && y <= 88) { const k = (y - 31) / 57, l = 20 - 5 * k, r = 36 + 5 * k; if (x >= l && x <= r) return 1; } // tower
+  return 0;
+};
+const MARK = [];
+for (let y = 7; y <= 94; y += 4.6) for (let x = 7; x <= 49; x += 4.6) { const k = inMark(x, y); if (k) MARK.push({ x: x - 28, y: y - 50, lamp: k === 2 }); }
+const MARK_FIVE = [MARK.find(d => d.lamp), MARK[Math.floor(MARK.length * .35)], MARK[Math.floor(MARK.length * .55)], MARK[Math.floor(MARK.length * .75)], MARK[MARK.length - 3]];
+
+// ---------- canvas ----------
+const cv = document.getElementById('c'), ctx = cv.getContext('2d');
+let W = 0, H = 0, DPR = 1, narrow = false, stars = [], pts = [], glowBig, glowSmall;
+const sprite = (size, c, inner) => { const o = document.createElement('canvas'); o.width = o.height = size; const g = o.getContext('2d'); const r = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2); r.addColorStop(0, rgba(c, inner)); r.addColorStop(.35, rgba(c, inner * .35)); r.addColorStop(1, rgba(c, 0)); g.fillStyle = r; g.fillRect(0, 0, size, size); return o; };
+function layout() {
+  W = innerWidth; H = innerHeight; DPR = Math.min(devicePixelRatio || 1, 2); narrow = W < 700;
+  FIVE.forEach((f, i) => { const p = (narrow ? NARROW_POS : WIDE_POS)[i]; f.fx = p[0]; f.fy = p[1]; });
+  cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR); ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  const rs = mulberry(7); stars = []; const ns = narrow ? 90 : 190;
+  for (let i = 0; i < ns; i++) stars.push({ x: rs() * W, y: rs() * H, r: .35 + rs() * .9, a: .12 + rs() * .45, p: rs() * 6.28, s: .3 + rs() * .7 });
+  const rp = mulberry(11); pts = []; const n = narrow ? 120 : 300;
+  for (let i = 0; i < n; i++) pts.push({ fx: .04 + rp() * .92, fy: .05 + rp() * .62, r: .9 + rp() * 1.1, a: .18 + rp() * .3, p: rp() * 6.28, d: rp() * 1.3 });
+  glowBig = sprite(160, ORANGE, .9); glowSmall = sprite(48, ORANGE, 1);
+}
+addEventListener('resize', layout); layout();
+
+// ---------- geometry that depends on the frame size ----------
+const G = () => {
+  const m = Math.min(W, H), lh = Math.round(m * (narrow ? .17 : .21));   // lighthouse height
+  const cx = W / 2, baseY = H * (narrow ? .88 : .82), lampY = baseY - lh * .84;
+  return { m, lh, cx, baseY, lampY, markScale: m * (narrow ? .0036 : .0040), markY: H * (narrow ? .40 : .42) };
+};
+const fivePos = (t) => FIVE.map((f, i) => ({ x: f.fx * W + Math.sin(t * .25 + i) * 3, y: f.fy * H + Math.cos(t * .2 + i * 1.7) * 2 }));
+const angTo = (g, p) => Math.atan2(p.y - g.lampY, p.x - g.cx);
+
+// ---------- labels: placed so none overlaps another label or any line ----------
+const segHit = (x1, y1, x2, y2, r) => {   // does segment cross rect r {x,y,w,h}?
+  const inside = (x, y) => x >= r.x && x <= r.x + r.w && y >= r.y && y <= r.y + r.h;
+  if (inside(x1, y1) || inside(x2, y2)) return true;
+  const edges = [[r.x, r.y, r.x + r.w, r.y], [r.x + r.w, r.y, r.x + r.w, r.y + r.h], [r.x + r.w, r.y + r.h, r.x, r.y + r.h], [r.x, r.y + r.h, r.x, r.y]];
+  const cross = (ax, ay, bx, by, cx, cy, dx, dy) => { const d = (bx - ax) * (dy - cy) - (by - ay) * (dx - cx); if (!d) return false; const u = ((cx - ax) * (dy - cy) - (cy - ay) * (dx - cx)) / d, v = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) / d; return u >= 0 && u <= 1 && v >= 0 && v <= 1; };
+  return edges.some(e => cross(x1, y1, x2, y2, e[0], e[1], e[2], e[3]));
+};
+const rectHit = (a, b) => !(a.x + a.w < b.x || b.x + b.w < a.x || a.y + a.h < b.y || b.y + b.h < a.y);
+function labelFont() { return `500 ${narrow ? 12 : 13}px system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif`; }
+function wrapRole(role, maxW) {   // narrow screens: the role on one or two lines, the score on its own
+  const words = role.split(' '), lines = []; let cur = '';
+  for (const w of words) { const t = cur ? cur + ' ' + w : w; if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; }
+  if (cur) lines.push(cur); return lines;
+}
+function placeLabels(g, pos) {
+  ctx.font = labelFont();
+  if (narrow) {
+    const x = Math.round(W * .44), w = W - 8 - x;
+    return pos.map((p, i) => { const ls = wrapRole(FIVE[i].role, w - 18); const h = 14 * (ls.length + 1) + 10; return { x, y: Math.round(p.y - h / 2), w, h, lines: ls }; });
+  }
+  const lines = pos.map(p => [g.cx, g.lampY, p.x, p.y]);
+  const placed = [];
+  const order = pos.map((p, i) => i).sort((a, b) => pos[a].y - pos[b].y);
+  const result = new Array(pos.length);
+  for (const i of order) {
+    const f = FIVE[i], p = pos[i];
+    const roleW = ctx.measureText(f.role).width, scoreW = ctx.measureText(' · ' + f.score).width;
+    const w = narrow ? Math.max(roleW, ctx.measureText(f.score).width) + 18 : roleW + scoreW + 20, h = narrow ? 40 : 24, gap = 11;
+    const cands = [
+      { x: p.x + gap, y: p.y - h / 2 }, { x: p.x - gap - w, y: p.y - h / 2 },
+      { x: p.x - w / 2, y: p.y - gap - h }, { x: p.x - w / 2, y: p.y + gap },
+      { x: p.x + gap, y: p.y - gap - h }, { x: p.x - gap - w, y: p.y - gap - h },
+      { x: p.x + gap, y: p.y + gap }, { x: p.x - gap - w, y: p.y + gap },
+    ];
+    let pick = null;
+    for (const c of cands) {
+      const r = { x: c.x, y: c.y, w, h };
+      if (r.x < 8 || r.y < 8 || r.x + r.w > W - 8 || r.y + r.h > H - 8) continue;
+      if (placed.some(q => rectHit(r, q))) continue;
+      if (lines.some((l, j) => j !== i && segHit(l[0], l[1], l[2], l[3], r))) continue;
+      pick = r; break;
+    }
+    if (!pick) { // last resort: slide the right-hand candidate upward until it is clear
+      for (let dy = 0; dy < 160 && !pick; dy += 6) { const r = { x: p.x + gap, y: p.y - h / 2 - dy, w, h }; if (r.y >= 8 && !placed.some(q => rectHit(r, q)) && !lines.some((l, j) => j !== i && segHit(l[0], l[1], l[2], l[3], r))) pick = r; }
+      if (!pick) pick = { x: p.x + gap, y: p.y - h / 2, w, h };
+    }
+    placed.push(pick); result[i] = pick;
+  }
+  return result;
+}
+
+// ---------- drawing ----------
+const glow = (img, x, y, s, a) => { if (a <= 0) return; ctx.globalAlpha = a; ctx.drawImage(img, x - s / 2, y - s / 2, s, s); ctx.globalAlpha = 1; };
+function drawStars(t) {
+  for (const s of stars) { const tw = .75 + .25 * Math.sin(t * s.s + s.p); ctx.fillStyle = rgba(OFF, s.a * tw); ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.283); ctx.fill(); }
+}
+function drawLighthouse(g, rise, lamp, alpha) {
+  if (alpha <= 0) return;
+  const { cx, baseY, lh } = g, u = lh / 96, y0 = baseY + (1 - rise) * lh * 1.1 - 96 * u;
+  ctx.save(); ctx.globalAlpha = alpha; ctx.translate(cx - 28 * u, y0); ctx.scale(u, u);
+  ctx.fillStyle = rgba(OFF, .92);
+  ctx.fillRect(9, 88, 38, 8); ctx.beginPath(); ctx.moveTo(20, 31); ctx.lineTo(36, 31); ctx.lineTo(41, 88); ctx.lineTo(15, 88); ctx.closePath(); ctx.fill();
+  ctx.fillRect(13, 27, 30, 5); ctx.beginPath(); ctx.moveTo(18.5, 14); ctx.lineTo(28, 5); ctx.lineTo(37.5, 14); ctx.closePath(); ctx.fill();
+  ctx.fillStyle = INK; ctx.fillRect(25.5, 44, 5, 7); ctx.fillRect(25, 62, 6, 7);
+  ctx.fillStyle = rgba(ORANGE, .25 + .75 * lamp); ctx.fillRect(21.5, 14, 13, 13);
+  ctx.restore();
+  glow(glowBig, cx, g.lampY, lh * 1.1, lamp * .8 * alpha);
+}
+function drawBeam(g, ang, width, alpha, len) {
+  if (alpha <= 0) return;
+  ctx.save(); ctx.translate(g.cx, g.lampY); ctx.rotate(ang); ctx.globalCompositeOperation = 'lighter';
+  const L = len, grad = ctx.createLinearGradient(0, 0, L, 0);
+  grad.addColorStop(0, rgba(ORANGE, .55 * alpha)); grad.addColorStop(.45, rgba(ORANGE, .18 * alpha)); grad.addColorStop(1, rgba(ORANGE, 0));
+  for (const [k, a] of [[2.2, .35], [1, 1]]) { const hw = Math.tan(width * k) * L; ctx.globalAlpha = a; ctx.fillStyle = grad; ctx.beginPath(); ctx.moveTo(0, 0); ctx.lineTo(L, -hw); ctx.lineTo(L, hw); ctx.closePath(); ctx.fill(); }
+  ctx.restore();
+}
+function drawLogs(g, t) {
+  const a = seg(t, 2, 2.8) * (1 - seg(t, 7.4, 8.2));
+  if (a <= 0) return;
+  ctx.font = `${narrow ? 10 : 11}px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`; ctx.textBaseline = 'alphabetic'; ctx.textAlign = 'left';
+  const x = narrow ? 14 : Math.max(24, g.cx - g.m * .62), top = H * (narrow ? .64 : .58), lineH = narrow ? 15 : 17, scroll = (t - 2) * lineH * .55;
+  for (let i = 0; i < LOGS.length; i++) {
+    const y = top + i * lineH * 1.6 - scroll * .6 + lineH * 3;
+    const vis = ramp(t, 2.2 + i * .55, 2.7 + i * .55) * (1 - ramp(y, top - lineH, top - lineH * .2));
+    if (vis <= 0 || y > H * .8) continue;
+    ctx.fillStyle = rgba(OFF, .22 * a * vis); ctx.fillText(LOGS[i], x, y);
+  }
+}
+function roundRect(x, y, w, h, r) { ctx.beginPath(); ctx.moveTo(x + r, y); ctx.arcTo(x + w, y, x + w, y + h, r); ctx.arcTo(x + w, y + h, x, y + h, r); ctx.arcTo(x, y + h, x, y, r); ctx.arcTo(x, y, x + w, y, r); ctx.closePath(); }
+function drawLabel(r, f, a) {
+  if (a <= 0) return;
+  ctx.globalAlpha = a; ctx.fillStyle = 'rgba(15,12,9,.78)'; roundRect(r.x, r.y, r.w, r.h, 6); ctx.fill();
+  ctx.strokeStyle = rgba(OFF, .14); ctx.lineWidth = 1; ctx.stroke();
+  ctx.font = labelFont(); ctx.textBaseline = 'middle'; ctx.textAlign = 'left';
+  if (narrow) { ctx.fillStyle = rgba(OFF, .92); (r.lines || [f.role]).forEach((ln, k) => ctx.fillText(ln, r.x + 9, r.y + 12 + 14 * k)); ctx.fillStyle = rgba(ORANGE, 1); ctx.fillText(f.score, r.x + 9, r.y + 12 + 14 * (r.lines || [f.role]).length); }
+  else { ctx.fillStyle = rgba(OFF, .92); ctx.fillText(f.role, r.x + 10, r.y + r.h / 2 + .5); const w = ctx.measureText(f.role).width; ctx.fillStyle = rgba(OFF, .45); ctx.fillText(' · ', r.x + 10 + w, r.y + r.h / 2 + .5); ctx.fillStyle = rgba(ORANGE, 1); ctx.fillText(f.score, r.x + 10 + w + ctx.measureText(' · ').width, r.y + r.h / 2 + .5); }
+  ctx.globalAlpha = 1;
+}
+function drawCard(g, t, anchor) {
+  const a = seg(t, 8, 8.4, out) * (1 - seg(t, 10, 10.5));
+  if (a <= 0) return;
+  const w = Math.min(narrow ? 260 : 300, W - 24), h = narrow ? 84 : 88;
+  let x, y;
+  if (narrow) { x = Math.round((W - w) / 2); y = Math.round(H * .66); }
+  else {
+    // below the first label, on the side away from the lamp, in a spot no line crosses
+    const p = { x: anchor.x - 11, y: anchor.y + anchor.h / 2 }, cands = [[p.x - w, anchor.y + anchor.h + 10], [anchor.x, anchor.y + anchor.h + 10], [p.x - w, anchor.y - h - 10], [anchor.x, anchor.y - h - 10], [p.x - w - 20, anchor.y + anchor.h + 40]];
+    let pick = null;
+    for (const [cx, cy] of cands) { const r = { x: cx, y: cy, w, h }; if (r.x < 8 || r.y < 8 || r.x + r.w > W - 8 || r.y + r.h > H - 8) continue; if (lastLines.some(l => segHit(l[0], l[1], l[2], l[3], r))) continue; if (lastLabels.some(q => rectHit(r, q))) continue; pick = r; break; }
+    if (!pick) pick = { x: Math.min(Math.max(8, anchor.x), W - 8 - w), y: anchor.y + anchor.h + 10, w, h };
+    x = pick.x; y = pick.y;
+  }
+  ctx.globalAlpha = a; ctx.fillStyle = 'rgba(15,12,9,.92)'; roundRect(x, y, w, h, 8); ctx.fill(); ctx.strokeStyle = rgba(ORANGE, .45); ctx.lineWidth = 1; ctx.stroke();
+  const fs = narrow ? 11.5 : 12.5, mono = `9px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`;
+  ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+  ctx.font = mono; ctx.fillStyle = rgba(ORANGE, .9); ctx.fillText('R É S U M É   C H E C K', x + 12, y + 15);
+  const f = `${fs}px system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif`;
+  // line 1: the claim that is not in the CV
+  const l1 = 'Managed 50 participants', y1 = y + 38, k1 = ramp(t, 8.3, 8.6);
+  ctx.font = f; ctx.fillStyle = rgba(OFF, .9 * k1); ctx.fillText(l1, x + 12, y1);
+  const w1 = ctx.measureText(l1).width, strike = seg(t, 8.8, 9.15, out);
+  if (strike > 0) { ctx.strokeStyle = rgba(ORANGE, .95); ctx.lineWidth = 1.5; ctx.beginPath(); ctx.moveTo(x + 12, y1 + .5); ctx.lineTo(x + 12 + w1 * strike, y1 + .5); ctx.stroke(); }
+  const tag = 'not in your CV', k2 = ramp(t, 8.55, 8.85); ctx.font = mono; const tw = ctx.measureText(tag).width;
+  ctx.globalAlpha = a * k2; ctx.strokeStyle = rgba(ORANGE, .8); roundRect(x + w - tw - 24, y1 - 8, tw + 12, 16, 8); ctx.stroke(); ctx.fillStyle = rgba(ORANGE, 1); ctx.fillText(tag, x + w - tw - 18, y1 + .5); ctx.globalAlpha = a;
+  // line 2: the claim that is
+  const l2 = 'Led a 40-person program team', y2 = y + 64, k3 = seg(t, 9.2, 9.55, out);
+  ctx.globalAlpha = a * k3; ctx.font = f; ctx.fillStyle = rgba(OFF, .95); ctx.fillText(l2, x + 12 + (1 - k3) * 8, y2);
+  const tag2 = 'in your CV', k4 = ramp(t, 9.45, 9.75); ctx.font = mono; const tw2 = ctx.measureText(tag2).width + 10;
+  ctx.globalAlpha = a * k4; ctx.fillStyle = rgba(ORANGE, .95); roundRect(x + w - tw2 - 24, y2 - 8, tw2 + 12, 16, 8); ctx.fill();
+  ctx.fillStyle = INK; ctx.fillText('✓ ' + tag2, x + w - tw2 - 18, y2 + .5);
+  ctx.globalAlpha = 1;
+}
+function drawMark(g, t, five) {
+  const reveal = seg(t, 11, 12.2, out), fade = 1 - seg(t, 13.4, 14, inn);
+  if (reveal <= 0 || fade <= 0) return;
+  const s = g.markScale, cx = g.cx, cy = g.markY;
+  ctx.save(); ctx.globalCompositeOperation = 'lighter';
+  MARK.forEach((d, i) => {
+    if (MARK_FIVE.includes(d) && t < 12) return;        // those five arrive as the lit points
+    const dist = Math.hypot(d.x, d.y) / 60, k = clamp01((reveal - dist * .55) / .45);
+    if (k <= 0) return;
+    const x = cx + d.x * s, y = cy + d.y * s, a = (d.lamp ? 1 : .8) * k * fade;
+    glow(glowSmall, x, y, s * 9, a * .5); ctx.fillStyle = rgba(ORANGE, a); ctx.beginPath(); ctx.arc(x, y, s * 1.1, 0, 6.283); ctx.fill();
+  });
+  ctx.restore();
+  // tagline
+  const ta = seg(t, 12, 12.8) * fade;
+  if (ta > 0) {
+    const fs = Math.max(15, Math.min(narrow ? 19 : 26, W * (narrow ? .046 : .0135)));
+    ctx.font = `${fs}px Georgia, 'Times New Roman', serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillStyle = rgba(OFF, .94 * ta);
+    const y = cy + 55 * s + fs * 1.6;
+    if (ctx.measureText(TAGLINE).width > W - 40) { const i = TAGLINE.indexOf(' for '); ctx.fillText(TAGLINE.slice(0, i), cx, y); ctx.fillText(TAGLINE.slice(i + 1), cx, y + fs * 1.35); }
+    else ctx.fillText(TAGLINE, cx, y);
+  }
+}
+
+// ---------- one frame at time t (seconds into the loop) ----------
+let lastLabels = [], lastLines = [];
+function render(t) {
+  const g = G();
+  ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = INK; ctx.fillRect(0, 0, W, H);
+  // a soft haze behind everything, warm and very faint, centred above the lamp
+  const hz = ctx.createRadialGradient(g.cx, H * .42, 0, g.cx, H * .42, g.m * .75); hz.addColorStop(0, rgba(ORANGE, .055)); hz.addColorStop(1, rgba(ORANGE, 0)); ctx.fillStyle = hz; ctx.fillRect(0, 0, W, H);
+  drawStars(t);
+
+  // the pile: fades in 0-1.6 s, dims after the five are found, almost gone in the finale, back for the next loop
+  const pileIn = seg(t, 0, 1.6, out), dim = 1 - .72 * seg(t, 5, 8), fin = 1 - .9 * seg(t, 10, 11.4), tail = 1 - seg(t, 13.5, 14);
+  for (const p of pts) {
+    const a = p.a * clamp01(pileIn * 1.4 - p.d * .4) * dim * fin;
+    if (a <= 0) continue;
+    const x = p.fx * W + Math.sin(t * .3 + p.p) * 5, y = p.fy * H + Math.cos(t * .22 + p.p) * 4;
+    ctx.fillStyle = rgba(OFF, a); ctx.beginPath(); ctx.arc(x, y, p.r, 0, 6.283); ctx.fill();
+  }
+
+  // the lighthouse rises, the lamp lights; it leaves as the mark forms
+  const rise = seg(t, .4, 1.9, out), lamp = seg(t, 1.6, 2.1), lhA = pileIn * (1 - seg(t, 10.4, 11.4));
+  drawLighthouse(g, rise, lamp, lhA);
+
+  // the beam: first sweep 2-5 s (reading), second sweep 5-8 s (the five catch it), then idle, then it folds into the mark
+  const five = fivePos(t);
+  const angs = five.map(p => angTo(g, p));
+  let ang, width, bA, len = g.m * 1.6;
+  const A0 = -160 * Math.PI / 180, A1 = -20 * Math.PI / 180;
+  // the second sweep runs from just past the right-most of the five to just past the left-most, so they light in turn across the whole 5-8 s
+  const S1 = Math.max(...angs) + .22, S0 = Math.min(...angs) - .22;
+  if (t < 5) { ang = A0 + (A1 - A0) * seg(t, 2, 5); width = .085; bA = seg(t, 1.9, 2.5); }
+  else if (t < 8) { ang = S1 + (S0 - S1) * seg(t, 5, 8); width = .075; bA = 1; }
+  else if (t < 10) { ang = S0 + (-Math.PI / 2 - S0) * seg(t, 8, 9); width = .075 - .03 * seg(t, 8, 9); bA = 1 - .72 * seg(t, 8, 9); }
+  else { ang = -Math.PI / 2; width = .045 * (1 - seg(t, 10, 11.4)); bA = .45 * (1 - seg(t, 10, 11.4)); len = g.m * 1.6 * (1 - .6 * seg(t, 10, 11.4)); }
+  drawBeam(g, ang, width, bA * lhA, len);
+  drawLogs(g, t);
+
+  // the five: each lights when the second sweep passes it; a line draws from the lamp; a label follows
+  const labels = placeLabels(g, five); lastLabels = []; lastLines = [];
+  const linesA = (1 - (narrow ? .8 : .65) * seg(t, 8, 8.5)) * (1 - seg(t, 10, 10.6)), labelA = 1 - seg(t, 10, 10.5);
+  five.forEach((p, i) => {
+    const hitAt = 5 + 3 * ((S1 - angs[i]) / (S1 - S0));                // when the returning beam reaches this angle
+    const lit = ramp(t, hitAt, hitAt + .35), line = seg(t, hitAt + .15, hitAt + .75, out), lab = seg(t, hitAt + .55, hitAt + .95);
+    if (t >= 10) {
+      // travel to the mark
+      const k = seg(t, 10.4, 11.8), d = MARK_FIVE[i], tx = g.cx + d.x * g.markScale, ty = g.markY + d.y * g.markScale;
+      const x = p.x + (tx - p.x) * k, y = p.y + (ty - p.y) * k, fade = 1 - seg(t, 13.4, 14, inn);
+      glow(glowSmall, x, y, 26 + 10 * (1 - k), .8 * fade); ctx.fillStyle = rgba(ORANGE, fade); ctx.beginPath(); ctx.arc(x, y, 2.4 - .6 * k + g.markScale * 1.1 * k, 0, 6.283); ctx.fill();
+      return;
+    }
+    if (lit <= 0) { ctx.fillStyle = rgba(OFF, .35 * dim); ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, 6.283); ctx.fill(); return; }
+    if (line > 0 && linesA > 0) {
+      const ex = g.cx + (p.x - g.cx) * line, ey = g.lampY + (p.y - g.lampY) * line;
+      ctx.strokeStyle = rgba(ORANGE, .55 * linesA); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(g.cx, g.lampY); ctx.lineTo(ex, ey); ctx.stroke();
+      lastLines.push([g.cx, g.lampY, p.x, p.y]);
+    }
+    glow(glowSmall, p.x, p.y, 30, .9 * lit); ctx.fillStyle = rgba(ORANGE, lit); ctx.beginPath(); ctx.arc(p.x, p.y, 2.6, 0, 6.283); ctx.fill();
+    if (lab > 0 && labelA > 0) { drawLabel(labels[i], FIVE[i], lab * labelA); lastLabels.push(labels[i]); }
+  });
+
+  // the fact check opens under the first label
+  if (t >= 8 && t < 10.6) drawCard(g, t, labels[0]);
+
+  // the finish: the mark in glowing dots, then the tagline
+  drawMark(g, t, five);
+}
+
+// ---------- the clock: runs only while the tab is visible; reduced motion shows the final frame ----------
+const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+let elapsed = 0, last = 0, raf = 0, playing = false, frames = [], fps = 0;
+function tick(now) {
+  if (!playing) return;
+  if (last) { const dt = Math.min(now - last, 100) / 1000; elapsed = (elapsed + dt) % LOOP; frames.push(now); while (frames.length && now - frames[0] > 1000) frames.shift(); fps = frames.length; }
+  last = now; render(elapsed); raf = requestAnimationFrame(tick);
+}
+function play() { if (reduce.matches || playing) return; playing = true; last = 0; raf = requestAnimationFrame(tick); }
+function pause() { playing = false; cancelAnimationFrame(raf); }
+document.addEventListener('visibilitychange', () => document.hidden ? pause() : play());
+reduce.addEventListener('change', () => { if (reduce.matches) { pause(); render(12.9); } else play(); });
+addEventListener('resize', () => { if (!playing) render(reduce.matches ? 12.9 : elapsed); });
+if (reduce.matches) render(12.9); else play();
+// for the proof scripts: freeze at a moment, read the label boxes, read the frame rate
+window.__beacon = { seek(t) { pause(); elapsed = t % LOOP; render(elapsed); return { labels: lastLabels, lines: lastLines, w: W, h: H }; }, play, fps: () => fps, tagline: TAGLINE, reduced: () => reduce.matches, playing: () => playing };
+})();
+</script>
+</body>
+</html>
