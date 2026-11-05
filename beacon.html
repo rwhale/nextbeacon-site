@@ -83,6 +83,7 @@ let W = 0, H = 0, DPR = 1, narrow = false, stars = [], pts = [], named = [], bli
 const logo = new Image(); logo.src = LOGO_SRC;
 const search = new Image(); search.src = SEARCH_SRC;
 const sprite = (size, c, inner) => { const o = document.createElement('canvas'); o.width = o.height = size; const g = o.getContext('2d'); const r = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2); r.addColorStop(0, rgba(c, inner)); r.addColorStop(.35, rgba(c, inner * .35)); r.addColorStop(1, rgba(c, 0)); g.fillStyle = r; g.fillRect(0, 0, size, size); return o; };
+let labelCache = null, labelKey = '';
 function layout() {
   W = innerWidth; H = innerHeight; DPR = Math.min(devicePixelRatio || 1, 2); narrow = W < 900;
   cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR); ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
@@ -116,6 +117,7 @@ function layout() {
     named.push({ ...item, kind, x, y, dot: null });
   });
   if (narrow) named.forEach(n => { n.at = passAt(g, n); });
+  labelCache = null;                                                        // the stars were rebuilt: place the labels again
   // the unnamed blips: field points that flash as the beam passes
   const rb = mulberry(5); blips = []; const nb = narrow ? 15 : 18;
   while (blips.length < nb) { const p = pts[Math.floor(rb() * pts.length)]; if (!blips.includes(p)) blips.push(p); }
@@ -182,7 +184,7 @@ const segHit = (x1, y1, x2, y2, r) => {
 const rectHit = (a, b) => !(a.x + a.w < b.x || b.x + b.w < a.x || a.y + a.h < b.y || b.y + b.h < a.y);
 const labelFont = () => `500 ${narrow ? 12 : 14}px ${SANS}`;
 function wrapText(text, maxW) { const words = text.split(' '), lines = []; let cur = ''; for (const w of words) { const t = cur ? cur + ' ' + w : w; if (ctx.measureText(t).width > maxW && cur) { lines.push(cur); cur = w; } else cur = t; } if (cur) lines.push(cur); return lines; }
-let labelCache = null, labelKey = '';
+
 function placeLabels(g) {
   const key = W + 'x' + H; if (labelCache && labelKey === key) return labelCache;
   ctx.font = labelFont();
@@ -204,13 +206,14 @@ function placeLabels(g) {
       const n = named[i], gap = 9, w1 = n.at + .5 + FULL;
       // what shares this label's window: lines of strong stars lit by then (its own too: the box must sit beside the star, not on its ray), their pills, the log, and overlapping full labels
       const lines = order.filter(j => named[j].kind === 's' && named[j].at + .15 < w1).map(lineOf);
-      const boxes = [g.log.rect, ...order.filter(j => j !== i && named[j].kind === 's' && named[j].at + 2.6 < w1 && named[j].pill).map(j => named[j].pill), ...order.filter(j => j !== i && result[j] && Math.abs(named[j].at - n.at) < FULL + .3).map(j => result[j])];
+      const boxes = [g.log.rect, ...order.filter(j => j !== i && named[j].kind === 's' && named[j].at + 2.75 < w1 && named[j].pill).map(j => named[j].pill), ...order.filter(j => j !== i && result[j] && Math.abs(named[j].at - n.at) < FULL + .3).map(j => result[j])];
       let pick = null;
       // two lines at 150 px, then three at 105 px; spots around the star tried nearest first
       for (const maxW of [150, 105]) {
         const ls = wrapText(n.role + ' · ' + n.score, maxW), w = Math.max(...ls.map(l => ctx.measureText(l).width)) + 16, h = 15 * ls.length + 10;
         const offs = [];
         for (const dx of [gap, -gap - w, -w / 2, gap + 24, -gap - w - 24, -w / 2 - 40, -w / 2 + 40]) for (const dy of [-h / 2, -gap - h, gap, -gap - h - 24, gap + 24, -h / 2 - 50, -h / 2 + 50, -gap - h - 60, gap + 60]) offs.push([dx, dy]);
+        for (let dx = -w - gap - 110; dx <= gap + 110; dx += 22) for (let dy = -h - gap - 130; dy <= gap + 130; dy += 20) offs.push([dx, dy]);   // and a wider field around the star, nearest first
         offs.sort((p, q) => Math.hypot(p[0] + w / 2, p[1] + h / 2) - Math.hypot(q[0] + w / 2, q[1] + h / 2));
         for (const [dx, dy] of offs) {
           const r = { x: n.x + dx, y: n.y + dy, w, h, lines: ls };
@@ -369,7 +372,7 @@ function render(t) {
       if (line > 0 && endA > 0) { ctx.strokeStyle = rgba(ORANGE, .55 * endA); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(g.lamp.x, g.lamp.y); ctx.lineTo(lerp(g.lamp.x, n.x, line), lerp(g.lamp.y, n.y, line)); ctx.stroke(); lastLines.push([g.lamp.x, g.lamp.y, n.x, n.y]); }
       glow(glowSmall, n.x, n.y, 30, .9 * lit); ctx.fillStyle = rgba(ORANGE, lit); ctx.beginPath(); ctx.arc(n.x, n.y, 2.6, 0, 6.283); ctx.fill();
       if (narrow) {
-        const full = lab * (1 - ramp(t, at + 2.5, at + 2.9)), pillA = ramp(t, at + 2.6, at + 3.0) * endA;
+        const full = lab * (1 - ramp(t, at + 2.3, at + 2.7)), pillA = ramp(t, at + 2.75, at + 3.05) * endA;   // the label is gone before the pill arrives
         if (full > 0 && endA > 0) { drawLabel(labels[i], n, full * endA, false); lastLabels.push(labels[i]); }
         if (pillA > 0 && n.pill) { drawPill(n.pill, n, pillA); lastLabels.push(n.pill); }
       } else if (lab > 0 && endA > 0) { drawLabel(labels[i], n, lab * endA, false); lastLabels.push(labels[i]); }
