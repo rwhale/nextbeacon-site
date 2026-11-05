@@ -93,16 +93,19 @@ function layout() {
   // the ten named stars: on wide screens a fan above the lamp at ten angles, radii varied so labels have room;
   // on narrow screens a column on the left, top to bottom, their labels in a column on the right
   const g = G(); named = [];
-  if (narrow) { A0 = -129 * D; A1 = -86 * D; } else { A0 = -165 * D; A1 = -15 * D; }
+  let narrowPts = null;
+  if (narrow) {
+    // the ten stars spread over the width and the upper half, sorted by angle so the beam meets them in turn
+    const P = [[.10, .34], [.26, .17], [.46, .08], [.68, .14], [.88, .30], [.17, .52], [.36, .40], [.60, .36], [.83, .50], [.50, .54]].map(([fx, fy]) => ({ x: fx * W, y: fy * H }));
+    P.sort((p, q) => Math.atan2(p.y - g.lamp.y, p.x - g.lamp.x) - Math.atan2(q.y - g.lamp.y, q.x - g.lamp.x));
+    const angs = P.map(p => Math.atan2(p.y - g.lamp.y, p.x - g.lamp.x));
+    A0 = Math.min(...angs) - .18; A1 = Math.max(...angs) + .18; narrowPts = P;
+  } else { A0 = -165 * D; A1 = -15 * D; }
   let wi = 0, si = 0;
   ORDER.forEach((kind, i) => {
     const item = kind === 'w' ? WEAK[wi++] : STRONG[si++];
     let x, y;
-    if (narrow) {
-      // a column on the left, top to bottom, each star at its own angle so the beam reaches them evenly through the sweep
-      const a = (-95 - 25 * i / 9) * D; y = H * (.09 + i * .058); const r = (g.lamp.y - y) / Math.abs(Math.sin(a));
-      x = Math.max(28, Math.min(g.lamp.x + Math.cos(a) * r, W / 2 - 40));
-    }
+    if (narrow) { x = narrowPts[i].x; y = narrowPts[i].y; }
     else {
       const a = A0 + (A1 - A0) * (.07 + .86 * i / 9);
       // the radius keeps every star at least 70 px inside the sides and 40 px below the top
@@ -112,6 +115,7 @@ function layout() {
     }
     named.push({ ...item, kind, x, y, dot: null });
   });
+  if (narrow) named.forEach(n => { n.at = passAt(g, n); });
   // the unnamed blips: field points that flash as the beam passes
   const rb = mulberry(5); blips = []; const nb = narrow ? 15 : 18;
   while (blips.length < nb) { const p = pts[Math.floor(rb() * pts.length)]; if (!blips.includes(p)) blips.push(p); }
@@ -184,9 +188,43 @@ function placeLabels(g) {
   ctx.font = labelFont();
   let result;
   if (narrow) {
-    // the column starts right of the lamp, so a line from the lamp to a star on the left can never reach it
-    const x = Math.round(W / 2 + 8), w = Math.min(W - 8 - x, 300);
-    result = named.map(n => { const ls = wrapText(n.role + ' · ' + n.score, w - 16); const h = 15 * ls.length + 10; return { x, y: Math.round(n.y - h / 2), w, h, lines: ls }; });
+    // a full label shows for about 2.2 s as its star lights; strong stars then keep a small score pill beside them.
+    // Each full label avoids only what shares its window: lines of strong stars already lit, their pills, the log, and
+    // the one or two full labels whose windows overlap its own.
+    const FULL = 2.2, lineOf = (i) => [g.lamp.x, g.lamp.y, named[i].x, named[i].y];
+    result = new Array(named.length);
+    const order = named.map((n, i) => i).sort((p, q) => named[p].at - named[q].at);
+    // pills first (they are small and stay): up-right of the star, or up-left, whichever no line crosses
+    order.forEach(i => { const n = named[i]; if (n.kind !== 's') return; ctx.font = `600 11px ${SANS}`; const w = ctx.measureText(n.score).width + 14, h = 18;
+      const cands = [[n.x + 8, n.y - h - 6], [n.x - w - 8, n.y - h - 6], [n.x + 8, n.y + 6], [n.x - w - 8, n.y + 6], [n.x - w / 2, n.y - h - 10], [n.x - w / 2, n.y + 10]];
+      let pick = null; for (const [cx, cy] of cands) { const r = { x: cx, y: cy, w, h, pill: true }; if (r.x < 6 || r.y < 6 || r.x + r.w > W - 6) continue; if (order.some(j => j !== i && named[j].kind === 's' && segHit(...lineOf(j), r))) continue; if (rectHit(r, g.log.rect)) continue; pick = r; break; }
+      n.pill = pick || { x: n.x + 8, y: n.y - h - 6, w, h, pill: true }; });
+    ctx.font = labelFont();
+    for (const i of order) {
+      const n = named[i], gap = 9, w1 = n.at + .5 + FULL;
+      // what shares this label's window: lines of strong stars lit by then (its own too: the box must sit beside the star, not on its ray), their pills, the log, and overlapping full labels
+      const lines = order.filter(j => named[j].kind === 's' && named[j].at + .15 < w1).map(lineOf);
+      const boxes = [g.log.rect, ...order.filter(j => j !== i && named[j].kind === 's' && named[j].at + 2.6 < w1 && named[j].pill).map(j => named[j].pill), ...order.filter(j => j !== i && result[j] && Math.abs(named[j].at - n.at) < FULL + .3).map(j => result[j])];
+      let pick = null;
+      // two lines at 150 px, then three at 105 px; spots around the star tried nearest first
+      for (const maxW of [150, 105]) {
+        const ls = wrapText(n.role + ' · ' + n.score, maxW), w = Math.max(...ls.map(l => ctx.measureText(l).width)) + 16, h = 15 * ls.length + 10;
+        const offs = [];
+        for (const dx of [gap, -gap - w, -w / 2, gap + 24, -gap - w - 24, -w / 2 - 40, -w / 2 + 40]) for (const dy of [-h / 2, -gap - h, gap, -gap - h - 24, gap + 24, -h / 2 - 50, -h / 2 + 50, -gap - h - 60, gap + 60]) offs.push([dx, dy]);
+        offs.sort((p, q) => Math.hypot(p[0] + w / 2, p[1] + h / 2) - Math.hypot(q[0] + w / 2, q[1] + h / 2));
+        for (const [dx, dy] of offs) {
+          const r = { x: n.x + dx, y: n.y + dy, w, h, lines: ls };
+          if (r.x < 6 || r.y < 6 || r.x + r.w > W - 6 || r.y + r.h > H - 6) continue;
+          if (n.x >= r.x - 4 && n.x <= r.x + r.w + 4 && n.y >= r.y - 4 && n.y <= r.y + r.h + 4) continue;   // never on the star
+          if (boxes.some(q => rectHit(r, q))) continue;
+          if (lines.some(l => segHit(l[0], l[1], l[2], l[3], r))) continue;
+          pick = r; break;
+        }
+        if (pick) break;
+      }
+      if (!pick) { const ls = wrapText(n.role + ' · ' + n.score, 105), w = Math.max(...ls.map(l => ctx.measureText(l).width)) + 16, h = 15 * ls.length + 10; pick = { x: Math.min(Math.max(6, n.x + gap), W - 6 - w), y: Math.max(6, n.y - gap - h), w, h, lines: ls }; }
+      result[i] = pick;
+    }
   } else {
     const lines = named.filter(n => n.kind === 's').map(n => [g.lamp.x, g.lamp.y, n.x, n.y]);
     const placed = [], obstacles = [g.log.rect]; result = new Array(named.length);
@@ -243,6 +281,12 @@ function drawLog(g, t) {
     const a = seg(t, t0, t0 + .4) * bright * off * end; if (a <= 0) return;
     ctx.fillStyle = rgba(OFF, a); ctx.fillText(line, g.log.x, y);
   });
+}
+function drawPill(r, n, a) {
+  if (a <= 0) return;
+  ctx.globalAlpha = a; ctx.fillStyle = rgba(ORANGE, 1); roundRect(r.x, r.y, r.w, r.h, r.h / 2); ctx.fill();
+  ctx.fillStyle = INK; ctx.font = `600 11px ${SANS}`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(n.score, r.x + r.w / 2, r.y + r.h / 2 + .5); ctx.textAlign = 'left';
+  ctx.globalAlpha = 1;
 }
 function drawLabel(r, n, a, weak) {
   if (a <= 0) return;
@@ -324,7 +368,11 @@ function render(t) {
       const line = seg(t, at + .15, at + .7, out), lab = seg(t, at + .5, at + 1.0);
       if (line > 0 && endA > 0) { ctx.strokeStyle = rgba(ORANGE, .55 * endA); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(g.lamp.x, g.lamp.y); ctx.lineTo(lerp(g.lamp.x, n.x, line), lerp(g.lamp.y, n.y, line)); ctx.stroke(); lastLines.push([g.lamp.x, g.lamp.y, n.x, n.y]); }
       glow(glowSmall, n.x, n.y, 30, .9 * lit); ctx.fillStyle = rgba(ORANGE, lit); ctx.beginPath(); ctx.arc(n.x, n.y, 2.6, 0, 6.283); ctx.fill();
-      if (lab > 0 && endA > 0) { drawLabel(labels[i], n, lab * endA, false); lastLabels.push(labels[i]); }
+      if (narrow) {
+        const full = lab * (1 - ramp(t, at + 2.5, at + 2.9)), pillA = ramp(t, at + 2.6, at + 3.0) * endA;
+        if (full > 0 && endA > 0) { drawLabel(labels[i], n, full * endA, false); lastLabels.push(labels[i]); }
+        if (pillA > 0 && n.pill) { drawPill(n.pill, n, pillA); lastLabels.push(n.pill); }
+      } else if (lab > 0 && endA > 0) { drawLabel(labels[i], n, lab * endA, false); lastLabels.push(labels[i]); }
     } else {
       const hold = 1 - ramp(t, at + 2.4, at + 3.0), a = lit * hold;        // lights, holds two seconds, fades out completely
       if (a <= 0) { ctx.fillStyle = rgba(OFF, .12); ctx.beginPath(); ctx.arc(n.x, n.y, 1.4, 0, 6.283); ctx.fill(); return; }
