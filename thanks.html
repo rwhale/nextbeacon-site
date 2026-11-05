@@ -66,6 +66,14 @@
   function ask(){
     tries++;
     fetch(DELIVERY_URL + "/purchase?session_id=" + encodeURIComponent(sid)).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+      if (d && d.unmatched_upgrade) {
+        // The upgrade payment arrived but matched no NextBeacon Lite purchase: never say "confirmed" here.
+        document.querySelector(".head h1").textContent = "Thank you. Your upgrade needs one more step.";
+        document.querySelector(".head .lede").textContent = "We received your payment, but we could not match it to a NextBeacon Lite purchase, so your copy has not been upgraded yet. We have emailed you: reply with your purchase key (it starts with NB-) and we will upgrade your copy the same day, or refund the payment in full if you prefer.";
+        var st = document.querySelector(".steps"); if (st) st.style.display = "none";
+        wait.innerHTML = "Write to <a href=\"mailto:info@mynextbeacon.com\">info@mynextbeacon.com</a> with your purchase key.";
+        return;
+      }
       if (d && d.key && d.upgraded) {
         // An upgrade from Lite to the full product: same key, nothing to download; the app sees it within a minute.
         document.querySelector(".head h1").textContent = "Thank you. Your NextBeacon is now the full version.";
