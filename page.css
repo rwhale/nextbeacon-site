@@ -69,3 +69,9 @@ footer a:hover{color:var(--fg)}
 footer span{color:var(--faint)}
 footer a.social{display:inline-flex;align-items:center;line-height:0}
 footer a.social svg{display:block}
+/* phones: every footer link is a 44 x 44 px tap target; the drawn size and spacing stay the same */
+@media (max-width:599px){
+  footer .wrap{row-gap:0}
+  footer a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding-inline:9px;margin-inline:-9px}
+  footer a.social{padding-inline:13px}
+}

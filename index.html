@@ -303,6 +303,12 @@ footer a:hover{color:var(--fg)}
 footer span{color:var(--faint)}
 footer a.social{display:inline-flex;align-items:center;line-height:0}
 footer a.social svg{display:block}
+/* phones: every footer link is a 44 x 44 px tap target; the drawn size and spacing stay the same */
+@media (max-width:599px){
+  footer .wrap{row-gap:0}
+  footer a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding-inline:9px;margin-inline:-9px}
+  footer a.social{padding-inline:13px}
+}
 
 @media (max-width:960px){
   .hero-grid{grid-template-columns:1fr}
@@ -480,7 +486,7 @@ footer a.social svg{display:block}
 <section class="facts" aria-label="At a glance">
   <div class="wrap">
     <div class="fact"><b>6:00 am</b><span>Daily scan, at any time you choose</span></div>
-    <div class="fact"><b>0 to 5</b><span>A fit score on every posting, with reasons</span></div>
+    <div class="fact"><b>1 to 5</b><span>A fit score on every posting, with reasons</span></div>
     <div class="fact"><b>2 pages</b><span>Tailored résumé, checked against your CV</span></div>
     <div class="fact"><b>1 click</b><span>From a match to the employer's own page</span></div>
   </div>
@@ -536,7 +542,7 @@ footer a.social svg{display:block}
       <article class="card">
         <div class="ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg></div>
         <h3>It scores you, not keywords.</h3>
-        <p>Each posting gets a 0 to 5 fit score against your actual experience, pay floor, level, location and the work you want, with the reasons written out. 4.0 and up means apply. 3.5 to 3.9 means worth a look.</p>
+        <p>Each posting gets a 1 to 5 fit score against your actual experience, pay floor, level, location and the work you want, with the reasons written out. 4.0 and up means apply. 3.5 to 3.9 means consider.</p>
         <div class="gauge-box">
           <div class="gauge">
             <svg viewBox="0 0 120 120" aria-hidden="true">
@@ -601,7 +607,7 @@ footer a.social svg{display:block}
         <li><b>Who you know</b><span>Your LinkedIn connections, matched to every posting: who could put in a word.</span></li>
       </ul></div>
       <div class="group"><h3>Stay on top</h3><ul>
-        <li><b>Your own NextBeacon app</b><span>Opens in its own window from a desktop shortcut and runs on your PC only: Today, Pipeline, Analytics, Follow-ups, Documents and Config.</span></li>
+        <li><b>Your own NextBeacon app</b><span>Opens in its own window from a desktop shortcut and runs on your PC only: Today, Pipeline, Analytics, Follow-ups, Portals, CV, Documents, Scheduled scans and Config.</span></li>
         <li><b>Three decisions a day</b><span>The morning email and the Pipeline lead with the three postings waiting on a yes or no from you.</span></li>
         <li><b>A pipeline you can read</b><span>Every posting with its score, the reasons, and where it stands.</span></li>
         <li><b>Applied, marked clearly</b><span>What you have already sent, at a glance.</span></li>
@@ -725,10 +731,10 @@ footer a.social svg{display:block}
     </div>
     <div class="need one">
       <div class="card"><h3>Before you buy, check that you have</h3><ul class="plain">
-        <li>A Windows 10 or 11 PC with 8 GB of memory and 4 GB of free disk space. The installer checks this before it installs anything.</li>
+        <li>A Windows 10 (version 2004 or later) or Windows 11 PC, with 8 GB of memory recommended (4 GB is the minimum) and 4 GB of free disk space. The installer checks this before it installs anything.</li>
         <li>For the full NextBeacon: a paid Claude plan from Anthropic, on an account in your name. Claude Pro at about $20 a month is enough. If you do not have Claude yet, <a href="https://claude.ai/download" target="_blank" rel="noopener">download it from Anthropic</a>. NextBeacon Lite needs no separate AI account.</li>
         <li>An internet connection that can reach Claude and the job boards. Home networks usually can; some work networks block them.</li>
-        <li>About fifteen minutes for the guided setup, mostly waiting.</li>
+        <li>About twenty minutes for the guided setup, mostly waiting.</li>
         <li>Your résumé as a PDF, Word file or text.</li>
       </ul></div>
     </div>
@@ -736,7 +742,7 @@ footer a.social svg{display:block}
       <div>
         <p class="eyebrow"><i>//</i> get nextbeacon</p>
         <h3>Ready to buy NextBeacon?</h3>
-        <p>$299 one time, or $129 for NextBeacon Lite, through secure checkout by Stripe. The thank-you page and your receipt carry the download link and your purchase key, so you can be installing within minutes.</p>
+        <p>$299 one time, or $129 for NextBeacon Lite, through secure checkout by Stripe. The thank-you page and your purchase email carry the download link and your purchase key, so you can be installing within minutes.</p>
       </div>
       <div class="cta-row">
         <a class="btn primary" href="https://buy.stripe.com/14A00jbUr7TD7cv5wS9EI00">Buy NextBeacon · $299</a>
@@ -755,7 +761,7 @@ footer a.social svg{display:block}
     <div class="qa">
       <details><summary>Is this another auto-apply tool?</summary><p>No. NextBeacon never applies to a job for you, in bulk or one at a time. It finds and scores postings and prepares your résumé. You read it, you open the employer's page, and after your review you submit the application. Nothing is ever sent in your name without you.</p></details>
       <details><summary>Will the AI make things up on my résumé?</summary><p>It is built not to. Before a résumé is saved, every number, employer, job title, degree and certification is checked word for word against your own CV, and anything that is not there is removed. AI can still make mistakes, so read every résumé and letter before you send it. You always have the final say.</p></details>
-      <details><summary>I am not technical. Can I set this up?</summary><p>Yes. You run one installer. It checks that your PC is ready, installs everything it needs, and opens a page-by-page setup that asks plain questions: your résumé, the roles you want, your pay floor, remote or on-site, and the companies to watch. There is no command window and no code. Most people are done in about fifteen minutes.</p></details>
+      <details><summary>I am not technical. Can I set this up?</summary><p>Yes. You run one installer. It checks that your PC is ready, installs everything it needs, and opens a page-by-page setup that asks plain questions: your résumé, the roles you want, your pay floor, remote or on-site, and the companies to watch. There is no command window and no code. Most people are done in about twenty minutes.</p></details>
       <details><summary>Where does my information go?</summary><p>It stays on your PC. Your résumé, your profile and your job history live in files on your own computer, and NextBeacon LLC never receives them. Two things do leave your PC, so you know. The AI work runs through your own Claude account, so posting text and parts of your résumé and profile go to Anthropic. And each morning's report (that day's companies, roles, scores and pay) passes through NextBeacon's sending service on its way to your inbox; the service sends it and keeps no copy. The full details are on the <a href="privacy.html">privacy page</a>.</p></details>
       <details><summary>What is Claude, and why do I need an account?</summary><p>Claude is the AI from Anthropic that reads postings, scores them and drafts your résumés. NextBeacon uses it through an account that belongs to you, so your information is never pooled with anyone else's. You pay Anthropic for that plan directly, about $20 a month for Claude Pro. If you do not have Claude on your PC yet, <a href="https://claude.ai/download" target="_blank" rel="noopener">download it from Anthropic</a>. If your plan lapses, the AI features pause until you renew it. NextBeacon Lite does not use Claude, so it needs no account.</p></details>
       <details><summary>What is NextBeacon Lite?</summary><p>The same tool without the AI. Lite watches the companies you choose, keeps the postings whose titles match the roles you want, ranks each one Strong, Possible or Weak fit by comparing the posting with your titles, your résumé, your pay floor and your remote setting, and emails you the list every morning. It does not score postings 1 to 5, explain its reasoning, or write résumés, cover letters or application answers. It needs no separate AI account. If you later want the full product, press Unlock in the app, pay the $170 difference, and the full features switch on in place, no reinstall.</p></details>
@@ -833,12 +839,12 @@ footer a.social svg{display:block}
     ['Orbital Dynamics', 'AI Program Lead · Remote', 3.6],
     ['Larkspur Energy', 'Project Manager · Pay below your floor', 2.9],
     ['Ironwood Labs', 'Program Director · Remote', 4.3],
-    ['Tidewater Group', 'Business Analyst · Hybrid, 40 miles away', 3.3]
+    ['Tidewater Group', 'Business Analyst · Hybrid, 40 miles away', 3.5]
   ];
   var feed = document.getElementById('feed'), readEl = document.getElementById('read'), n = 0, found = 6;
   var dateEl = document.getElementById('today-date');
   if (dateEl) { try { dateEl.textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' }).toLowerCase(); } catch (e) {} }
-  var verdict = function (v) { return v >= 4 ? ['apply', 'Apply'] : v >= 3 ? ['consider', 'Consider'] : ['pass', 'Pass']; };
+  var verdict = function (v) { return v >= 4 ? ['apply', 'Apply'] : v >= 3.5 ? ['consider', 'Consider'] : ['pass', 'Pass']; };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
   var make = function (d, scored) {
     var li = document.createElement('li'), v = verdict(d[2]);

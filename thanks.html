@@ -41,12 +41,12 @@
       <ol class="steps">
         <li><b>Check your email</b>A message from info@mynextbeacon.com carries the download link for the installer, your purchase key and the setup steps. It usually arrives within a minute or two; check your spam folder if it has not.</li>
         <li><b>Download and run the installer</b>If Windows shows a blue box saying “Windows protected your PC”, click <b>More info</b>, then <b>Run anyway</b>. NextBeacon is new, so Windows asks you to confirm. The installer then shows the terms, checks that your PC meets the requirements, and asks for your purchase key. If a check fails, it tells you what to change and you can run it again.</li>
-        <li id="step-setup"><b>Walk through the first setup</b>About fifteen minutes: sign in to your Claude account, add your résumé, say what you are looking for, pick your companies, set the morning email and the daily time.</li>
+        <li id="step-setup"><b>Walk through the first setup</b>About twenty minutes: sign in to your Claude account (the full NextBeacon only; NextBeacon Lite skips this), add your résumé, say what you are looking for, pick your companies, set the morning email and the daily time.</li>
         <li><b>Start your first scan</b>From then on NextBeacon runs every morning on its own, and every application is still sent by you.</li>
       </ol>
 
       <h2>While you wait</h2>
-      <p id="wait-note">The <a href="help.html">Help page</a> walks through the installer, each setup page and the common problems. If you do not have a paid Claude plan yet, now is a good moment to get one: Claude Pro at about $20 a month is enough, on an account in your name.</p>
+      <p id="wait-note">The <a href="help.html">Help page</a> walks through the installer, each setup page and the common problems. The full NextBeacon needs a paid Claude plan. If you do not have one yet, now is a good moment to get one: Claude Pro at about $20 a month is enough, on an account in your name. NextBeacon Lite needs no separate AI account.</p>
 
       <h2>Questions</h2>
       <p>Email <a href="mailto:info@mynextbeacon.com">info@mynextbeacon.com</a>. The <a href="terms.html">terms</a> cover licensing and refunds.</p>
@@ -88,7 +88,7 @@
           // Lite: no Claude sign-in in the walkthrough, and no need for a Claude plan while waiting.
           document.querySelector(".head h1").textContent = "Thank you. Your copy of NextBeacon Lite is on its way.";
           document.getElementById("step-setup").innerHTML = "<b>Walk through the first setup</b>About ten minutes: add your résumé, say what you are looking for, pick your companies, set the morning email and the daily time. No separate AI account is needed for Lite.";
-          document.getElementById("wait-note").innerHTML = "The <a href=\"help.html\">Help page</a> walks through the installer, each setup page and the common problems. Lite needs no separate AI account. If you later want the full NextBeacon, the Config page in the app has an Upgrade button for the difference.";
+          document.getElementById("wait-note").innerHTML = "The <a href=\"help.html\">Help page</a> walks through the installer, each setup page and the common problems. Lite needs no separate AI account. If you later want the full NextBeacon, the Config page in the app has an Unlock button for the difference.";
         }
         document.getElementById("pdl").href = d.download_url;
         wait.hidden = true; box.hidden = false;
