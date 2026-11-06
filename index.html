@@ -203,8 +203,8 @@ section[id]{scroll-margin-top:72px}
 .viz text{font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;text-anchor:middle;fill:var(--faint)}
 .viz .files{font-family:var(--sans);font-size:9.5px;letter-spacing:0;text-transform:none;fill:var(--muted)}
 .viz .t-ok{fill:var(--ok);font-weight:700}
-.viz .row{font-family:var(--sans);font-size:12px;letter-spacing:0;text-transform:none;text-anchor:start;fill:var(--fg)}
-.viz .row.gone{fill:var(--faint)}
+.viz .nm{font-family:var(--sans);font-size:12px;letter-spacing:0;text-transform:none;text-anchor:start;fill:var(--fg)}
+.viz .nm.gone{fill:var(--faint)}
 .viz .board{fill:var(--surface);stroke:var(--border);stroke-width:1.5}
 .viz .clip{fill:var(--brand-soft);stroke:var(--brand-text);stroke-width:1.6}
 .viz .hole{fill:var(--surface);stroke:var(--brand-text);stroke-width:1.4}
@@ -580,10 +580,10 @@ footer a.social svg{display:block}
         <div class="vizbox"><svg class="viz" viewBox="30 0 240 172" role="img" aria-label="A clipboard listing your companies: Northwind Systems, Halcyon Space and Orbital Dynamics, with Meridian Logistics crossed out.">
           <rect class="board" x="68" y="14" width="164" height="152" rx="12"/><rect class="clip" x="122" y="5" width="56" height="19" rx="6"/><circle class="hole" cx="150" cy="14" r="3"/>
           <text x="150" y="46">Your companies</text><path class="rule" d="M84 54H216"/>
-          <path class="tick" d="M88 74l3.5 3.5 6-7"/><text class="row" x="106" y="78">Northwind Systems</text>
-          <path class="tick" d="M88 98l3.5 3.5 6-7"/><text class="row" x="106" y="102">Halcyon Space</text>
-          <text class="row gone" x="106" y="126">Meridian Logistics</text><path class="strike" d="M84 122H216"/>
-          <path class="tick" d="M88 146l3.5 3.5 6-7"/><text class="row" x="106" y="150">Orbital Dynamics</text>
+          <path class="tick" d="M88 74l3.5 3.5 6-7"/><text class="nm" x="106" y="78">Northwind Systems</text>
+          <path class="tick" d="M88 98l3.5 3.5 6-7"/><text class="nm" x="106" y="102">Halcyon Space</text>
+          <text class="nm gone" x="106" y="126">Meridian Logistics</text><path class="strike" d="M84 122H216"/>
+          <path class="tick" d="M88 146l3.5 3.5 6-7"/><text class="nm" x="106" y="150">Orbital Dynamics</text>
         </svg></div>
       </article>
       <article class="card pic">
