@@ -175,6 +175,8 @@ footer a{color:var(--muted);text-decoration:none}
     document.getElementById('cards').innerHTML = scored.map((r, n) => `<article class="cardt ${n === 0 && max ? 'top' : ''}" id="t-${r.t.name.toLowerCase()}"><div class="hd"><span class="n">${n + 1}</span><h3>${esc(r.t.name)}</h3><span class="pr">${esc(r.t.price)}${r.t.priceNote ? ' &middot; ' + esc(r.t.priceNote) : ''}</span></div><p><b style="color:var(--fg);font-weight:500">Best for:</b> ${esc(r.t.best)}</p><ul class="why">${CRITERIA.map((c, j) => `<li>${markHtml(r.t.marks[c.k])}<span><b style="color:var(--fg);font-weight:500">${esc(c.name)}.</b> ${esc(r.t.why[j])}</span></li>`).join('')}</ul><p><b style="color:var(--fg);font-weight:500">Watch out:</b> ${esc(r.t.watch)}${r.t.rating ? ` <span style="color:var(--faint)">Trustpilot ${esc(r.t.rating)}.</span>` : ''}</p><div class="links">${r.t.links.map(([l, u]) => `<a href="${u}" rel="nofollow noopener" target="_blank">${esc(l)}</a>`).join('')}</div></article>`).join('');
   }
   render();
+  // A visitor who came here from our own site was not brought in by this page: their links back carry no tag.
+  try { if (document.referrer && new URL(document.referrer).host === location.host) document.querySelectorAll('a[href*="?ref=compare"]').forEach(function (l) { l.href = l.href.replace('?ref=compare', ''); }); } catch (e) {}
 })();
 </script>
 </body>
