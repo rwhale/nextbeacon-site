@@ -19,6 +19,7 @@ const PUBLISH = [
 ];
 const LEAVE_OUT = [
   'index.src.html', 'build-site.mjs', 'make-dist.mjs', 'make-og.mjs', 'og-card.html',
+  'notfound.html', // published as 404.html, the page the host shows for an address that does not exist
   'CNAME', '.nojekyll', '.gitignore', '.git', 'dist', 'node_modules',
 ];
 
@@ -31,6 +32,7 @@ if (missing.length) throw new Error('make-dist: listed in PUBLISH but not found:
 fs.rmSync(out, { recursive: true, force: true });
 fs.mkdirSync(out);
 for (const f of PUBLISH) fs.cpSync(path.join(dir, f), path.join(out, f), { recursive: true });
+fs.copyFileSync(path.join(dir, 'notfound.html'), path.join(out, '404.html'));
 
 // The pages carry their scripts inside the page. The content policy allows exactly those scripts, by their
 // fingerprint, and nothing else, so a script somebody managed to inject would not run.
