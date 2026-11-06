@@ -76,6 +76,10 @@ const headers = `/*
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+
+# The host's own address for this project is a second copy of the site; search engines should list only the real one.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
 `;
 fs.writeFileSync(path.join(out, '_headers'), headers);
 
