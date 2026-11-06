@@ -30,6 +30,23 @@ p{margin:0}
 .nav a.link{color:var(--muted);text-decoration:none;font-size:.9rem;white-space:nowrap}
 .nav a.link:hover{color:var(--fg)}
 @media (max-width:900px){.nav a.link{display:none}}
+/* the menu for phones and narrow windows: the same links the wide header shows */
+.nb-menu{display:none}
+.nb-menu summary{display:block;list-style:none;cursor:pointer;border-radius:999px;-webkit-tap-highlight-color:transparent}
+.nb-menu summary::-webkit-details-marker{display:none}
+.nb-menu summary:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.nb-menu-btn{display:flex;align-items:center;justify-content:center;gap:7px;min-width:44px;min-height:44px;padding:0 12px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--fg);font:500 .9rem/1 var(--sans)}
+.nb-menu-btn svg{display:block;width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.nb-menu-shut{display:none!important}
+.nb-menu[open] .nb-menu-shut{display:block!important}
+.nb-menu[open] .nb-menu-open{display:none}
+.nb-menu-panel{position:absolute;left:0;right:0;top:100%;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 22px 30px -24px rgba(30,20,10,.4);padding:4px 16px 10px;max-height:calc(100vh - 64px);overflow:auto}
+.nb-menu-panel a{display:flex;align-items:center;min-height:50px;color:var(--fg);text-decoration:none;font-size:1rem;border-top:1px solid var(--border)}
+.nb-menu-panel a:first-child{border-top:0}
+@media (max-width:900px){.nb-menu{display:block}.nav{gap:8px}}
+@media (max-width:420px){.nb-menu-word{display:none}.nb-menu-btn{padding:0}}
+/* the smallest phones: the name, Buy and the menu button still fit on one line */
+@media (max-width:350px){.top .wrap{gap:8px}.top .nav>.btn{padding-inline:13px}.top .word{font-size:1.3rem}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--fg);font:500 .9rem/1 var(--sans);text-decoration:none;cursor:pointer;min-height:40px;white-space:nowrap}
 .btn:hover{background:var(--surface-hover)}
 .btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-fg)}

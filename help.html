@@ -19,6 +19,15 @@
       <a class="link" href="terms.html">Terms</a>
       <a class="link" href="privacy.html">Privacy</a>
       <a class="btn primary" href="index.html#buy">Buy · $299</a>
+      <details class="nb-menu">
+        <summary aria-label="Menu"><span class="nb-menu-btn"><svg class="nb-menu-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="nb-menu-shut" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="nb-menu-word">Menu</span></span></summary>
+        <div class="nb-menu-panel">
+          <a href="index.html#different">Why it is different</a>
+          <a href="index.html#questions">Questions</a>
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+      </details>
     </nav>
   </div>
 </header>
@@ -63,13 +72,13 @@
         <li><strong>Your documents.</strong> Upload your résumé. You can add certifications, older résumés and a list of accomplishments too; everything helps the fact check.</li>
         <li><strong>About you.</strong> Name, email, city, remote or office, the job titles you want, how far you would commute, your experience level, job type, and your pay floor and target.</li>
         <li><strong>Companies.</strong> Pick industries and company sizes, type company names, or paste a careers page address. There is a button that suggests companies like the ones you already added.</li>
-        <li><strong>Daily email.</strong> Where the morning report goes. Your report is sent by NextBeacon to this address; nothing to set up. A Send a test report button checks it.</li>
+        <li><strong>Daily email.</strong> Where the daily report goes. Your report is sent by NextBeacon to this address; nothing to set up. A Send a test report button checks it.</li>
         <li><strong>Schedule.</strong> The times the scan runs, every day or weekdays only, and whether you want an email on every run or only when something new turns up.</li>
         <li><strong>Done.</strong> A checklist of anything still missing, and a Start my first scan button. The first scan takes an hour or more, and the Today page fills in as scores arrive.</li>
       </ul>
 
       <h2 id="morning">Every morning</h2>
-      <p>At the time you chose, NextBeacon wakes your PC if it is asleep, reads the new postings at your companies, scores each one, writes a tailored résumé for the strong matches, and emails you the list. Open the email or the Today page, read the reasons, open the résumé, and after your review submit the application on the employer's page yourself. Mark the row as Applied so the pipeline stays honest. If a posting closes, NextBeacon notices and drops it from your list.</p>
+      <p>At the time you chose, NextBeacon wakes your PC if it is asleep, reads the new postings at your companies, scores each one, writes a tailored résumé for the strong matches, and emails you the list. Open the daily report or the Today page, read the reasons, open the résumé, and after your review submit the application on the employer's page yourself. Mark the row as Applied so the pipeline stays honest. If a posting closes, NextBeacon notices and drops it from your list.</p>
       <p>Before the scan, NextBeacon also checks for a newer version of itself and installs it after the scan. Only the files that changed are downloaded, and your résumé, profile, companies and history are never touched. If a new version does not start, the previous one is put back. The Today page says “Updated to version” with the new number when it happens, and shows an <b>Install now</b> button whenever an update is waiting for the morning.</p>
 
       <h2 id="stuck">If something goes wrong</h2>
@@ -84,7 +93,7 @@
         <p>The page shows a line for this case. Make sure a browser is set as your default, then click Check again. The free Claude plan does not include what NextBeacon needs; you need a paid plan.</p>
       </div>
       <div class="card">
-        <h3>No morning email arrived</h3>
+        <h3>No daily report arrived</h3>
         <p>Open NextBeacon and check the Today page first; the scan may have run without the email. Look in your spam or junk folder: the report comes from reports@mynextbeacon.com, so mark it as safe the first time. Then check the address on the Daily email page in Config and press Send a test report. If the email service was unreachable, NextBeacon keeps the report and tries again every hour for up to two days. If the PC was off at the scan time, the scan runs the next time the PC is on.</p>
       </div>
       <div class="card">
@@ -107,5 +116,14 @@
     <a href="help.html">Help</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="mailto:info@mynextbeacon.com">info@mynextbeacon.com</a><a class="social" href="https://www.linkedin.com/company/nextbeacon/" target="_blank" rel="noopener" aria-label="NextBeacon on LinkedIn" title="NextBeacon on LinkedIn"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a class="social" href="https://x.com/nextbeacon" target="_blank" rel="noopener" aria-label="NextBeacon on X" title="NextBeacon on X"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><span>© 2026 NextBeacon LLC. All rights reserved.</span>
   </div>
 </footer>
+<script>
+(function () {
+  var m = document.querySelector('.nb-menu');
+  if (!m) return;
+  m.addEventListener('click', function (e) { if (e.target.closest('.nb-menu-panel a')) m.open = false; });
+  document.addEventListener('click', function (e) { if (m.open && !m.contains(e.target)) m.open = false; });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && m.open) { m.open = false; m.querySelector('summary').focus(); } });
+})();
+</script>
 </body>
 </html>

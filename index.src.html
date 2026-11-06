@@ -71,6 +71,23 @@ section[id]{scroll-margin-top:72px}
 .nav .btn{white-space:nowrap}
 @media (max-width:900px){.nav a.link{display:none}}
 .nav a.link:hover{color:var(--fg)}
+/* the menu for phones and narrow windows: the same links the wide header shows */
+.nb-menu{display:none}
+.nb-menu summary{display:block;list-style:none;cursor:pointer;border-radius:999px;-webkit-tap-highlight-color:transparent}
+.nb-menu summary::-webkit-details-marker{display:none}
+.nb-menu summary:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.nb-menu-btn{display:flex;align-items:center;justify-content:center;gap:7px;min-width:44px;min-height:44px;padding:0 12px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--fg);font:500 .9rem/1 var(--sans)}
+.nb-menu-btn svg{display:block;width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
+.nb-menu-shut{display:none!important}
+.nb-menu[open] .nb-menu-shut{display:block!important}
+.nb-menu[open] .nb-menu-open{display:none}
+.nb-menu-panel{position:absolute;left:0;right:0;top:100%;background:var(--bg);border-top:1px solid var(--border);border-bottom:1px solid var(--border);box-shadow:0 22px 30px -24px rgba(30,20,10,.4);padding:4px 16px 10px;max-height:calc(100vh - 64px);overflow:auto}
+.nb-menu-panel a{display:flex;align-items:center;min-height:50px;color:var(--fg);text-decoration:none;font-size:1rem;border-top:1px solid var(--border)}
+.nb-menu-panel a:first-child{border-top:0}
+@media (max-width:900px){.nb-menu{display:block}.nav{gap:8px}}
+@media (max-width:420px){.nb-menu-word{display:none}.nb-menu-btn{padding:0}}
+/* the smallest phones: the name, Buy and the menu button still fit on one line */
+@media (max-width:350px){.top .wrap{gap:8px}.top .nav>.btn{padding-inline:13px}.top .word{font-size:1.3rem}}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 20px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--fg);font:500 .9rem/1 var(--sans);text-decoration:none;cursor:pointer;transition:background .15s,border-color .15s,transform .15s;min-height:40px}
 .btn:hover{background:var(--surface-hover)}
 .btn.primary{background:var(--brand);border-color:var(--brand);color:var(--brand-fg)}
@@ -380,6 +397,16 @@ footer a.social svg{display:block}
       <a class="link" href="#questions">Questions</a>
       <a class="link" href="help.html">Help</a>
       <a class="btn primary" href="https://buy.stripe.com/14A00jbUr7TD7cv5wS9EI00">Buy · $299</a>
+      <details class="nb-menu">
+        <summary aria-label="Menu"><span class="nb-menu-btn"><svg class="nb-menu-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="nb-menu-shut" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="nb-menu-word">Menu</span></span></summary>
+        <div class="nb-menu-panel">
+          <a href="#different">Why it is different</a>
+          <a href="#how">How it works</a>
+          <a href="#for">Who it is for</a>
+          <a href="#questions">Questions</a>
+          <a href="help.html">Help</a>
+        </div>
+      </details>
     </nav>
   </div>
 </header>
@@ -392,7 +419,7 @@ footer a.social svg{display:block}
         <div>
           <p class="eyebrow"><i>//</i> for experienced professionals · one-time purchase</p>
           <h1>Your next role is not in the pile of 300. <em>It is in the five that fit.</em></h1>
-          <p class="lede">Every morning NextBeacon reads the new postings at the companies you choose, scores each one against your real background, and builds a tailored résumé where every number, employer and title is checked against your own CV. It all lands in your own NextBeacon app on your PC, with a morning email telling you what is worth a look. Built for people with fifteen or more years of real work behind them.</p>
+          <p class="lede">Every morning NextBeacon reads the new postings at the companies you choose, scores each one against your real background, and builds a tailored résumé where every number, employer and title is checked against your own CV. It all lands in your own NextBeacon app on your PC, with a daily report by email telling you what is worth a look. Built for people with fifteen or more years of real work behind them.</p>
           <div class="cta-row">
             <a class="btn primary" href="https://buy.stripe.com/14A00jbUr7TD7cv5wS9EI00">Buy NextBeacon · $299</a>
             <a class="btn" href="#how">See how it works</a>
@@ -484,7 +511,7 @@ footer a.social svg{display:block}
               <li><span>Titles you want<small>Program manager, delivery lead, PMO, platform owner</small></span><span class="chip reading">Edit</span></li>
               <li><span>Pay floor<small>Postings below it are shown but never scored</small></span><span class="chip ok">$140,000</span></li>
               <li><span>Where<small>Remote, or hybrid within 40 miles of home</small></span><span class="chip ok">Set</span></li>
-              <li><span>Morning email<small>Sent to you at the hour you choose</small></span><span class="chip ok">06:00</span></li>
+              <li><span>Daily report<small>Emailed to you at the hour you choose</small></span><span class="chip ok">06:00</span></li>
             </ul>
             </div>
           </div>
@@ -619,8 +646,8 @@ footer a.social svg{display:block}
         <li><b>A daily scan</b><span>At the times you pick. It wakes your PC to run.</span></li>
         <li><b>Add any company by name</b><span>NextBeacon finds its job board. Pasting a careers page works too.</span></li>
         <li><b>Company suggestions</b><span>Name one you like and get similar ones.</span></li>
-        <li><b>A daily email report</b><span>Score, company, role, pay and a link to the posting.</span></li>
-        <li><b>Your week, every Monday</b><span>The email adds a weekly tally and the postings closing soon.</span></li>
+        <li><b>A daily report by email</b><span>Score, company, role, pay and a link to the posting.</span></li>
+        <li><b>Your week, every Monday</b><span>On Mondays the daily report adds a weekly tally and the postings closing soon.</span></li>
         <li><b>Pay on one clean line</b><span>When a posting states its pay, you see it as one salary line, so you stop reading below your floor.</span></li>
         <li><b>Pay for your titles</b><span>What postings for the roles you want actually pay, set against your floor.</span></li>
         <li><b>Paste any posting</b><span>Found one yourself? Paste the link and it joins your pipeline, scored like the rest.</span></li>
@@ -635,11 +662,11 @@ footer a.social svg{display:block}
       </ul></div>
       <div class="group"><h3>Stay on top</h3><ul>
         <li><b>Your own NextBeacon app</b><span>Opens in its own window from a desktop shortcut and runs on your PC only: Today, Pipeline, Analytics, Follow-ups, Portals, CV, Documents, Scheduled scans and Config.</span></li>
-        <li><b>Three decisions a day</b><span>The morning email and the Pipeline lead with the three postings waiting on a yes or no from you.</span></li>
+        <li><b>Three decisions a day</b><span>The daily report and the Pipeline lead with the three postings waiting on a yes or no from you.</span></li>
         <li><b>A pipeline you can read</b><span>Every posting with its score, the reasons, and where it stands.</span></li>
         <li><b>Applied, marked clearly</b><span>What you have already sent, at a glance.</span></li>
         <li><b>Follow-up reminders</b><span>Who to nudge and when.</span></li>
-        <li><b>Why that score</b><span>Every score in four named parts: on the posting, in the pipeline and in the email.</span></li>
+        <li><b>Why that score</b><span>Every score in four named parts: on the posting, in the pipeline and in the daily report.</span></li>
         <li><b>Ghost jobs flagged</b><span>Re-posted again and again, or up for weeks: marked, so you do not chase it.</span></li>
         <li><b>Trends</b><span>How many strong matches show up each day, and your applications week by week.</span></li>
       </ul></div>
@@ -789,7 +816,7 @@ footer a.social svg{display:block}
       <details><summary>Is this another auto-apply tool?</summary><p>No. NextBeacon never applies to a job for you, in bulk or one at a time. It finds and scores postings and prepares your résumé. You read it, you open the employer's page, and after your review you submit the application. Nothing is ever sent in your name without you.</p></details>
       <details><summary>Will the AI make things up on my résumé?</summary><p>It is built not to. Before a résumé is saved, every number, employer, job title, degree and certification is checked word for word against your own CV, and anything that is not there is removed. AI can still make mistakes, so read every résumé and letter before you send it. You always have the final say.</p></details>
       <details><summary>I am not technical. Can I set this up?</summary><p>Yes. You run one installer. It checks that your PC is ready, installs everything it needs, and opens a page-by-page setup that asks plain questions: your résumé, the roles you want, your pay floor, remote or on-site, and the companies to watch. There is no command window and no code. Plan on about half an hour: the installer takes around ten minutes and the setup questions the rest.</p></details>
-      <details><summary>Where does my information go?</summary><p>It stays on your PC. Your résumé, your profile and your job history live in files on your own computer, and NextBeacon LLC never receives them. Three things do leave your PC, so you know. The AI work runs through your own Claude account, so posting text and parts of your résumé and profile go to Anthropic. And each morning's report (that day's companies, roles, scores and pay) passes through NextBeacon's sending service on its way to your inbox; the service sends it and keeps no copy. And once a day NextBeacon checks your license with that service and sends it a few counts (how many postings were scanned and scored and, unless you switch it off, how many you applied to), never a company, a job title or a line of your résumé. The full details are on the <a href="privacy.html">privacy page</a>.</p></details>
+      <details><summary>Where does my information go?</summary><p>It stays on your PC. Your résumé, your profile and your job history live in files on your own computer, and NextBeacon LLC never receives them. Three things do leave your PC, so you know. The AI work runs through your own Claude account, so posting text and parts of your résumé and profile go to Anthropic. And your daily report (that day's companies, roles, scores and pay) passes through NextBeacon's sending service on its way to your inbox; the service sends it and keeps no copy. And once a day NextBeacon checks your license with that service and sends it a few counts (how many postings were scanned and scored and, unless you switch it off, how many you applied to), never a company, a job title or a line of your résumé. The full details are on the <a href="privacy.html">privacy page</a>.</p></details>
       <details><summary>What is Claude, and why do I need an account?</summary><p>Claude is the AI from Anthropic that reads postings, scores them and drafts your résumés. NextBeacon uses it through an account that belongs to you, so your information is never pooled with anyone else's. You pay Anthropic for that plan directly, about $20 a month for Claude Pro. If you do not have Claude on your PC yet, <a href="https://claude.com/download" target="_blank" rel="noopener">download it from Anthropic</a>. If your plan lapses, the AI features pause until you renew it. NextBeacon Lite does not use Claude, so it needs no account.</p></details>
       <details><summary>What is NextBeacon Lite?</summary><p>The same tool without the AI. Lite watches the companies you choose, keeps the postings whose titles match the roles you want, ranks each one Strong, Possible or Weak fit by comparing the posting with your titles, your résumé, your pay floor and your remote setting, and emails you the list every morning. It does not score postings 1 to 5, explain its reasoning, or write résumés, cover letters or application answers. It needs no separate AI account. If you later want the full product, press Unlock in the app, pay the $170 difference, and the full features switch on in place, no reinstall.</p></details>
       <details><summary>Is there a subscription?</summary><p>Not to NextBeacon. You pay once, $299 for NextBeacon or $129 for NextBeacon Lite, and it is licensed to you for one Windows PC with no end date. If it is not for you, ask within seven days for a full refund. The only running cost is your own Claude plan, and Lite has none.</p></details>
@@ -807,6 +834,16 @@ footer a.social svg{display:block}
     <a href="help.html">Help</a><a href="terms.html">Terms</a><a href="privacy.html">Privacy</a><a href="mailto:info@mynextbeacon.com">info@mynextbeacon.com</a><a class="social" href="https://www.linkedin.com/company/nextbeacon/" target="_blank" rel="noopener" aria-label="NextBeacon on LinkedIn" title="NextBeacon on LinkedIn"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a class="social" href="https://x.com/nextbeacon" target="_blank" rel="noopener" aria-label="NextBeacon on X" title="NextBeacon on X"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a><span>© 2026 NextBeacon LLC. All rights reserved.</span>
   </div>
 </footer>
+
+<script>
+(function () {
+  var m = document.querySelector('.nb-menu');
+  if (!m) return;
+  m.addEventListener('click', function (e) { if (e.target.closest('.nb-menu-panel a')) m.open = false; });
+  document.addEventListener('click', function (e) { if (m.open && !m.contains(e.target)) m.open = false; });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && m.open) { m.open = false; m.querySelector('summary').focus(); } });
+})();
+</script>
 
 <script>
 (function () {
